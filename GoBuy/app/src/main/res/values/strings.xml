@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">GoBuy</string>
+    <string name="Welcome">Welcome to GoBuy</string>
+    <string name="Decription">We are here to help you get what you want</string>
+    <string name="GetStartedButton">Get Started</string>
+    <string name="title_activity_info_tabs">InfoTabs</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+
+    <string name="title_activity_start_goal">StartGoal</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="Add_goal">Please enter the following information</string>
+</resources>
