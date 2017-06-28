@@ -4,7 +4,7 @@ package com.example.nightc.gobuy.GoBuySDK;
  * Created by Oppai on 6/26/2017.
  */
 
-public abstract class Bill {
+public class Bill {
 
     //private boolean paid;
     private String Name;

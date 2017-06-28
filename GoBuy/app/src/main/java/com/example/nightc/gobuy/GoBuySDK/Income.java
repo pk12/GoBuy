@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * Created by nightc on 6/25/17.
  */
 
-public abstract class Income {
+public class Income {
 
     protected double Tax; //May Change to Bill
     protected String Name;

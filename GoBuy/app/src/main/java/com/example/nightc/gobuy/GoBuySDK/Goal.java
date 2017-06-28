@@ -16,6 +16,7 @@ public class Goal {
 
     private Item GoalItem;
     private ArrayList<Income> incomes;
+    private ArrayList<Bill> bills;
     private double TotalMonthlyIncome;
     private double TotalMonthlyBills;
     private LocalDate DateWanted;
@@ -26,11 +27,10 @@ public class Goal {
     private double MoneyToSavePerMonth; //Money you have to save to get the itam on the wanted Date
     private Month month;
 
-    public Goal(Item goalItem, ArrayList<Income> incomes, double totalMonthlyIncome, double totalMonthlyBills, LocalDate dateWanted, double moneySaved) {
+    public Goal(Item goalItem, ArrayList<Income> incomes,ArrayList<Bill> bills, LocalDate dateWanted, double moneySaved) {
         GoalItem = goalItem;
-        this.incomes = incomes;
-        TotalMonthlyIncome = totalMonthlyIncome;
-        TotalMonthlyBills = totalMonthlyBills;
+        this.incomes = incomes; //user will add his incomes on the Oncreate,and then they will be added here
+        this.bills = bills;
         DateWanted = dateWanted;
         MoneySaved = moneySaved;
         DateCreated = new LocalDate();
