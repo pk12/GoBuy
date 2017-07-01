@@ -6,7 +6,7 @@ package com.example.nightc.gobuy.GoBuySDK;
 
 public class Item {
     private String Name;
-    private String Category;
+    private String Category; //to be pulled by userdata class
     private double Price;
 
 

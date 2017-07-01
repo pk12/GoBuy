@@ -5,32 +5,28 @@ import org.joda.time.LocalDate;
 import org.joda.time.Period;
 import org.joda.time.PeriodType;
 
-import java.util.ArrayList;
-
 /**
  * Created by nightc on 6/25/17.
  */
 
-/* the calculations will dynamically change when the product price needs less than a month to buy */
+/* the calculations will dynamically change when the product price needs less than a day to buy */
 public class Goal {
 
     private Item GoalItem;
-    private ArrayList<Income> incomes;
-    private ArrayList<Bill> bills;
-    private double TotalMonthlyIncome;
-    private double TotalMonthlyBills;
+    private Income incomes;
+    private Bill Expenses;
     private LocalDate DateWanted;
     private LocalDate ExpectedDate;
     private LocalDate DateCreated;
-    private double MoneySaved; //Money you have collected
-    private double MoneySavedPerMonth; //Money you save each month and have available to spend
+    private double MoneySaved; //Money you have already collected
+    private double MoneySavedPerMonth; //Money you save each day and have available to spend
     private double MoneyToSavePerMonth; //Money you have to save to get the itam on the wanted Date
-    private Month month;
+    private Day day;
 
-    public Goal(Item goalItem, ArrayList<Income> incomes,ArrayList<Bill> bills, LocalDate dateWanted, double moneySaved) {
+    public Goal(Item goalItem,Income incomes, Bill Expenses, LocalDate dateWanted, double moneySaved) {
         GoalItem = goalItem;
         this.incomes = incomes; //user will add his incomes on the Oncreate,and then they will be added here
-        this.bills = bills;
+        this.Expenses = Expenses;
         DateWanted = dateWanted;
         MoneySaved = moneySaved;
         DateCreated = new LocalDate();
@@ -40,9 +36,7 @@ public class Goal {
 
     }
 
-    public void EstimatedDate(){
-        int Days = (int) ( TotalMonthlyIncome - TotalMonthlyBills); // if <0 then suggest other ways
-    }
+
 
     public boolean Achievable(){
         if (Days.daysBetween(ExpectedDate,DateWanted).getDays() >= 0)
@@ -51,7 +45,7 @@ public class Goal {
     }
 
     public void CalMoneySavedPerMonth(){
-        MoneySavedPerMonth = (TotalMonthlyIncome - TotalMonthlyBills);
+        MoneySavedPerMonth = (incomes.getMonthlyIncome() - Expenses.getAmountPerMonth());
     }
 
     public void CalMoneyToSavePerMonth(){
@@ -61,7 +55,7 @@ public class Goal {
     }
 
     public void startNewMonth(){
-        month = new Month(MoneySavedPerMonth - MoneyToSavePerMonth,MoneyToSavePerMonth);
+        day = new Day(MoneySavedPerMonth - MoneyToSavePerMonth,MoneyToSavePerMonth);
     }
 
 
@@ -81,16 +75,8 @@ public class Goal {
         return GoalItem;
     }
 
-    public ArrayList<Income> getIncomes() {
+    public Income getIncomes() {
         return incomes;
-    }
-
-    public double getTotalMonthlyIncome() {
-        return TotalMonthlyIncome;
-    }
-
-    public double getTotalMonthlyBills() {
-        return TotalMonthlyBills;
     }
 
     public LocalDate getDateWanted() {

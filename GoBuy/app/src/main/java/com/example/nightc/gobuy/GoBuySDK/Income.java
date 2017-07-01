@@ -8,27 +8,22 @@ import java.util.ArrayList;
 
 public class Income {
 
-    protected double Tax; //May Change to Bill
-    protected String Name;
-    protected double MonthlyIncome;
-    protected ArrayList<Double> gifts;
+    protected Bill Tax; //May Change to Bill
+    protected double MonthlyIncome; //Total monthly Income = Jobs.salary + extraIncomes.amount (from UserData)
+    // protected ArrayList<Double> gifts; To be added to extraIncomes
 
-    public Income(double monthlyIncome,String Name, double tax) {
-        this.Name = Name;
+    public Income(double monthlyIncome,String Name, Bill tax) {
         MonthlyIncome = monthlyIncome;
-        gifts = new ArrayList<Double>();
+        //gifts = new ArrayList<Double>();
         Tax = tax;
     }
 
-    public String getName() {
-        return Name;
-    }
 
     public double getMonthlyIncome() {
         return MonthlyIncome;
     }
 
-    public ArrayList<Double> getGifts() {
-        return gifts;
-    }
+//    public ArrayList<Double> getGifts() {
+//        return gifts;
+//    }
 }
