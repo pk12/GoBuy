@@ -52,9 +52,6 @@ public class User {
         return goals;
     }
 
-    public Goal getGoal() {
-        return goal;
-    }
 
     //Setters
 
@@ -69,8 +66,5 @@ public class User {
     public void setGoals(ArrayList<Goal> goals) {
         this.goals = goals;
     }
-
-    public void setGoal(Goal goal) {
-        this.goal = goal;
-    }
+    
 }
