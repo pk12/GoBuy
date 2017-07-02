@@ -2,8 +2,6 @@ package com.example.nightc.gobuy.GoBuySDK;
 
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
-import org.joda.time.Period;
-import org.joda.time.PeriodType;
 
 /**
  * Created by nightc on 6/25/17.
@@ -15,47 +13,52 @@ public class Goal {
     private Item GoalItem;
     private Income incomes;
     private Bill Expenses;
-    private LocalDate DateWanted;
-    private LocalDate ExpectedDate;
-    private LocalDate DateCreated;
-    private double MoneySaved; //Money you have already collected
-    private double MoneySavedPerMonth; //Money you save each day and have available to spend
-    private double MoneyToSavePerMonth; //Money you have to save to get the itam on the wanted Date
+    private GoalDates Dates; //API for all the Goal dates that we have to use
+    private GoalMoneySaved MoneySaved; //API for the money that have been saved for the goal
+    private GoalMoneyToSavePerDay MoneyToSavePerDay; //a class that calculates the money to be saved each day
+    private double MoneySavedPerMonth; //WARNING!!! TO BE CONVERTED TO DAILY,Desription: Money you save each day and have available to spend
     private Day day;
 
     public Goal(Item goalItem,Income incomes, Bill Expenses, LocalDate dateWanted, double moneySaved) {
         GoalItem = goalItem;
         this.incomes = incomes; //user will add his incomes on the Oncreate,and then they will be added here
         this.Expenses = Expenses;
-        DateWanted = dateWanted;
-        MoneySaved = moneySaved;
-        DateCreated = new LocalDate();
+        Dates = new GoalDates(dateWanted);
+        MoneySaved = new GoalMoneySaved(moneySaved);
+        MoneyToSavePerDay = new GoalMoneyToSavePerDay(Dates,GoalItem); //May change it to Dates.get and Items.get
         CalMoneySavedPerMonth();
-        CalMoneyToSavePerMonth();
-        startNewMonth();
+        startNewDay();
 
     }
 
 
 
     public boolean Achievable(){
-        if (Days.daysBetween(ExpectedDate,DateWanted).getDays() >= 0)
+        if (Days.daysBetween(Dates.getExpectedDate(),Dates.getDateWanted()).getDays() >= 0)
             return true;
         return false;
     }
 
+
+
+    //WARNING!!! THIS SECTION MAY BE BETTER IF IT WAS ADDED INTO THE USER DATA(maybe not)
+
+
+    //Calculates the money the user Saves each month
+    //WARNING!!! this has to be converted to daily
+    //maybe we should prompt the user to insert his Annual Income and then we divide it
+    //by the Working Days of each year to calculate the daily income
+    //ELSE we ask for the monthly Income and divide it by the working days(or all the days of the month since the next method calculates even the non working days)
+    //to calculate the daily income
     public void CalMoneySavedPerMonth(){
-        MoneySavedPerMonth = (incomes.getMonthlyIncome() - Expenses.getAmountPerMonth());
+        MoneySavedPerMonth = (incomes.getTotalIncome() - Expenses.getTotalAmount());
     }
 
-    public void CalMoneyToSavePerMonth(){
-        Period p = new Period(DateCreated,DateWanted, PeriodType.yearMonthDay());
 
-        MoneyToSavePerMonth = GoalItem.getPrice() / p.getMonths();
-    }
 
-    public void startNewMonth(){
-        day = new Day(MoneySavedPerMonth - MoneyToSavePerMonth,MoneyToSavePerMonth);
+    //Starts a new day each time it changes,to reset the daily tracking status
+    public void startNewDay(){
+        day = new Day(MoneySavedPerMonth - MoneyToSavePerDay.getMoneyToSavePerDay(),MoneyToSavePerDay.getMoneyToSavePerDay());
     }
 
 
@@ -79,15 +82,7 @@ public class Goal {
         return incomes;
     }
 
-    public LocalDate getDateWanted() {
-        return DateWanted;
-    }
-
-    public LocalDate getExpectedDate() {
-        return ExpectedDate;
-    }
-
-    public double getMoneySaved() {
-        return MoneySaved;
+    public Bill getExpenses() {
+        return Expenses;
     }
 }
