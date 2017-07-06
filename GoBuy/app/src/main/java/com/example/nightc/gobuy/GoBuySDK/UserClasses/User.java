@@ -66,5 +66,5 @@ public class User {
     public void setGoals(ArrayList<Goal> goals) {
         this.goals = goals;
     }
-    
+
 }
