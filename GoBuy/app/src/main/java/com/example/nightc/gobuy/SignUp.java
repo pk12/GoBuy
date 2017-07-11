@@ -111,7 +111,7 @@ public class SignUp extends AppCompatActivity {
                  rootView = inflater.inflate(R.layout.add_incomes, container, false);
             }
             else {
-                 rootView = inflater.inflate(R.layout.activity_info_add, container, false);
+                 rootView = inflater.inflate(R.layout.add_expenses, container, false);
             }
 //            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
 //            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
