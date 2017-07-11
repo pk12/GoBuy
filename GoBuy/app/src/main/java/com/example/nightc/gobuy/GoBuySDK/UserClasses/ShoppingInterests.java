@@ -1,6 +1,6 @@
 package com.example.nightc.gobuy.GoBuySDK.UserClasses;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by Oppai on 7/2/2017.
@@ -11,5 +11,5 @@ import java.util.ArrayList;
 //and then we will remove from the arrayList all the types that are not selected
 
 public class ShoppingInterests {
-    private ArrayList<String> types;    //contains all the types available to the user to select
+    private HashMap<String,Boolean> types;    //contains all the types available to the user to select
 }

@@ -11,7 +11,6 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="Add_goal">Please enter the following information</string>
-    <string name="title_activity_login">Sign in</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
@@ -26,4 +25,19 @@
         completions."
     </string>
     <string name="title_activity_sign_up">SignUp</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string-array name="Job_types">
+        <item>Health</item>
+        <item>IT</item>
+        <item>Agriculture</item>
+    </string-array>
+    <string-array name="Time_Period">
+        <item>Daily</item>
+        <item>Monthly</item>
+        <item>Annual</item>
+    </string-array>
+    <string-array name="Income_Types">
+        <item>Rent</item>
+        <item>Part Time</item>
+    </string-array>
 </resources>

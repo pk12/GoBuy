@@ -3,6 +3,8 @@ package com.example.nightc.gobuy.GoBuySDK;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
 
+import java.util.ArrayList;
+
 /**
  * Created by nightc on 6/25/17.
  */
@@ -10,7 +12,7 @@ import org.joda.time.LocalDate;
 /* the calculations will dynamically change when the product price needs less than a day to buy */
 public class Goal {
 
-    private Item GoalItem;
+    private ArrayList<Item> GoalItems;
     private Income incomes;
     private Bill Expenses;
     private GoalDates Dates; //API for all the Goal dates that we have to use
@@ -20,12 +22,13 @@ public class Goal {
     private Day day;
 
     public Goal(Item goalItem,Income incomes, Bill Expenses, LocalDate dateWanted, double moneySaved) {
-        GoalItem = goalItem;
+        GoalItems = new ArrayList<Item>();
+        GoalItems.add(goalItem);
         this.incomes = incomes; //user will add his incomes on the Oncreate,and then they will be added here
         this.Expenses = Expenses;
         Dates = new GoalDates(dateWanted);
         MoneySaved = new GoalMoneySaved(moneySaved);
-        MoneyToSavePerDay = new GoalMoneyToSavePerDay(Dates,GoalItem); //May change it to Dates.get and Items.get
+        MoneyToSavePerDay = new GoalMoneyToSavePerDay(Dates,GoalItems); //May change it to Dates.get and Items.get
         CalMoneySavedPerMonth();
         startNewDay();
 
@@ -74,8 +77,8 @@ public class Goal {
 
 
     //Getters
-    public Item getGoalItem() {
-        return GoalItem;
+    public ArrayList<Item> getGoalItem() {
+        return GoalItems;
     }
 
     public Income getIncomes() {

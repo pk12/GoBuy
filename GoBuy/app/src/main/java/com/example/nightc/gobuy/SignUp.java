@@ -108,7 +108,7 @@ public class SignUp extends AppCompatActivity {
 
             }
             else if (getArguments().getInt(ARG_SECTION_NUMBER) == 2){
-                 rootView = inflater.inflate(R.layout.income_category_selection, container, false);
+                 rootView = inflater.inflate(R.layout.add_incomes, container, false);
             }
             else {
                  rootView = inflater.inflate(R.layout.activity_info_add, container, false);
