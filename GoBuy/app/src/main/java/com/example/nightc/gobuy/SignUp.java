@@ -5,12 +5,15 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 
 public class SignUp extends AppCompatActivity {
@@ -42,8 +45,15 @@ public class SignUp extends AppCompatActivity {
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.container);
+        mViewPager = (ViewPager) findViewById(R.id.SignUpPager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+        mViewPager.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
+            }
+        });
+
 
 
 
@@ -108,10 +118,13 @@ public class SignUp extends AppCompatActivity {
 
             }
             else if (getArguments().getInt(ARG_SECTION_NUMBER) == 2){
-                 rootView = inflater.inflate(R.layout.add_incomes, container, false);
+                 rootView = inflater.inflate(R.layout.add_job, container, false);
+            }
+            else if (getArguments().getInt(ARG_SECTION_NUMBER) == 3){
+                 rootView = inflater.inflate(R.layout.add_other_incomes, container, false);
             }
             else {
-                 rootView = inflater.inflate(R.layout.add_expenses, container, false);
+                rootView = inflater.inflate(R.layout.add_expenses, container, false);
             }
 //            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
 //            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
@@ -138,8 +151,8 @@ public class SignUp extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
-            return 3;
+            // Show 4 total pages.
+            return 4;
         }
 
         @Override
@@ -153,8 +166,59 @@ public class SignUp extends AppCompatActivity {
                     return "SECTION 2";
                 case 2:
                     return "SECTION 3";
+                case 4:
+                    return "SECTION 4";
             }
             return null;
+        }
+    }
+
+    //On signUp screen makes the layout change when pressing the next button
+    public void OnNextSelected(View view){
+        final ViewPager pager = (ViewPager) findViewById(R.id.SignUpPager);
+
+        //if the user wants to add other incomes it will navigate him to other incomes screen
+        //if he doesn't want to then it will navigate to Expenses screen
+        if (pager.getCurrentItem() == 1){
+
+            View v = getLayoutInflater().inflate(R.layout.ask_other_income,null);
+            AlertDialog.Builder aBuilder = new AlertDialog.Builder(this);
+
+            aBuilder.setView(v);
+            final AlertDialog alertDialog = aBuilder.create();
+            alertDialog.show();
+
+            Button yes = (Button) v.findViewById(R.id.YesButton);
+            Button no = (Button) v.findViewById(R.id.NoButton);
+
+
+
+            yes.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    pager.setCurrentItem(pager.getCurrentItem() + 1,true);
+                    alertDialog.dismiss();
+                }
+            });
+
+            no.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    pager.setCurrentItem(pager.getCurrentItem() + 2,true);
+                    alertDialog.dismiss();
+                }
+            });
+
+
+
+
+
+
+
+
+
+        }else{
+            pager.setCurrentItem(pager.getCurrentItem() + 1,true);
         }
     }
 }
