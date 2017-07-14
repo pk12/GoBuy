@@ -10,7 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -32,7 +31,7 @@ public class SignUp extends AppCompatActivity {
     /**
      * The {@link ViewPager} that will host the section contents.
      */
-    private ViewPager mViewPager;
+    private CustomViewPager mViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,14 +44,9 @@ public class SignUp extends AppCompatActivity {
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.SignUpPager);
+        mViewPager = (CustomViewPager) findViewById(R.id.SignUpPager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
-        mViewPager.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return true;
-            }
-        });
+
 
 
 
@@ -107,7 +101,7 @@ public class SignUp extends AppCompatActivity {
             return fragment;
         }
 
-        //HERE WE SHALL LOCATE THE CONTENTS OF EACH LAYOUT AND HANDLE THE NOTE****WE CAN CREATE DIFFERENT CLASSES EXTENDING FRAGMENT TO HANDLE EACH LAYOUT
+        //HERE WE SHALL LOCATE THE CONTENTS OF EACH LAYOUT AND HANDLE THE Information inserted NOTE****WE CAN CREATE DIFFERENT CLASSES EXTENDING FRAGMENT TO HANDLE EACH LAYOUT
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {

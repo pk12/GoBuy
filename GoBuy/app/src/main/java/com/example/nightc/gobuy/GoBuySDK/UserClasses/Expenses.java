@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class Expenses {
     private ArrayList<String> types; //we will add some categories and the user will have to choose one of them
     private double amount;
+    private String PeriodPaid; // the time period which the user pays the expense
 
     public Expenses(ArrayList<String> types, double amount) {
         this.types = types;

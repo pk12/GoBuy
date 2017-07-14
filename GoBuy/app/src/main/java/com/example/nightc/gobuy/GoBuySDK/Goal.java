@@ -13,8 +13,8 @@ import java.util.ArrayList;
 public class Goal {
 
     private ArrayList<Item> GoalItems;
-    private Income incomes;
-    private Bill Expenses;
+    private Income SteadyIncomes;
+    private Bill SteadyExpenses;
     private GoalDates Dates; //API for all the Goal dates that we have to use
     private GoalMoneySaved MoneySaved; //API for the money that have been saved for the goal
     private GoalMoneyToSavePerDay MoneyToSavePerDay; //a class that calculates the money to be saved each day
@@ -24,8 +24,8 @@ public class Goal {
     public Goal(Item goalItem,Income incomes, Bill Expenses, LocalDate dateWanted, double moneySaved) {
         GoalItems = new ArrayList<Item>();
         GoalItems.add(goalItem);
-        this.incomes = incomes; //user will add his incomes on the Oncreate,and then they will be added here
-        this.Expenses = Expenses;
+        this.SteadyIncomes = incomes; //user will add his incomes on the Oncreate,and then they will be added here
+        this.SteadyExpenses = Expenses;
         Dates = new GoalDates(dateWanted);
         MoneySaved = new GoalMoneySaved(moneySaved);
         MoneyToSavePerDay = new GoalMoneyToSavePerDay(Dates,GoalItems); //May change it to Dates.get and Items.get
@@ -54,7 +54,7 @@ public class Goal {
     //ELSE we ask for the monthly Income and divide it by the working days(or all the days of the month since the next method calculates even the non working days)
     //to calculate the daily income
     public void CalMoneySavedPerMonth(){
-        MoneySavedPerMonth = (incomes.getTotalIncome() - Expenses.getTotalAmount());
+        MoneySavedPerMonth = (SteadyIncomes.getTotalIncome() - SteadyExpenses.getTotalAmount());
     }
 
 
@@ -82,10 +82,10 @@ public class Goal {
     }
 
     public Income getIncomes() {
-        return incomes;
+        return SteadyIncomes;
     }
 
     public Bill getExpenses() {
-        return Expenses;
+        return SteadyExpenses;
     }
 }

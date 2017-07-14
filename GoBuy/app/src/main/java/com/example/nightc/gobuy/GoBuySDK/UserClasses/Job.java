@@ -7,10 +7,12 @@ package com.example.nightc.gobuy.GoBuySDK.UserClasses;
 public class Job {
     private String Type;    //we will add some types and the user will have to choose one of them
     private double Salary;
+    private String PeriodGot;  //the time period which he gets the money
 
-    public Job(String type, double salary) {
+    public Job(String type, double salary, String periodGot) {
         Type = type;
         Salary = salary;
+        PeriodGot = periodGot;
     }
 
     //Getters

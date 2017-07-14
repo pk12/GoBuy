@@ -25,4 +25,9 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(i);
     }
 
+    public void OnLogin(View view){
+        Intent i = new Intent(this,GoalSelectionActivity.class);
+        startActivity(i);
+    }
+
 }

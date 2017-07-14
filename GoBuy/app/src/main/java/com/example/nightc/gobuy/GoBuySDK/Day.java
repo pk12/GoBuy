@@ -2,8 +2,6 @@ package com.example.nightc.gobuy.GoBuySDK;
 
 import org.joda.time.MonthDay;
 
-import java.util.ArrayList;
-
 /**
  * Created by Oppai on 6/27/2017.
  */
@@ -13,7 +11,8 @@ import java.util.ArrayList;
  */
 
 public class Day {
-    private MonthDay month; //May have to change the Data Type
+    private MonthDay Day; //May have to change the Data Type
+    //private ArrayList<SpontaneousExpense> dailyExpenses for an expense that does not have time period
 
     //output
     private double MoneyLeftToSpend;
@@ -22,7 +21,7 @@ public class Day {
 
     public Day(double moneyLeftToSpend, double moneytosave) {
         MoneyToSave = moneytosave;
-        this.month = new MonthDay();
+        this.Day = new MonthDay();
         MoneyLeftToSpend = moneyLeftToSpend;
     }
 }

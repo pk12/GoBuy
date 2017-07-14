@@ -40,4 +40,5 @@
         <item>Rent</item>
         <item>Part Time</item>
     </string-array>
+    <string name="title_activity_goal_selection">GoalSelectionActivity</string>
 </resources>
