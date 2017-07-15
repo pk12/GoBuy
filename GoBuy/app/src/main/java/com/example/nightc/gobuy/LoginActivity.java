@@ -30,7 +30,7 @@ public class LoginActivity extends AppCompatActivity {
         //...
 
         //Start Logged in activity
-        Intent i = new Intent(this,GoalSelectionActivity.class);
+        Intent i = new Intent(this,Bottom_Tabs_Activity.class);
         startActivity(i);
     }
 

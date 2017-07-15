@@ -31,7 +31,12 @@
         <activity
             android:name=".GoalSelectionActivity"
             android:label="@string/title_activity_goal_selection"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Bottom_Tabs_Activity"
+            android:label="@string/title_activity_bottom__tabs_"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>
