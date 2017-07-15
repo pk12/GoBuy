@@ -28,9 +28,9 @@ public class Goal {
         this.SteadyExpenses = Expenses;
         Dates = new GoalDates(dateWanted);
         MoneySaved = new GoalMoneySaved(moneySaved);
-        MoneyToSavePerDay = new GoalMoneyToSavePerDay(Dates,GoalItems); //May change it to Dates.get and Items.get
-        CalMoneySavedPerMonth();
-        startNewDay();
+       // MoneyToSavePerDay = new GoalMoneyToSavePerDay(Dates,GoalItems); //May change it to Dates.get and Items.get
+       // CalMoneySavedPerMonth();
+       // startNewDay();
 
     }
 
@@ -67,25 +67,44 @@ public class Goal {
 
 
 
-
-
-
-
-
-
-
-
-
     //Getters
-    public ArrayList<Item> getGoalItem() {
-        return GoalItems;
-    }
-
     public Income getIncomes() {
         return SteadyIncomes;
     }
 
     public Bill getExpenses() {
         return SteadyExpenses;
+    }
+
+    public ArrayList<Item> getGoalItems() {
+        return GoalItems;
+    }
+
+    public Income getSteadyIncomes() {
+        return SteadyIncomes;
+    }
+
+    public Bill getSteadyExpenses() {
+        return SteadyExpenses;
+    }
+
+    public GoalDates getDates() {
+        return Dates;
+    }
+
+    public GoalMoneySaved getMoneySaved() {
+        return MoneySaved;
+    }
+
+    public GoalMoneyToSavePerDay getMoneyToSavePerDay() {
+        return MoneyToSavePerDay;
+    }
+
+    public double getMoneySavedPerMonth() {
+        return MoneySavedPerMonth;
+    }
+
+    public Day getDay() {
+        return day;
     }
 }

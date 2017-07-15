@@ -26,6 +26,10 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void OnLogin(View view){
+        //check credentials
+        //...
+
+        //Start Logged in activity
         Intent i = new Intent(this,GoalSelectionActivity.class);
         startActivity(i);
     }
