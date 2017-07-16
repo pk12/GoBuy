@@ -14,6 +14,8 @@ public class UserData {
     private Job mainJob;
     private ArrayList<ExtraIncome> extraIncomes; //An array of all the extra incomes because there may be multiple extra
     private ArrayList<Expenses> expenses; //An array of all the fixed expenses the user has
+    private ArrayList<ExtraIncome> SpontaneousIncomes; //contains the Incomes the user creates on a goal Day
+    private ArrayList<Expenses> SpontaneousExpenses; //contains the Expenses the user creates on a goal Day
 
 
     public UserData(String area, short age, String gender, ArrayList<ShoppingInterests> shoppingInterests,
@@ -75,6 +77,13 @@ public class UserData {
         return expenses;
     }
 
+    public ArrayList<ExtraIncome> getSpontaneousIncomes() {
+        return SpontaneousIncomes;
+    }
+
+    public ArrayList<Expenses> getSpontaneousExpenses() {
+        return SpontaneousExpenses;
+    }
 
     //setters
 

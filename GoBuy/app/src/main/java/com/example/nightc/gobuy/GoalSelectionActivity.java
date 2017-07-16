@@ -36,8 +36,6 @@ public class GoalSelectionActivity extends Fragment {
     private ViewPager mViewPager;
 
 
-    public GoalSelectionActivity() {
-    }
 
     @Nullable
     @Override
@@ -48,7 +46,8 @@ public class GoalSelectionActivity extends Fragment {
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(((AppCompatActivity) getActivity()).getSupportFragmentManager());
+        mSectionsPagerAdapter = new SectionsPagerAdapter( getChildFragmentManager());  // Key to recreate view pager content on BottomTabNavigation fragment changing
+                                                                                        //use childFragmentManager because the GoalSelection is a fragment,not an activity
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) v.findViewById(R.id.container);
@@ -69,8 +68,6 @@ public class GoalSelectionActivity extends Fragment {
         return v;
 
     }
-
-
 
 
     @Override
@@ -129,7 +126,7 @@ public class GoalSelectionActivity extends Fragment {
                 case 0:
                     return "Goals";
                 case 1:
-                    return "Settings";
+                    return "Today";
             }
             return null;
         }
