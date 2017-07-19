@@ -1,5 +1,6 @@
-package com.example.nightc.gobuy;
+package com.example.nightc.gobuy.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -18,7 +19,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class GoalSelectionActivity extends Fragment {
+import com.example.nightc.gobuy.Activities.AddGoalActivity;
+import com.example.nightc.gobuy.GoBuySDK.Goal;
+import com.example.nightc.gobuy.GoBuySDK.Item;
+import com.example.nightc.gobuy.GoBuySDK.UserClasses.SpontaeousExpense;
+import com.example.nightc.gobuy.GoBuySDK.UserClasses.SpontaneousIncome;
+import com.example.nightc.gobuy.R;
+
+import org.joda.time.LocalDate;
+
+import java.util.ArrayList;
+
+public class TabbedFragment extends Fragment {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -34,6 +46,9 @@ public class GoalSelectionActivity extends Fragment {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+
+    private GoalsScreenTab goalsScreenTab;
+    private TodayTab todayTab;
 
 
 
@@ -60,8 +75,13 @@ public class GoalSelectionActivity extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                if (mViewPager.getCurrentItem() == 0){
+                    Intent intent = new Intent(TabbedFragment.this.getContext(), AddGoalActivity.class);
+                    startActivity(intent);
+                }
+                else if (mViewPager.getCurrentItem() == 1){
+                    Snackbar.make(view,"Today Showing",Snackbar.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -104,12 +124,12 @@ public class GoalSelectionActivity extends Fragment {
         @Override
         public Fragment getItem(int position) {
             switch (position){
-                case 1:
-                    GoalsScreenTab goalsScreenTab = new GoalsScreenTab();
+                case 0:
+                    goalsScreenTab = new GoalsScreenTab(DemoData());
                     return goalsScreenTab;
                 default:
-                    GoalsScreenTab goalsScreenTab1 = new GoalsScreenTab();
-                    return goalsScreenTab1;
+                    todayTab = new TodayTab(DemoIncomes());
+                    return todayTab;
             }
         }
 
@@ -130,5 +150,36 @@ public class GoalSelectionActivity extends Fragment {
             }
             return null;
         }
+    }
+
+
+
+    public ArrayList<Goal> DemoData(){
+        ArrayList<Goal> goals = new ArrayList<Goal>();
+        Item i1 = new Item("Ipad",3000.2,"Electronics");
+        Item i2 = new Item("Iphone",30400.2,"Phone");
+        Goal goal = new Goal(i1,null,null,new LocalDate(),500);
+        Goal g1oal = new Goal(i2,null,null,new LocalDate(),500);
+        goals.add(goal);
+        goals.add(g1oal);
+        return goals;
+    }
+
+    public ArrayList<SpontaneousIncome> DemoIncomes(){
+        SpontaeousExpense expense = new SpontaeousExpense("Coffee",4);
+        SpontaeousExpense expense1 = new SpontaeousExpense("Coffee",4);
+        SpontaneousIncome income = new SpontaneousIncome("Mom",6);
+        SpontaneousIncome income1 = new SpontaneousIncome("Dad",6);
+        SpontaneousIncome income2 = new SpontaneousIncome("You",6);
+        SpontaneousIncome income3 = new SpontaneousIncome("Id",6);
+        SpontaneousIncome income4 = new SpontaneousIncome("Loe",6);
+
+        ArrayList<SpontaneousIncome> incomes = new ArrayList<SpontaneousIncome>();
+        incomes.add(income);
+        incomes.add(income1);
+        incomes.add(income2);
+        incomes.add(income3);
+        incomes.add(income4);
+        return incomes;
     }
 }

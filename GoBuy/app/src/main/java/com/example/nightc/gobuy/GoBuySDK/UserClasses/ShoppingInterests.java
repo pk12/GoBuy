@@ -10,6 +10,8 @@ import java.util.HashMap;
 //The user will select wich shopping interests define him
 //and then we will remove from the arrayList all the types that are not selected
 
+
+    //Will extend the Type Class
 public class ShoppingInterests {
     private HashMap<String,Boolean> types;    //contains all the types available to the user to select
 }

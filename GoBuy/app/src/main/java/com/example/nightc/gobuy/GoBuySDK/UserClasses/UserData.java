@@ -12,14 +12,14 @@ public class UserData {
     private String gender;
     private ArrayList<ShoppingInterests> shoppingInterests; //shopping interests are multiple
     private Job mainJob;
-    private ArrayList<ExtraIncome> extraIncomes; //An array of all the extra incomes because there may be multiple extra
-    private ArrayList<Expenses> expenses; //An array of all the fixed expenses the user has
-    private ArrayList<ExtraIncome> SpontaneousIncomes; //contains the Incomes the user creates on a goal Day
-    private ArrayList<Expenses> SpontaneousExpenses; //contains the Expenses the user creates on a goal Day
+    private ArrayList<StableIncome> extraIncomes; //An array of all the extra incomes because there may be multiple extra
+    private ArrayList<StableExpense> expenses; //An array of all the fixed expenses the user has
+    private ArrayList<SpontaneousIncome> SpontaneousIncomes; //contains the Incomes the user creates on a goal Day
+    private ArrayList<SpontaeousExpense> spontaneousExpenses; //contains the Expense the user creates on a goal Day
 
 
     public UserData(String area, short age, String gender, ArrayList<ShoppingInterests> shoppingInterests,
-                    Job mainJob, ArrayList<ExtraIncome> extraIncomes, ArrayList<Expenses> expenses) {
+                    Job mainJob, ArrayList<StableIncome> extraIncomes, ArrayList<StableExpense> expenses) {
         Area = area;
         this.age = age;
         this.gender = gender;
@@ -32,15 +32,17 @@ public class UserData {
 
     public double CalculateBillAmount(){
         double amount = 0;
-        for (Expenses expense : expenses){
+        for (Expense expense : expenses){
             amount += expense.getAmount();
         }
         return amount;
     }
 
     public double CalculateIncomeAmount(){
-        double amount = mainJob.getSalary();
-        for (ExtraIncome extraIncome : extraIncomes){
+        double amount = mainJob.getAmount();
+        //to be added pay period calculations
+
+        for (StableIncome extraIncome : extraIncomes){
             amount += extraIncome.getAmount();
         }
         return amount;
@@ -69,20 +71,20 @@ public class UserData {
         return mainJob;
     }
 
-    public ArrayList<ExtraIncome> getExtraIncomes() {
+    public ArrayList<StableIncome> getExtraIncomes() {
         return extraIncomes;
     }
 
-    public ArrayList<Expenses> getExpenses() {
+    public ArrayList<StableExpense> getExpenses() {
         return expenses;
     }
 
-    public ArrayList<ExtraIncome> getSpontaneousIncomes() {
+    public ArrayList<SpontaneousIncome> getSpontaneousIncomes() {
         return SpontaneousIncomes;
     }
 
-    public ArrayList<Expenses> getSpontaneousExpenses() {
-        return SpontaneousExpenses;
+    public ArrayList<SpontaeousExpense> getSpontaneousExpenses() {
+        return spontaneousExpenses;
     }
 
     //setters

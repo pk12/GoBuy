@@ -39,7 +39,6 @@
                 android:layout_marginLeft="32dp"
                 android:layout_marginRight="32dp"
                 android:layout_marginStart="32dp"
-                android:layout_marginTop="0dp"
                 android:animationCache="true"
                 android:divider="@android:color/transparent"
                 android:orientation="horizontal"
@@ -108,8 +107,10 @@
                 android:id="@+id/textInputLayout3"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
@@ -223,5 +224,4 @@
         </android.support.constraint.ConstraintLayout>
 
     </android.support.v7.widget.CardView>
-
 </android.support.constraint.ConstraintLayout>

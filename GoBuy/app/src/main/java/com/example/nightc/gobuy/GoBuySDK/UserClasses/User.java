@@ -18,13 +18,13 @@ public class User {
         this.userData = userData;
 
         //creates the array list with the goals
-        //sets up the first goal(Expenses and Incomes and then adds it into the list
+        //sets up the first goal(Expense and Incomes and then adds it into the list
         goals = new ArrayList<Goal>();
         setGoalData(goal);
         addGoal(goal);
     }
 
-    //inserts the User Income and Expenses Amount
+    //inserts the User IncomesAPI and Expense Amount
     //it was the only correct way i could think of
     public void setGoalData(Goal goal){
         goal.getIncomes().setTotalIncome(userData.CalculateIncomeAmount());

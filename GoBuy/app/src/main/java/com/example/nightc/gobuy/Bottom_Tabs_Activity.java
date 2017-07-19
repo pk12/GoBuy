@@ -8,11 +8,14 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
+import com.example.nightc.gobuy.Fragments.SettingsFragment;
+import com.example.nightc.gobuy.Fragments.TabbedFragment;
+
 public class Bottom_Tabs_Activity extends AppCompatActivity {
 
 
 
-    GoalSelectionActivity goalSelectionActivity = new GoalSelectionActivity();
+    TabbedFragment tabbedFragment = new TabbedFragment();
     SettingsFragment settingsFragment = new SettingsFragment();
 
     private String FRAGMENT_TAG;
@@ -27,16 +30,17 @@ public class Bottom_Tabs_Activity extends AppCompatActivity {
             android.support.v4.app.FragmentTransaction TransactionV4 = fmV4.beginTransaction();
             FragmentTransaction fragmentTransaction = fm.beginTransaction();
 
+            //Switching between fragments when a bottom tab is pressed
             switch (item.getItemId()) {
                 case R.id.navigation_home:
                     if (FRAGMENT_TAG.equals("Settings")){
                         fragmentTransaction.remove(fm.findFragmentById(R.id.Bottom_Tab_Container)).commit();
-                        TransactionV4.add(R.id.Bottom_Tab_Container,goalSelectionActivity,FRAGMENT_TAG="GSelection").commit();
+                        TransactionV4.add(R.id.Bottom_Tab_Container, tabbedFragment,FRAGMENT_TAG="GSelection").commit();
                         getSupportFragmentManager().executePendingTransactions();
 
                     }
                     else if (!FRAGMENT_TAG.equals("GSelection")){
-                        TransactionV4.replace(R.id.Bottom_Tab_Container,goalSelectionActivity,FRAGMENT_TAG="GSelection").commit();
+                        TransactionV4.replace(R.id.Bottom_Tab_Container, tabbedFragment,FRAGMENT_TAG="GSelection").commit();
                     }
 
 
@@ -49,8 +53,8 @@ public class Bottom_Tabs_Activity extends AppCompatActivity {
                     }
                     else {
                         TransactionV4.remove(fmV4.findFragmentById(R.id.Bottom_Tab_Container)).commit();
-                        fragmentTransaction.add(R.id.Bottom_Tab_Container,settingsFragment,FRAGMENT_TAG="Settings").commit();
-
+                        fragmentTransaction.replace(R.id.Bottom_Tab_Container,settingsFragment,FRAGMENT_TAG="Settings").commit();
+                        getSupportFragmentManager().executePendingTransactions();
                     }
 
 
@@ -67,7 +71,7 @@ public class Bottom_Tabs_Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bottom__tabs_);
-        getSupportFragmentManager().beginTransaction().replace(R.id.Bottom_Tab_Container,goalSelectionActivity,FRAGMENT_TAG="GSelection").commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.Bottom_Tab_Container, tabbedFragment,FRAGMENT_TAG="GSelection").commit();
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);

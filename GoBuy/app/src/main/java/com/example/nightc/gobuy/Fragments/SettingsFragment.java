@@ -1,8 +1,10 @@
-package com.example.nightc.gobuy;
+package com.example.nightc.gobuy.Fragments;
 
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
 import android.support.annotation.Nullable;
+
+import com.example.nightc.gobuy.R;
 
 /**
  * Created by Oppai on 7/16/2017.

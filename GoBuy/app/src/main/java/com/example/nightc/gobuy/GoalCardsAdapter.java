@@ -17,13 +17,13 @@ import java.util.ArrayList;
  */
 
 //A custom adapter to populate the recycler view content
-public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.GoalViewHolder> {
+public class GoalCardsAdapter extends RecyclerView.Adapter<GoalCardsAdapter.GoalViewHolder> {
 
     private ArrayList<Goal> goals;
 
 
 
-    public GoalAdapter(ArrayList<Goal> goals) {
+    public GoalCardsAdapter(ArrayList<Goal> goals) {
         this.goals = goals;
     }
 
@@ -36,6 +36,7 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.GoalViewHolder
 
     }
 
+    //populate the Viewholder with each goal Instance
     @Override
     public void onBindViewHolder(GoalViewHolder holder, int position) {
         Goal goal = goals.get(position);

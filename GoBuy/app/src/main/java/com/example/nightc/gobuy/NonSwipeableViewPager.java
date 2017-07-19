@@ -11,12 +11,12 @@ import android.view.MotionEvent;
 
 
 // A custom ViewPager for the sign up screen to disable swiping between layouts
-public class CustomViewPager extends ViewPager {
-    public CustomViewPager(Context context) {
+public class NonSwipeableViewPager extends ViewPager {
+    public NonSwipeableViewPager(Context context) {
         super(context);
     }
 
-    public CustomViewPager(Context context, AttributeSet attrs) {
+    public NonSwipeableViewPager(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 

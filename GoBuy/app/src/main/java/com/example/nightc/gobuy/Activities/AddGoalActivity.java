@@ -1,21 +1,25 @@
-package com.example.nightc.gobuy;
+package com.example.nightc.gobuy.Activities;
 
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
 
-public class SignUp extends AppCompatActivity {
+import com.example.nightc.gobuy.Fragments.DatePickerFragment;
+import com.example.nightc.gobuy.NonSwipeableViewPager;
+import com.example.nightc.gobuy.R;
+
+import static com.example.nightc.gobuy.R.id.container;
+
+public class AddGoalActivity extends AppCompatActivity {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -27,7 +31,6 @@ public class SignUp extends AppCompatActivity {
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
-
     /**
      * The {@link ViewPager} that will host the section contents.
      */
@@ -36,17 +39,15 @@ public class SignUp extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_up);
-
+        setContentView(R.layout.activity_add_goal2);
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
-        mViewPager = (NonSwipeableViewPager) findViewById(R.id.SignUpPager);
+        mViewPager = (NonSwipeableViewPager) findViewById(container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
-
 
 
 
@@ -57,7 +58,7 @@ public class SignUp extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_sign_up, menu);
+        getMenuInflater().inflate(R.menu.menu_add_goal, menu);
         return true;
     }
 
@@ -101,29 +102,21 @@ public class SignUp extends AppCompatActivity {
             return fragment;
         }
 
-        //HERE WE SHALL LOCATE THE CONTENTS OF EACH LAYOUT AND HANDLE THE Information inserted NOTE****WE CAN CREATE DIFFERENT CLASSES EXTENDING FRAGMENT TO HANDLE EACH LAYOUT
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView;
             if (getArguments().getInt(ARG_SECTION_NUMBER) == 1){
-                 rootView = inflater.inflate(R.layout.fragment_sign_up, container, false);
-                ImageView v = (ImageView) rootView.findViewById(R.id.imageView);
+                //handle fragment of tab 1
+                //NOTE may create a new class extending fragment for it
+                rootView = inflater.inflate(R.layout.fragment_add_goal, container, false);
 
             }
-            else if (getArguments().getInt(ARG_SECTION_NUMBER) == 2){
-                 rootView = inflater.inflate(R.layout.add_job, container, false);
-            }
-            else if (getArguments().getInt(ARG_SECTION_NUMBER) == 3){
-                 rootView = inflater.inflate(R.layout.add_other_incomes, container, false);
-            }
-            else {
-                rootView = inflater.inflate(R.layout.add_expenses, container, false);
-            }
-//            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-//            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+            else
+                rootView = inflater.inflate(R.layout.fragment_add_goal,container,false);
+
             return rootView;
-        }
+
     }
 
     /**
@@ -145,74 +138,25 @@ public class SignUp extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            // Show 4 total pages.
-            return 4;
+            // Show 2 total pages.
+            return 2;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-
-                    return "SECTION 1";
+                    return "";
                 case 1:
-
                     return "SECTION 2";
-                case 2:
-                    return "SECTION 3";
-                case 4:
-                    return "SECTION 4";
             }
             return null;
         }
     }
 
-    //On signUp screen makes the layout change when pressing the next button
-    public void OnNextSelected(View view){
-        final ViewPager pager = (ViewPager) findViewById(R.id.SignUpPager);
+    public void onSelectDateClick(View v){
+        DialogFragment dialogFragment = new DatePickerFragment();
+        dialogFragment.show(getSupportFragmentManager(),"SelectDateFrag");
 
-        //if the user wants to add other incomes it will navigate him to other incomes screen
-        //if he doesn't want to then it will navigate to Expense screen
-        if (pager.getCurrentItem() == 1){
-
-            View v = getLayoutInflater().inflate(R.layout.ask_other_income,null);
-            AlertDialog.Builder aBuilder = new AlertDialog.Builder(this);
-
-            aBuilder.setView(v);
-            final AlertDialog alertDialog = aBuilder.create();
-            alertDialog.show();
-
-            Button yes = (Button) v.findViewById(R.id.YesButton);
-            Button no = (Button) v.findViewById(R.id.NoButton);
-
-
-
-            yes.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    pager.setCurrentItem(pager.getCurrentItem() + 1,true);
-                    alertDialog.dismiss();
-                }
-            });
-
-            no.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    pager.setCurrentItem(pager.getCurrentItem() + 2,true);
-                    alertDialog.dismiss();
-                }
-            });
-
-
-
-
-
-
-
-
-
-        }else{
-            pager.setCurrentItem(pager.getCurrentItem() + 1,true);
-        }
     }
 }

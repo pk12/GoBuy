@@ -4,13 +4,13 @@ package com.example.nightc.gobuy.GoBuySDK;
  * Created by nightc on 6/25/17.
  */
 
-public class Income {
+public class IncomesAPI {
 
-    private Bill Tax; //May Change to Bill
-    private double TotalIncome; //Total monthly Income = Jobs.salary + extraIncomes.amount (from UserData)
+    private BillsAPI Tax; //May Change to BillsAPI
+    private double TotalIncome; //Total monthly IncomesAPI = Jobs.salary + extraIncomes.amount (from UserData)
     // protected ArrayList<Double> gifts; To be added to extraIncomes
 
-    public Income(double totalIncome, Bill tax) {
+    public IncomesAPI(double totalIncome, BillsAPI tax) {
         TotalIncome = 0;
         //gifts = new ArrayList<Double>();
         Tax = tax;

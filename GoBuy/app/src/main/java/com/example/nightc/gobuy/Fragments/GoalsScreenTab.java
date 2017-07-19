@@ -1,4 +1,4 @@
-package com.example.nightc.gobuy;
+package com.example.nightc.gobuy.Fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,9 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.nightc.gobuy.GoBuySDK.Goal;
-import com.example.nightc.gobuy.GoBuySDK.Item;
-
-import org.joda.time.LocalDate;
+import com.example.nightc.gobuy.GoalCardsAdapter;
+import com.example.nightc.gobuy.R;
 
 import java.util.ArrayList;
 
@@ -21,6 +20,13 @@ import java.util.ArrayList;
  */
 
 public class GoalsScreenTab extends Fragment {
+
+    private ArrayList<Goal> goals;
+
+    public GoalsScreenTab(ArrayList<Goal> goals) {
+        this.goals = goals;
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -33,8 +39,8 @@ public class GoalsScreenTab extends Fragment {
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(inflater.getContext());
         rv.setLayoutManager(mLayoutManager);
 
-        GoalAdapter goalAdapter = new GoalAdapter(DemoData());
-        rv.setAdapter(goalAdapter);
+        GoalCardsAdapter goalCardsAdapter = new GoalCardsAdapter(goals);
+        rv.setAdapter(goalCardsAdapter);
 
         return RootView;
 
@@ -42,14 +48,4 @@ public class GoalsScreenTab extends Fragment {
 
     }
 
-    public ArrayList<Goal> DemoData(){
-        ArrayList<Goal> goals = new ArrayList<Goal>();
-        Item i1 = new Item("Ipad",3000.2,"Electronics");
-        Item i2 = new Item("Iphone",30400.2,"Phone");
-        Goal goal = new Goal(i1,null,null,new LocalDate(),500);
-        Goal g1oal = new Goal(i2,null,null,new LocalDate(),500);
-        goals.add(goal);
-        goals.add(g1oal);
-        return goals;
-    }
 }
