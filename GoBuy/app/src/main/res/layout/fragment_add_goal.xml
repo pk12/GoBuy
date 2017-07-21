@@ -24,6 +24,22 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <TextView
+                android:id="@+id/textView27"
+                style="?android:attr/listSeparatorTextViewStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+                android:text="TextView"
+                android:textAlignment="center"
+                android:textAppearance="@android:style/TextAppearance.Material.Medium"
+                android:textColor="@color/colorPrimaryDark"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <Button
                 android:id="@+id/SelectDateWantedButton"
                 style="@style/Widget.AppCompat.Button.Colored"
@@ -39,12 +55,14 @@
 
             <TextView
                 android:id="@+id/textView29"
+                style="?android:attr/listSeparatorTextViewStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
+                android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="64dp"
                 android:text="Date Wanted"
+                android:textAlignment="center"
                 android:textAppearance="@android:style/TextAppearance.Material.Medium"
                 android:textColor="@color/colorPrimaryDark"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -52,6 +70,7 @@
 
             <EditText
                 android:id="@+id/ItemPriceText"
+                style="?android:attr/listSeparatorTextViewStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
@@ -61,18 +80,20 @@
                 android:ems="10"
                 android:hint="Price"
                 android:inputType="numberDecimal"
+                android:textAlignment="center"
                 app:layout_constraintBaseline_toBaselineOf="@+id/textView28"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintLeft_toRightOf="@+id/textView28"
                 app:layout_constraintRight_toRightOf="parent" />
 
             <TextView
+                style="?android:attr/listSeparatorTextViewStyle"
                 android:id="@+id/textView28"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
+                android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="64dp"
                 android:text="Item Price"
                 android:textAppearance="@android:style/TextAppearance.Material.Medium"
                 android:textColor="@color/colorPrimaryDark"
@@ -81,6 +102,7 @@
 
             <EditText
                 android:id="@+id/ItemNameText"
+                style="?android:attr/listSeparatorTextViewStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
@@ -90,23 +112,25 @@
                 android:ems="10"
                 android:hint="Name"
                 android:inputType="textPersonName"
+                android:textAlignment="center"
                 app:layout_constraintBaseline_toBaselineOf="@+id/section_label"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintLeft_toRightOf="@+id/section_label"
                 app:layout_constraintRight_toRightOf="parent" />
 
             <TextView
+                style="?android:attr/listSeparatorTextViewStyle"
                 android:id="@+id/section_label"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
                 android:text="Item Name"
                 android:textAppearance="@android:style/TextAppearance.Material.Medium"
                 android:textColor="@color/colorPrimaryDark"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_marginTop="16dp"
+                app:layout_constraintTop_toBottomOf="@+id/textView27" />
         </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>
 

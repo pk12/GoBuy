@@ -7,13 +7,12 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.example.nightc.gobuy.Fragments.DatePickerFragment;
+import com.example.nightc.gobuy.Fragments.GoalCreationFragment;
 import com.example.nightc.gobuy.NonSwipeableViewPager;
 import com.example.nightc.gobuy.R;
 
@@ -50,8 +49,6 @@ public class AddGoalActivity extends AppCompatActivity {
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
 
-
-
     }
 
 
@@ -77,86 +74,56 @@ public class AddGoalActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
 
-        public PlaceholderFragment() {
-        }
 
         /**
-         * Returns a new instance of this fragment for the given section
-         * number.
+         * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
+         * one of the sections/tabs/pages.
          */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
+        public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView;
-            if (getArguments().getInt(ARG_SECTION_NUMBER) == 1){
-                //handle fragment of tab 1
-                //NOTE may create a new class extending fragment for it
-                rootView = inflater.inflate(R.layout.fragment_add_goal, container, false);
+            public SectionsPagerAdapter(FragmentManager fm) {
+                super(fm);
+            }
+
+            @Override
+            public Fragment getItem(int position) {
+                // getItem is called to instantiate the fragment for the given page.
+                switch (position) {
+                    case 1: return new GoalCreationFragment();
+
+                    default: return new GoalCreationFragment();
+
+                }
 
             }
-            else
-                rootView = inflater.inflate(R.layout.fragment_add_goal,container,false);
 
-            return rootView;
-
-    }
-
-    /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
-
-        public SectionsPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
-        }
-
-        @Override
-        public int getCount() {
-            // Show 2 total pages.
-            return 2;
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            switch (position) {
-                case 0:
-                    return "";
-                case 1:
-                    return "SECTION 2";
+            @Override
+            public int getCount() {
+                // Show 2 total pages.
+                return 2;
             }
-            return null;
-        }
-    }
 
-    public void onSelectDateClick(View v){
+            @Override
+            public CharSequence getPageTitle(int position) {
+                switch (position) {
+                    case 0:
+                        return "";
+                    case 1:
+                        return "SECTION 2";
+                }
+                return null;
+            }
+        }
+
+
+    public void onSelectDateClick(View v) {
         DialogFragment dialogFragment = new DatePickerFragment();
-        dialogFragment.show(getSupportFragmentManager(),"SelectDateFrag");
-
+        dialogFragment.show(getSupportFragmentManager(), "SelectDateFrag");
     }
+
+
+
+
 }
+

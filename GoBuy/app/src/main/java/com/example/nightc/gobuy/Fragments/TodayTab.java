@@ -33,13 +33,6 @@ public class TodayTab extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.today_fragment,container,false);
 
-//        RecyclerView recyclerView = (RecyclerView) v.findViewById(R.id.ActivityRecycler);
-//        recyclerView.setHasFixedSize(true);
-//        GridAutofitLayoutManager layoutManager = new GridAutofitLayoutManager(getContext(),400);
-//        ActivityCardAdapter activityCardAdapter = new ActivityCardAdapter(spontaneousIncomes);
-//        recyclerView.setLayoutManager(layoutManager);
-//        recyclerView.setAdapter(activityCardAdapter);
-
 
         RecyclerView recyclerView = (RecyclerView) v.findViewById(R.id.ActivityRecycler);
         recyclerView.setHasFixedSize(true);

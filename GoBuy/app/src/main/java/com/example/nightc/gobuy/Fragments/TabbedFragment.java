@@ -4,12 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -18,8 +18,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.nightc.gobuy.Activities.AddGoalActivity;
+import com.example.nightc.gobuy.Activities.NewIncome_ExpenseActivity;
 import com.example.nightc.gobuy.GoBuySDK.Goal;
 import com.example.nightc.gobuy.GoBuySDK.Item;
 import com.example.nightc.gobuy.GoBuySDK.UserClasses.SpontaeousExpense;
@@ -54,8 +56,8 @@ public class TabbedFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.activity_goal_selection,container,false);
+    public View onCreateView(final LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.tabbed_fragment,container,false);
         Toolbar toolbar = (Toolbar) v.findViewById(R.id.toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 
@@ -74,13 +76,45 @@ public class TabbedFragment extends Fragment {
         FloatingActionButton fab = (FloatingActionButton) v.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
+            //When the plus button is clicked
             public void onClick(View view) {
+                //if Goals Screen Active then add new goal activity starts
                 if (mViewPager.getCurrentItem() == 0){
                     Intent intent = new Intent(TabbedFragment.this.getContext(), AddGoalActivity.class);
                     startActivity(intent);
                 }
+
+                //if Today Tab active then asks for new income or expense and begins add new Income_Expense activity
                 else if (mViewPager.getCurrentItem() == 1){
-                    Snackbar.make(view,"Today Showing",Snackbar.LENGTH_SHORT).show();
+                    View v = getActivity().getLayoutInflater().inflate(R.layout.fragment_ask_income_expense,null);
+                    AlertDialog.Builder aBuilder = new AlertDialog.Builder(getActivity());
+
+                    aBuilder.setView(v);
+                    final AlertDialog alertDialog = aBuilder.create();
+                    alertDialog.show();
+
+                    Button Expense = (Button) v.findViewById(R.id.ExpenseButton);
+                    Button Income = (Button) v.findViewById(R.id.IncomeButton);
+
+                    View.OnClickListener listener = new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(getContext(),NewIncome_ExpenseActivity.class);
+                            if (v.getId() == R.id.ExpenseButton)
+                                intent.putExtra("Type","Expense");
+                            else
+                                intent.putExtra("Type","Income");
+
+                            startActivity(intent);
+                            alertDialog.dismiss();
+
+                        }
+                    };
+
+                    Expense.setOnClickListener(listener);
+                    Income.setOnClickListener(listener);
+
+
                 }
             }
         });

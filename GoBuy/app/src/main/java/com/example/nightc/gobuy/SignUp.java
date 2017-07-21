@@ -175,7 +175,7 @@ public class SignUp extends AppCompatActivity {
         //if he doesn't want to then it will navigate to Expense screen
         if (pager.getCurrentItem() == 1){
 
-            View v = getLayoutInflater().inflate(R.layout.ask_other_income,null);
+            View v = getLayoutInflater().inflate(R.layout.fragment_ask_other_income,null);
             AlertDialog.Builder aBuilder = new AlertDialog.Builder(this);
 
             aBuilder.setView(v);
@@ -202,14 +202,6 @@ public class SignUp extends AppCompatActivity {
                     alertDialog.dismiss();
                 }
             });
-
-
-
-
-
-
-
-
 
         }else{
             pager.setCurrentItem(pager.getCurrentItem() + 1,true);

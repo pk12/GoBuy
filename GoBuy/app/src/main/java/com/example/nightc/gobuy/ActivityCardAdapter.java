@@ -16,6 +16,8 @@ import java.util.ArrayList;
  * Created by Oppai on 7/17/2017.
  */
 
+
+//A custom RecyclerView Adapter for the Activity Cards
 public class ActivityCardAdapter extends RecyclerView.Adapter<ActivityCardAdapter.ActivityViewHolder> {
 
     private ArrayList<SpontaneousIncome> incomes;
