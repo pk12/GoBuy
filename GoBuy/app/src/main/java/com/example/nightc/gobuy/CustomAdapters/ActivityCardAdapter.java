@@ -1,4 +1,4 @@
-package com.example.nightc.gobuy;
+package com.example.nightc.gobuy.CustomAdapters;
 
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.nightc.gobuy.GoBuySDK.UserClasses.SpontaneousIncome;
+import com.example.nightc.gobuy.R;
 
 import java.util.ArrayList;
 
@@ -30,7 +31,7 @@ public class ActivityCardAdapter extends RecyclerView.Adapter<ActivityCardAdapte
     //and return a new instance of it
     @Override
     public ActivityViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View item = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_card,parent,false);
+        View item = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_daily_activity,parent,false);
         return new ActivityViewHolder(item);
     }
 

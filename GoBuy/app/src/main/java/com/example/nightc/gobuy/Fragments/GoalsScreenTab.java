@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.nightc.gobuy.GoBuySDK.Goal;
-import com.example.nightc.gobuy.GoalCardsAdapter;
+import com.example.nightc.gobuy.CustomAdapters.GoalCardsAdapter;
 import com.example.nightc.gobuy.R;
 
 import java.util.ArrayList;

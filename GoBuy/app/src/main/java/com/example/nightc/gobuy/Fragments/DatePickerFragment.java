@@ -34,7 +34,14 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        DateWanted = new LocalDate(year,month,dayOfMonth);
+        //TO BE ADDED ON NEXT PAGE
+//        DateWanted = new LocalDate(year,month,dayOfMonth);
+//        TextView textView = (TextView) getActivity().findViewById(R.id.date_wantedText);
+//        textView.setText(DateWanted.toString());
     }
+
+
+
+
 
 }

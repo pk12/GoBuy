@@ -1,4 +1,4 @@
-package com.example.nightc.gobuy;
+package com.example.nightc.gobuy.CustomAdapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.nightc.gobuy.GoBuySDK.Goal;
+import com.example.nightc.gobuy.R;
 
 import java.util.ArrayList;
 
@@ -31,7 +32,7 @@ public class GoalCardsAdapter extends RecyclerView.Adapter<GoalCardsAdapter.Goal
     //creates the viewholder which holds the contents of the cardview layout
     @Override
     public GoalViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.goalscreen_cardview,parent,false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_goals_tab,parent,false);
         return new GoalViewHolder(itemView);
 
     }

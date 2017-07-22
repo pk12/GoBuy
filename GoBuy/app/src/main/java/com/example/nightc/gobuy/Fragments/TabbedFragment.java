@@ -10,8 +10,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,6 +17,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.example.nightc.gobuy.Activities.AddGoalActivity;
 import com.example.nightc.gobuy.Activities.NewIncome_ExpenseActivity;
@@ -52,14 +52,34 @@ public class TabbedFragment extends Fragment {
     private GoalsScreenTab goalsScreenTab;
     private TodayTab todayTab;
 
+    //the Views to hide when Scrolling tabs
+    private ProgressBar ToolbarProgess;
+    private TextView DateBar;
+    private TextView SaveBar;
+    private TextView SaveAmountBar;
+    private TextView SpendBar;
+    private TextView SpendAmountBar;
 
 
     @Nullable
     @Override
     public View onCreateView(final LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.tabbed_fragment,container,false);
-        Toolbar toolbar = (Toolbar) v.findViewById(R.id.toolbar);
-        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        ToolbarProgess = (ProgressBar) v.findViewById(R.id.ProgressToolbar);
+        SaveBar = (TextView) v.findViewById(R.id.SaveText);
+        SaveAmountBar = (TextView) v.findViewById(R.id.SaveAmountText);
+        SpendBar = (TextView) v.findViewById(R.id.SpendText);
+        SpendAmountBar = (TextView) v.findViewById(R.id.SpendAmountText);
+        DateBar = (TextView) v.findViewById(R.id.textDate);
+        //Hide Views when Goals tab is inflated
+        SaveAmountBar.setVisibility(View.GONE);
+        SpendBar.setVisibility(View.GONE);
+        SaveBar.setVisibility(View.GONE);
+        SpendAmountBar.setVisibility(View.GONE);
+        ToolbarProgess.setVisibility(View.GONE);
+        DateBar.setVisibility(View.GONE);
+
+
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -74,6 +94,7 @@ public class TabbedFragment extends Fragment {
         tabLayout.setupWithViewPager(mViewPager);
 
         FloatingActionButton fab = (FloatingActionButton) v.findViewById(R.id.fab);
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             //When the plus button is clicked
@@ -85,6 +106,7 @@ public class TabbedFragment extends Fragment {
                 }
 
                 //if Today Tab active then asks for new income or expense and begins add new Income_Expense activity
+                //May change to In Activity Selection
                 else if (mViewPager.getCurrentItem() == 1){
                     View v = getActivity().getLayoutInflater().inflate(R.layout.fragment_ask_income_expense,null);
                     AlertDialog.Builder aBuilder = new AlertDialog.Builder(getActivity());
@@ -116,6 +138,44 @@ public class TabbedFragment extends Fragment {
 
 
                 }
+            }
+        });
+
+
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                if (position == 1){
+                    ToolbarProgess.setVisibility(View.VISIBLE);
+                    DateBar.setVisibility(View.VISIBLE);
+                    SaveAmountBar.setVisibility(View.VISIBLE);
+                    SpendBar.setVisibility(View.VISIBLE);
+                    SaveBar.setVisibility(View.VISIBLE);
+                    SpendAmountBar.setVisibility(View.VISIBLE);
+                    ToolbarProgess.setVisibility(View.VISIBLE);
+                    DateBar.setVisibility(View.VISIBLE);
+                }
+                else {
+                    ToolbarProgess.setVisibility(View.GONE);
+                    DateBar.setVisibility(View.GONE);
+                    SaveAmountBar.setVisibility(View.GONE);
+                    SpendBar.setVisibility(View.GONE);
+                    SaveBar.setVisibility(View.GONE);
+                    SpendAmountBar.setVisibility(View.GONE);
+                    ToolbarProgess.setVisibility(View.GONE);
+                    DateBar.setVisibility(View.GONE);
+                }
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
             }
         });
 
@@ -160,9 +220,13 @@ public class TabbedFragment extends Fragment {
             switch (position){
                 case 0:
                     goalsScreenTab = new GoalsScreenTab(DemoData());
+                    ToolbarProgess.setVisibility(View.GONE);
+                    DateBar.setVisibility(View.GONE);
                     return goalsScreenTab;
                 default:
                     todayTab = new TodayTab(DemoIncomes());
+                    ToolbarProgess.setVisibility(View.VISIBLE);
+                    DateBar.setVisibility(View.VISIBLE);
                     return todayTab;
             }
         }

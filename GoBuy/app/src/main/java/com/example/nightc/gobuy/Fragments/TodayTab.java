@@ -4,13 +4,13 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.nightc.gobuy.ActivityCardAdapter;
+import com.example.nightc.gobuy.CustomAdapters.ActivityCardAdapter;
 import com.example.nightc.gobuy.GoBuySDK.UserClasses.SpontaneousIncome;
+import com.example.nightc.gobuy.GridNoScrollLayoutManager;
 import com.example.nightc.gobuy.R;
 
 import java.util.ArrayList;
@@ -36,7 +36,7 @@ public class TodayTab extends Fragment {
 
         RecyclerView recyclerView = (RecyclerView) v.findViewById(R.id.ActivityRecycler);
         recyclerView.setHasFixedSize(true);
-        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL);
+        GridNoScrollLayoutManager layoutManager = new GridNoScrollLayoutManager(getContext(),3);
         ActivityCardAdapter activityCardAdapter = new ActivityCardAdapter(spontaneousIncomes);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(activityCardAdapter);
