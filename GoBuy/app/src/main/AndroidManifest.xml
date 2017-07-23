@@ -34,11 +34,11 @@
             android:label="@string/title_activity_bottom__tabs_"
             android:theme="@style/AppTheme.NoActionBar" />
         <!-- makes the app not crash on orientation change -->
+        <activity android:name=".Activities.NewIncome_ExpenseActivity" />
         <activity
             android:name=".Activities.AddGoalActivity"
             android:label="Create New Goal"
-            android:theme="@style/AppTheme" />
-        <activity android:name=".Activities.NewIncome_ExpenseActivity"></activity>
+            android:theme="@style/AppTheme"/>
     </application>
 
 </manifest>

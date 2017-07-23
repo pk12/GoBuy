@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.widget.DatePicker;
+import android.widget.TextView;
+
+import com.example.nightc.gobuy.R;
 
 import org.joda.time.LocalDate;
 
@@ -15,6 +18,7 @@ import java.util.Calendar;
  * Created by Oppai on 7/19/2017.
  */
 
+//MAY BE DELETED SINCE WE SELECT THE DATE VIEW ON THE NEXT PAGE
 public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
     private LocalDate DateWanted;
 
@@ -34,10 +38,9 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        //TO BE ADDED ON NEXT PAGE
-//        DateWanted = new LocalDate(year,month,dayOfMonth);
-//        TextView textView = (TextView) getActivity().findViewById(R.id.date_wantedText);
-//        textView.setText(DateWanted.toString());
+        DateWanted = new LocalDate(year,month,dayOfMonth);
+        TextView textView = (TextView) getActivity().findViewById(R.id.DateText);
+        textView.setText(DateWanted.toString());
     }
 
 

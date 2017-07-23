@@ -154,6 +154,7 @@ public class TabbedFragment extends Fragment {
                     SpendAmountBar.setVisibility(View.VISIBLE);
                     ToolbarProgess.setVisibility(View.VISIBLE);
                     DateBar.setVisibility(View.VISIBLE);
+                    DateBar.setText(new LocalDate().toString("dd-MMM-yy"));
                 }
                 else {
                     ToolbarProgess.setVisibility(View.GONE);
