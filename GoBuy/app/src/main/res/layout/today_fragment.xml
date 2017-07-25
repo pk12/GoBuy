@@ -44,7 +44,8 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView23"
         tools:listitem="@layout/card_daily_activity"
-        app:layout_constraintHorizontal_bias="0.0">
+        app:layout_constraintHorizontal_bias="0.0"
+        >
 
     </android.support.v7.widget.RecyclerView>
 </android.support.constraint.ConstraintLayout>

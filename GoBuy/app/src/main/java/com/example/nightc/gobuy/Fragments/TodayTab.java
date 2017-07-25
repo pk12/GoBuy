@@ -1,5 +1,6 @@
 package com.example.nightc.gobuy.Fragments;
 
+import android.animation.LayoutTransition;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -36,10 +37,13 @@ public class TodayTab extends Fragment {
 
         RecyclerView recyclerView = (RecyclerView) v.findViewById(R.id.ActivityRecycler);
         recyclerView.setHasFixedSize(true);
-        GridLayoutManager layoutManager = new GridLayoutManager(getContext(),3);
+        GridLayoutManager layoutManager = new GridLayoutManager(getContext(),2);
         ActivityCardAdapter activityCardAdapter = new ActivityCardAdapter(spontaneousIncomes,getContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(activityCardAdapter);
+        LayoutTransition layoutTransition = new LayoutTransition();
+
+
 
 
 

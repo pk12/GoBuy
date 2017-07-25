@@ -73,7 +73,8 @@ public class ActivityCardAdapter extends RecyclerView.Adapter<ActivityCardAdapte
 
         @Override
         public void onClick(View v) {
-            Toast.makeText(context,"clicked="+ getAdapterPosition(),Toast.LENGTH_SHORT).show();
+            Toast toast = Toast.makeText(context,"clicked="+ getAdapterPosition(),Toast.LENGTH_SHORT);
+            toast.show();
         }
     }
 }
