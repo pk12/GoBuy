@@ -142,6 +142,7 @@ public class TabbedFragment extends Fragment {
         });
 
 
+
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -281,4 +282,6 @@ public class TabbedFragment extends Fragment {
         incomes.add(income4);
         return incomes;
     }
+
 }
+
