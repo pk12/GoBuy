@@ -7,26 +7,28 @@ import java.util.ArrayList;
  */
 
 public class UserData {
+    private int UserID;
     private String Area;
     private short age;
     private String gender;
     private ArrayList<ShoppingInterests> shoppingInterests; //shopping interests are multiple
     private Job mainJob;
-    private ArrayList<StableIncome> extraIncomes; //An array of all the extra incomes because there may be multiple extra
+    private ArrayList<StableIncome> Incomes; //An array of all the extra incomes because there may be multiple extra
     private ArrayList<StableExpense> expenses; //An array of all the fixed expenses the user has
     private ArrayList<SpontaneousIncome> SpontaneousIncomes; //contains the Incomes the user creates on a goal Day
     private ArrayList<SpontaeousExpense> spontaneousExpenses; //contains the Expense the user creates on a goal Day
 
 
     public UserData(String area, short age, String gender, ArrayList<ShoppingInterests> shoppingInterests,
-                    Job mainJob, ArrayList<StableIncome> extraIncomes, ArrayList<StableExpense> expenses) {
+                    Job mainJob, ArrayList<StableIncome> extraIncomes, ArrayList<StableExpense> expenses, int UserID) {
         Area = area;
         this.age = age;
         this.gender = gender;
         this.shoppingInterests = shoppingInterests;
         this.mainJob = mainJob;
-        this.extraIncomes = extraIncomes;
+        this.Incomes = extraIncomes;
         this.expenses = expenses;
+        this.UserID = UserID;
     }
 
 
@@ -42,7 +44,7 @@ public class UserData {
         double amount = mainJob.getAmount();
         //to be added pay period calculations
 
-        for (StableIncome extraIncome : extraIncomes){
+        for (StableIncome extraIncome : Incomes){
             amount += extraIncome.getAmount();
         }
         return amount;
@@ -50,6 +52,11 @@ public class UserData {
 
 
     //getters
+
+
+    public int getUserID() {
+        return UserID;
+    }
 
     public String getArea() {
         return Area;
@@ -72,7 +79,7 @@ public class UserData {
     }
 
     public ArrayList<StableIncome> getExtraIncomes() {
-        return extraIncomes;
+        return Incomes;
     }
 
     public ArrayList<StableExpense> getExpenses() {

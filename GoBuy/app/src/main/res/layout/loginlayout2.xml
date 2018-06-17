@@ -2,6 +2,7 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LoginLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -107,23 +108,22 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
-    <Button
-        android:id="@+id/loginButton"
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/SignIn"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
         android:layout_marginTop="24dp"
         android:onClick="OnLogin"
-        android:text="Login"
         android:textAllCaps="false"
         android:textColor="@color/colorPrimaryDark"
         android:textStyle="bold|italic"
-        app:layout_constraintBottom_toTopOf="@+id/ForgotPassText"
+        app:layout_constraintBottom_toBottomOf="@+id/NextButton"
+        app:layout_constraintHorizontal_bias="0.514"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/NextButton"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout5"
-        app:layout_constraintVertical_bias="0.13999999" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/NextButton"
@@ -131,6 +131,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
+        android:layout_marginRight="28dp"
         android:layout_marginTop="24dp"
         android:onClick="onSignUp"
         android:text="Sign Up"
@@ -141,5 +142,5 @@
         app:layout_constraintLeft_toRightOf="@+id/loginButton"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout5"
-        app:layout_constraintVertical_bias="0.13999999" />
+        app:layout_constraintVertical_bias="0.333" />
 </android.support.constraint.ConstraintLayout>

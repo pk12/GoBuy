@@ -8,12 +8,13 @@ public class Credentials {
 
     private String Username;
     private String Password;
+    private int UserID;
 
-    public Credentials(String username, String password) {
+    public Credentials(String username, String password, int userID) {
         Username = username;
         Password = password;
+        UserID = userID;
     }
-
 
     //getters
     public String getUsername() {

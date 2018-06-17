@@ -7,13 +7,17 @@ import org.joda.time.LocalDate;
  */
 
 public class GoalDates {
+    private int GoalID;
+    private int UserID;
     private LocalDate DateWanted; //the date which the User wants to have his goal completed
     private LocalDate ExpectedDate; //the date which our algorithms expect the goal to be completed
     private LocalDate DateCreated;  //the date which the Goal was created
 
-    public GoalDates(LocalDate dateWanted) {
+    public GoalDates(int goalID, int userID, LocalDate dateWanted, LocalDate dateCreated) {
+        GoalID = goalID;
+        UserID = userID;
         DateWanted = dateWanted;
-        DateCreated = new LocalDate(); //leaving the constructor empty makes it use the date it was created
+        DateCreated = dateCreated;
     }
 
 
@@ -30,7 +34,13 @@ public class GoalDates {
         return DateCreated;
     }
 
+    public int getGoalID() {
+        return GoalID;
+    }
 
+    public int getUserID() {
+        return UserID;
+    }
 
     //Setters
     public void setDateWanted(LocalDate dateWanted) {

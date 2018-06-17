@@ -7,13 +7,11 @@ package com.example.nightc.gobuy.GoBuySDK;
 public class BillsAPI {
 
     //private boolean paid;
-    private String Name;
     private double TotalAmount;
     //May add Max amount and min amount to display worst and best case scenarios
 
-    public BillsAPI(String name, double totalAmount) {
-       // this.paid = paid;
-        Name = name;
+    public BillsAPI( double totalAmount) {
+
         TotalAmount = totalAmount;
     }
 

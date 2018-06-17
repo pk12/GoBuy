@@ -22,8 +22,6 @@ import android.widget.TextView;
 
 import com.example.nightc.gobuy.Activities.AddGoalActivity;
 import com.example.nightc.gobuy.Activities.NewIncome_ExpenseActivity;
-import com.example.nightc.gobuy.GoBuySDK.Goal;
-import com.example.nightc.gobuy.GoBuySDK.Item;
 import com.example.nightc.gobuy.GoBuySDK.UserClasses.SpontaeousExpense;
 import com.example.nightc.gobuy.GoBuySDK.UserClasses.SpontaneousIncome;
 import com.example.nightc.gobuy.R;
@@ -221,7 +219,7 @@ public class TabbedFragment extends Fragment {
         public Fragment getItem(int position) {
             switch (position){
                 case 0:
-                    goalsScreenTab = new GoalsScreenTab(DemoData());
+                    goalsScreenTab = new GoalsScreenTab();
                     ToolbarProgess.setVisibility(View.GONE);
                     DateBar.setVisibility(View.GONE);
                     return goalsScreenTab;
@@ -254,25 +252,16 @@ public class TabbedFragment extends Fragment {
 
 
 
-    public ArrayList<Goal> DemoData(){
-        ArrayList<Goal> goals = new ArrayList<Goal>();
-        Item i1 = new Item("Ipad",3000.2,"Electronics");
-        Item i2 = new Item("Iphone",30400.2,"Phone");
-        Goal goal = new Goal(i1,null,null,new LocalDate(),500);
-        Goal g1oal = new Goal(i2,null,null,new LocalDate(),500);
-        goals.add(goal);
-        goals.add(g1oal);
-        return goals;
-    }
+
 
     public ArrayList<SpontaneousIncome> DemoIncomes(){
-        SpontaeousExpense expense = new SpontaeousExpense("Coffee",4);
-        SpontaeousExpense expense1 = new SpontaeousExpense("Coffee",4);
-        SpontaneousIncome income = new SpontaneousIncome("Mom",6);
-        SpontaneousIncome income1 = new SpontaneousIncome("Dad",6);
-        SpontaneousIncome income2 = new SpontaneousIncome("You",6);
-        SpontaneousIncome income3 = new SpontaneousIncome("Id",6);
-        SpontaneousIncome income4 = new SpontaneousIncome("Loe",6);
+        SpontaeousExpense expense = new SpontaeousExpense("Coffee",4,1,1);
+        SpontaeousExpense expense1 = new SpontaeousExpense("Coffee",4,1,1);
+        SpontaneousIncome income = new SpontaneousIncome("Mom",6,1,1);
+        SpontaneousIncome income1 = new SpontaneousIncome("Dad",6,1,1);
+        SpontaneousIncome income2 = new SpontaneousIncome("You",6,1,1);
+        SpontaneousIncome income3 = new SpontaneousIncome("Id",6,1,1);
+        SpontaneousIncome income4 = new SpontaneousIncome("Loe",6,1,1);
 
         ArrayList<SpontaneousIncome> incomes = new ArrayList<SpontaneousIncome>();
         incomes.add(income);

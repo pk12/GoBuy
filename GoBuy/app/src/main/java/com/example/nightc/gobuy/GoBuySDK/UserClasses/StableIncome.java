@@ -7,8 +7,8 @@ package com.example.nightc.gobuy.GoBuySDK.UserClasses;
 public class StableIncome extends Income {
     private String PayPeriod;
 
-    public StableIncome(String type, double amount, String payPeriod) {
-        super(type, amount);
+    public StableIncome(String type, double amount,int IncomeID,int UserID, String payPeriod) {
+        super(type, amount, IncomeID, UserID);
         PayPeriod = payPeriod;
     }
 
@@ -18,6 +18,7 @@ public class StableIncome extends Income {
 
 
     //getters
+
 
     public String getPayPeriod() {
         return PayPeriod;

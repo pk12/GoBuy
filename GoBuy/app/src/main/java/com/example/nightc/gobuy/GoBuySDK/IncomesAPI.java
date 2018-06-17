@@ -6,12 +6,12 @@ package com.example.nightc.gobuy.GoBuySDK;
 
 public class IncomesAPI {
 
-    private BillsAPI Tax; //May Change to BillsAPI
+    private Double Tax; //May Change to BillsAPI
     private double TotalIncome; //Total monthly IncomesAPI = Jobs.salary + extraIncomes.amount (from UserData)
     // protected ArrayList<Double> gifts; To be added to extraIncomes
 
-    public IncomesAPI(double totalIncome, BillsAPI tax) {
-        TotalIncome = 0;
+    public IncomesAPI(double totalIncome, double tax) {
+        TotalIncome = totalIncome;
         //gifts = new ArrayList<Double>();
         Tax = tax;
     }

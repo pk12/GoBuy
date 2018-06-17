@@ -3,31 +3,30 @@ package com.example.nightc.gobuy.GoBuySDK;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
 
-import java.util.ArrayList;
-
 /**
  * Created by nightc on 6/25/17.
  */
 
 /* the calculations will dynamically change when the product price needs less than a day to buy */
 public class Goal {
-
-    private ArrayList<Item> GoalItems;
+    private int UserID;
+    private int GoalID;
+    private Item GoalItem;
     private IncomesAPI steadyIncomes;
     private BillsAPI SteadyExpenses;
     private GoalDates Dates; //API for all the Goal dates that we have to use
-    private GoalMoneySaved MoneySaved; //API for the money that have been saved for the goal
-    private GoalMoneyToSavePerDay MoneyToSavePerDay; //a class that calculates the money to be saved each day
+    private double MoneySaved; //API for the money that have been saved for the goal
+    private double MoneyToSavePerDay; //a class that calculates the money to be saved each day
     private double MoneySavedPerMonth; //WARNING!!! TO BE CONVERTED TO DAILY,Desription: Money you save each day and have available to spend
     private Day day;
 
-    public Goal(Item goalItem, IncomesAPI incomes, BillsAPI Expenses, LocalDate dateWanted, double moneySaved) {
-        GoalItems = new ArrayList<Item>();
-        GoalItems.add(goalItem);
+    public Goal(Item goalItem, IncomesAPI incomes, BillsAPI Expenses, LocalDate dateWanted, double moneySaved,int GoalID, int UserID) {
         this.steadyIncomes = incomes; //the system will fetch the stable Incomes from the UserData
         this.SteadyExpenses = Expenses; //so that the user wont need to add them again,making the proccess easier
-        Dates = new GoalDates(dateWanted);
-        MoneySaved = new GoalMoneySaved(moneySaved);
+        Dates = new GoalDates(GoalID,UserID,dateWanted,new LocalDate());
+        MoneySaved = moneySaved;
+        this.GoalID = GoalID;
+        this.UserID = UserID;
        // MoneyToSavePerDay = new GoalMoneyToSavePerDay(Dates,GoalItems); //May change it to Dates.get and Items.get
        // CalMoneySavedPerMonth();  //Comment because i create the demo data for the TabbedFragment
        // startNewDay();
@@ -61,23 +60,29 @@ public class Goal {
 
     //Starts a new day each time it changes,to reset the daily tracking status
     public void startNewDay(){
-        day = new Day(MoneySavedPerMonth - MoneyToSavePerDay.getMoneyToSavePerDay(),MoneyToSavePerDay.getMoneyToSavePerDay());
+        day = new Day(MoneySavedPerMonth - MoneyToSavePerDay, MoneyToSavePerDay);
     }
 
 
 
 
     //Getters
+
+
+    public Item getGoalItem() {
+        return GoalItem;
+    }
+
+    public int getGoalID() {
+        return GoalID;
+    }
+
     public IncomesAPI getIncomes() {
         return steadyIncomes;
     }
 
     public BillsAPI getExpenses() {
         return SteadyExpenses;
-    }
-
-    public ArrayList<Item> getGoalItems() {
-        return GoalItems;
     }
 
     public IncomesAPI getSteadyIncomes() {
@@ -92,11 +97,11 @@ public class Goal {
         return Dates;
     }
 
-    public GoalMoneySaved getMoneySaved() {
+    public double getMoneySaved() {
         return MoneySaved;
     }
 
-    public GoalMoneyToSavePerDay getMoneyToSavePerDay() {
+    public double getMoneyToSavePerDay() {
         return MoneyToSavePerDay;
     }
 

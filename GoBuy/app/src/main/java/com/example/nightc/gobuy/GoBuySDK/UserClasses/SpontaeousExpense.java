@@ -5,10 +5,12 @@ package com.example.nightc.gobuy.GoBuySDK.UserClasses;
  */
 
 public class SpontaeousExpense extends Expense {
-
     //to add DayMade,maybe into an arrayList
 
-    public SpontaeousExpense(String types, double amount) {
-        super(types, amount);
+    public SpontaeousExpense(String type, double amount, int ExpenseID, int UserID) {
+        super(type, amount, ExpenseID, UserID);
     }
+
+
+
 }

@@ -9,13 +9,15 @@ import java.util.ArrayList;
  */
 
 public class User {
+    private long UserID;
     private Credentials credentials; //a class containg the User's credentials
     private UserData userData;  //a class containing the User's Data
     private ArrayList<Goal> goals; //An array keeping all the active Goals the user has
 
-    public User(Credentials credentials, UserData userData, Goal goal) {
+    public User(Credentials credentials, UserData userData, Goal goal, long UserID) {
         this.credentials = credentials;
         this.userData = userData;
+        this.UserID = UserID;
 
         //creates the array list with the goals
         //sets up the first goal(Expense and Incomes and then adds it into the list
@@ -52,6 +54,9 @@ public class User {
         return goals;
     }
 
+    public long getUserID() {
+        return UserID;
+    }
 
     //Setters
 

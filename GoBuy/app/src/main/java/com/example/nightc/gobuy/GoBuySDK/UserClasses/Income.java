@@ -7,14 +7,18 @@ import android.graphics.drawable.Drawable;
  */
 
 public class Income {
+    private int UserID;
+    private int IncomeID;
     private String type;    //the type of the income,should crate an enum class
     private double Amount;  //the amount of the income
     private Drawable Typeicon; //for gui purposes
 
 
-    public Income(String type, double amount) {
+    public Income(String type, double amount, int IncomeID, int UserID) {
         this.type = type;
         Amount = amount;
+        this.IncomeID = IncomeID;
+        this.UserID = UserID;
     }
 
 
@@ -32,6 +36,9 @@ public class Income {
         return Typeicon;
     }
 
+    public int getIncomeID() {
+        return IncomeID;
+    }
     //setters
 
 

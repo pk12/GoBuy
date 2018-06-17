@@ -5,9 +5,12 @@ package com.example.nightc.gobuy.GoBuySDK.UserClasses;
  */
 
 public class SpontaneousIncome extends Income {
-
     //to add Date variable for machine learning purposes
-    public SpontaneousIncome(String type, double amount) {
-        super(type, amount);
+
+    public SpontaneousIncome(String type, double amount, int IncomeID, int UserID) {
+        super(type, amount, IncomeID, UserID);
     }
+
+
+
 }
