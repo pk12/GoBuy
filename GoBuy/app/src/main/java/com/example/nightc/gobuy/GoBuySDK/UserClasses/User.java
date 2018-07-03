@@ -29,13 +29,13 @@ public class User {
     //inserts the User IncomesAPI and Expense Amount
     //it was the only correct way i could think of
     public void setGoalData(Goal goal){
-        goal.getIncomes().setTotalIncome(userData.CalculateIncomeAmount());
-        goal.getExpenses().setTotalAmount(userData.CalculateBillAmount());
+        goal.getSteadyIncomes().setTotalIncome(userData.CalculateIncomeAmount());
+        goal.getSteadyExpenses().setTotalAmount(userData.CalculateBillAmount());
     }
 
     public void addGoal(Goal goal){
-        goal.getExpenses().setTotalAmount(userData.CalculateBillAmount());
-        goal.getIncomes().setTotalIncome(userData.CalculateIncomeAmount());
+        goal.getSteadyExpenses().setTotalAmount(userData.CalculateBillAmount());
+        goal.getSteadyIncomes().setTotalIncome(userData.CalculateIncomeAmount());
         goals.add(goal);
     }
 

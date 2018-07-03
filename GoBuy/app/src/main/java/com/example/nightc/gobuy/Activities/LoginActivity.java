@@ -1,4 +1,4 @@
-package com.example.nightc.gobuy;
+package com.example.nightc.gobuy.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.nightc.gobuy.R;
+import com.example.nightc.gobuy.SignUp;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -22,10 +24,11 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.ArrayList;
+import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -75,11 +78,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
         //Start Logged in activity
-//        Intent i = new Intent(this,Bottom_Tabs_Activity.class);
-//        startActivity(i);
     }
 
     @Override
+    //Signs in to google account to use with firebase later
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         //Result returned from launching Intent for login
@@ -101,7 +103,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
-    private void firebaseAuthWithGoogle(GoogleSignInAccount account){
+    private void firebaseAuthWithGoogle(final GoogleSignInAccount account){
         Log.d(TAG, "firebaseAuthWithGoogle: " + account.getId());
         //howProgressDialog();
 
@@ -112,16 +114,37 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 if (task.isSuccessful()){
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "signInWithCredential:success");
-                    FirebaseUser user = mAuth.getCurrentUser();
-                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
-                    ArrayList<String> UserData = new ArrayList<String>();
-                    UserData.add("Name:" + user.getDisplayName());
-                    UserData.add("Phone Number:" + user.getPhoneNumber());
+                    final FirebaseUser user = mAuth.getCurrentUser();
+                    final DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+                    final DatabaseReference ref = rootRef.child("Users").child(user.getUid());
+                    final DatabaseReference goalCounter = FirebaseDatabase.getInstance().getReference("Goals").child(user.getUid()).child("GoalNumber");
 
+                    //checks if there is a data snapshot with key: UserID
+                    //Soo it checks if it is a new user
+                    ValueEventListener eventListener = new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            if (!dataSnapshot.exists()){
+                                ref.child("Name").setValue(user.getDisplayName());
+                                ref.child("Email").setValue(user.getEmail());
+                                ref.child("Phone").setValue(user.getPhoneNumber());
+                                goalCounter.setValue(0);
+                            }
+                        }
 
-                    ref.child(user.getUid()).child("Name").setValue(UserData.get(0));
-                    ref = FirebaseDatabase.getInstance().getReference("Users/" + user.getUid());
-                    ref.child("PhoneNo").setValue(UserData.get(1));
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    };
+                    ref.addListenerForSingleValueEvent(eventListener);
+
+                    //Start the new activity
+
+                    Intent i = new Intent(LoginActivity.this,Bottom_Tabs_Activity.class);
+                    startActivity(i);
+                    LoginActivity.this.finish();
+
                     //updateUI(user);
                 } else {
                     // If sign in fails, display a message to the user.
@@ -138,6 +161,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
     }
+
+
+
+
+
 
     @Override
     public void onClick(View v) {

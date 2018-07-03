@@ -8,12 +8,12 @@ import org.joda.time.LocalDate;
 
 public class GoalDates {
     private int GoalID;
-    private int UserID;
+    private String UserID;
     private LocalDate DateWanted; //the date which the User wants to have his goal completed
     private LocalDate ExpectedDate; //the date which our algorithms expect the goal to be completed
     private LocalDate DateCreated;  //the date which the Goal was created
 
-    public GoalDates(int goalID, int userID, LocalDate dateWanted, LocalDate dateCreated) {
+    public GoalDates(int goalID, String userID, LocalDate dateWanted, LocalDate dateCreated) {
         GoalID = goalID;
         UserID = userID;
         DateWanted = dateWanted;
@@ -38,7 +38,7 @@ public class GoalDates {
         return GoalID;
     }
 
-    public int getUserID() {
+    public String getUserID() {
         return UserID;
     }
 

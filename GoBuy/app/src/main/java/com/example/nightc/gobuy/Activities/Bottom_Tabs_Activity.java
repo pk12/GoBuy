@@ -1,4 +1,4 @@
-package com.example.nightc.gobuy;
+package com.example.nightc.gobuy.Activities;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -10,6 +10,7 @@ import android.view.MenuItem;
 
 import com.example.nightc.gobuy.Fragments.SettingsFragment;
 import com.example.nightc.gobuy.Fragments.TabbedFragment;
+import com.example.nightc.gobuy.R;
 
 public class Bottom_Tabs_Activity extends AppCompatActivity {
 
