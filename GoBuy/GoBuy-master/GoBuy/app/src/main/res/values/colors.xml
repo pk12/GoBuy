@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#00BCD4</color>
+    <color name="colorPrimaryDark">#0097A7</color>
+    <color name="primary_light">#b2ebf2</color>
+    <color name="colorAccent">#7e57c2</color>
+    <color name="black_overlay">#212121</color>
+    <color name="secondary_text">#757575</color>
+    <color name="icons">#FFFFFF</color>
+    <color name="divider">#1fffffff</color>
+    <color name="MaleColor">#016490</color>
+    <color name="primary_super_light">#e0f7fa</color>
+    <color name="divider_light">#1f000000</color>
+</resources>
+

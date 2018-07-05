@@ -24,11 +24,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -120,30 +117,25 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     final DatabaseReference goalCounter = FirebaseDatabase.getInstance().getReference("Goals").child(user.getUid()).child("GoalNumber");
 
                     //checks if there is a data snapshot with key: UserID
-                    //Soo it checks if it is a new user
-                    ValueEventListener eventListener = new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            if (!dataSnapshot.exists()){
-                                ref.child("Name").setValue(user.getDisplayName());
-                                ref.child("Email").setValue(user.getEmail());
-                                ref.child("Phone").setValue(user.getPhoneNumber());
-                                goalCounter.setValue(0);
-                            }
-                        }
+                    //So it checks if it is a new user
+                    if (task.getResult().getAdditionalUserInfo().isNewUser()){
+                            ref.child("Name").setValue(user.getDisplayName());
+                            ref.child("Email").setValue(user.getEmail());
+                            ref.child("Phone").setValue(user.getPhoneNumber());
+                            goalCounter.setValue(0);
+                            Intent i = new Intent(LoginActivity.this, SignUp.class);
+                            startActivity(i);
 
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
+                    }
+                    else{
+                        //Start the new activity
 
-                        }
-                    };
-                    ref.addListenerForSingleValueEvent(eventListener);
+                        Intent i = new Intent(LoginActivity.this,Bottom_Tabs_Activity.class);
+                        startActivity(i);
+                        LoginActivity.this.finish();
+                    }
 
-                    //Start the new activity
 
-                    Intent i = new Intent(LoginActivity.this,Bottom_Tabs_Activity.class);
-                    startActivity(i);
-                    LoginActivity.this.finish();
 
                     //updateUI(user);
                 } else {

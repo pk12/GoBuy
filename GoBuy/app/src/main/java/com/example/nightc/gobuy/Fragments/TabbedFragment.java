@@ -144,7 +144,7 @@ public class TabbedFragment extends Fragment {
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                if (position == 1){
+                if (position == 0){
                     ToolbarProgess.setVisibility(View.VISIBLE);
                     DateBar.setVisibility(View.VISIBLE);
                     SaveAmountBar.setVisibility(View.VISIBLE);
@@ -156,14 +156,14 @@ public class TabbedFragment extends Fragment {
                     DateBar.setText(new LocalDate().toString("dd-MMM-yy"));
                 }
                 else {
-                    ToolbarProgess.setVisibility(View.GONE);
-                    DateBar.setVisibility(View.GONE);
-                    SaveAmountBar.setVisibility(View.GONE);
-                    SpendBar.setVisibility(View.GONE);
-                    SaveBar.setVisibility(View.GONE);
-                    SpendAmountBar.setVisibility(View.GONE);
-                    ToolbarProgess.setVisibility(View.GONE);
-                    DateBar.setVisibility(View.GONE);
+//                    ToolbarProgess.setVisibility(View.GONE);
+//                    DateBar.setVisibility(View.GONE);
+//                    SaveAmountBar.setVisibility(View.GONE);
+//                    SpendBar.setVisibility(View.GONE);
+//                    SaveBar.setVisibility(View.GONE);
+//                    SpendAmountBar.setVisibility(View.GONE);
+//                    ToolbarProgess.setVisibility(View.GONE);
+//                    DateBar.setVisibility(View.GONE);
                 }
 
             }

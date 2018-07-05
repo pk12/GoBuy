@@ -49,20 +49,8 @@ public class AddGoalActivity extends AppCompatActivity {
 
         switch (item.getItemId()){
             case R.id.action_save:
-                //check if every line is filled
-                //create new goal arguments
-                //Create UserData object from DB
 
-//                DBHandler dbHandler = new DBHandler(getApplicationContext());
-//                UserData userData = dbHandler.getUserData(1); //should pass the UserID as an argument i think
-//                Item Gitem = new Item(1,1,Name.getText().toString(),"nothing",Double.parseDouble(Price.getText().toString()));
-//                IncomesAPI incomesAPI = new IncomesAPI(userData.CalculateIncomeAmount(),0);
-//                BillsAPI billsAPI = new BillsAPI(userData.CalculateBillAmount());
-//                Goal goal = new Goal(Gitem,incomesAPI,billsAPI,new LocalDate(dateWanted.getText().toString()),100,1,1);
-
-                //Save goal to DB
-                //dbHandler.addGoal(goal);
-                if (dateWanted.getText().toString().trim() != "Select Date" && Name.getText().toString().trim() != "" && Price.getText().toString().trim() != ""){
+                if (!dateWanted.getText().toString().trim().equals("Select Date") && !Name.getText().toString().trim().equals("") && !Price.getText().toString().trim().equals("")){
                     final FirebaseUser User = FirebaseAuth.getInstance().getCurrentUser();
                     final DatabaseReference[] reference = {FirebaseDatabase.getInstance().getReference()};
                     DatabaseReference GoalNo = FirebaseDatabase.getInstance().getReference();
@@ -79,7 +67,7 @@ public class AddGoalActivity extends AppCompatActivity {
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             if (!dataSnapshot.exists()){
                                 Item item = new Item(User.getUid().toString(),Name.getText().toString().trim(),"Something", Double.parseDouble(Price.getText().toString().trim()));
-                                Goal goal = new Goal(item,null,null, new LocalDate(dateWanted.getText().toString()),200, 1, User.getUid().toString());
+                                Goal goal = new Goal(item,2,2, new LocalDate(dateWanted.getText().toString()),200);
                                 reference[0].setValue(goal.toHashMap());
                                 finalGoalNo.setValue(GoalNumber[0] + 1);
                             }

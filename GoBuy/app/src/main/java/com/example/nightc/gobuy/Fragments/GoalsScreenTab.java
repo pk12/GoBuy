@@ -1,7 +1,5 @@
 package com.example.nightc.gobuy.Fragments;
 
-import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.nightc.gobuy.CustomAdapters.GoalCardsAdapter;
 import com.example.nightc.gobuy.GoBuySDK.Goal;
@@ -23,19 +22,19 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by Oppai on 7/14/2017.
  */
 
 public class GoalsScreenTab extends Fragment {
-
+    private ArrayList<Goal> goals = new ArrayList<Goal>();
 
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        CreateDB();
         View RootView = inflater.inflate(R.layout.fragment_goal_selection,container,false);
 
         RecyclerView rv = (RecyclerView) RootView.findViewById(R.id.GoalRecyclerView);
@@ -45,7 +44,8 @@ public class GoalsScreenTab extends Fragment {
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(inflater.getContext());
         rv.setLayoutManager(mLayoutManager);
 
-        GoalCardsAdapter goalCardsAdapter = new GoalCardsAdapter(FetchData());
+        GoalCardsAdapter goalCardsAdapter = new GoalCardsAdapter(goals);
+        FetchData(goalCardsAdapter);
         rv.setAdapter(goalCardsAdapter);
 
         return RootView;
@@ -55,27 +55,28 @@ public class GoalsScreenTab extends Fragment {
     }
 
     //MUST CREATE ASYNC TASK TO LOAD THE DATA FROM THE DB
-    public ArrayList<Goal> FetchData(){
-        ArrayList<Goal> goals = new ArrayList<Goal>();
-//        DBHandler dbHandler = new DBHandler(getContext());
-//        Goal goal = dbHandler.getGoal(1);
-//        if (goal!= null)
-//            goals.add(goal); //NullPointer exception if db is empty
+    public ArrayList<Goal> FetchData(final GoalCardsAdapter adapter){
 
-//        Item i1 = new Item(1,1,"Ipad","Electronics",3000.2);
-//        Item i2 = new Item(1,1,"Iphone","Phone",30400.2);
-//        Goal goal = new Goal(i1,null,null,new LocalDate(),500,1,1);
-//        Goal g1oal = new Goal(i2,null,null,new LocalDate(),500,1,1);
-//        goals.add(goal);
-//        goals.add(g1oal);
- //       return goals;
+
         FirebaseUser User = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         reference = reference.child("Goals").child(User.getUid());
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-//                Goal goal = (Goal) dataSnapshot.getValue();
+                HashMap hashMap;
+                goals.clear();
+                for (DataSnapshot snapshot: dataSnapshot.getChildren()){
+                    if (!snapshot.getKey().toString().equals("GoalNumber")){
+                        hashMap = (HashMap) snapshot.getValue();
+                        Goal goal = new Goal();
+                        goal.HashMapToGoal(hashMap);
+                        goals.add(goal);
+                    }
+
+                }
+                adapter.notifyDataSetChanged();
+                Toast.makeText(GoalsScreenTab.this.getContext(), "Data successfully fetched", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -87,10 +88,5 @@ public class GoalsScreenTab extends Fragment {
         return goals;
     }
 
-    //Open DB Method
-    public SQLiteDatabase CreateDB(){
-        SQLiteDatabase database = getContext().openOrCreateDatabase("GobuyDB", Context.MODE_PRIVATE,null);
-        return database;
-    }
 
 }

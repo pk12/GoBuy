@@ -41,7 +41,7 @@ public class GoalCardsAdapter extends RecyclerView.Adapter<GoalCardsAdapter.Goal
     @Override
     public void onBindViewHolder(GoalViewHolder holder, int position) {
         Goal goal = goals.get(position);
-        holder.DateWanted.setText(goal.getDates().getDateWanted().toString());
+        holder.DateWanted.setText(goal.getDateWanted().toString());
         holder.ItemName.setText(goal.getGoalItem().getName());
 
     }
