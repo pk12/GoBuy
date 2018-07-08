@@ -8,8 +8,8 @@ package com.example.nightc.gobuy.GoBuySDK.UserClasses;
 public class StableExpense extends Expense {
     private String PeriodPaid;
 
-    public StableExpense(String type, double amount,int ExpenseID ,int UserID, String periodPaid) {
-        super(type, amount, ExpenseID, UserID);
+    public StableExpense(String type, double amount, String periodPaid) {
+        super(type, amount);
         PeriodPaid = periodPaid;
     }
 

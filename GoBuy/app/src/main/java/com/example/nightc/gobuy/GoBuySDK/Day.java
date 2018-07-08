@@ -1,6 +1,6 @@
 package com.example.nightc.gobuy.GoBuySDK;
 
-import com.example.nightc.gobuy.GoBuySDK.UserClasses.SpontaeousExpense;
+import com.example.nightc.gobuy.GoBuySDK.UserClasses.Expense;
 
 import org.joda.time.MonthDay;
 
@@ -17,8 +17,8 @@ import java.util.ArrayList;
 public class Day {
     private MonthDay Day; //May have to change the Data Type
     //private ArrayList<SpontaneousExpense> dailyExpenses for an expense that does not have time period
-    private ArrayList<SpontaeousExpense> spontaneousExpenses; //to be sent to user Data
-    private ArrayList<com.example.nightc.gobuy.GoBuySDK.UserClasses.SpontaneousIncome> SpontaneousIncome;
+    private ArrayList<Expense> spontaneousExpenses; //to be sent to user Data
+    private ArrayList<com.example.nightc.gobuy.GoBuySDK.UserClasses.Income> SpontaneousIncome;
 
     //output
     private double MoneyLeftToSpend;

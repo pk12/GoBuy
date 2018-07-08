@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.nightc.gobuy.GoBuySDK.UserClasses.SpontaneousIncome;
+import com.example.nightc.gobuy.GoBuySDK.UserClasses.Income;
 import com.example.nightc.gobuy.R;
 
 import java.util.ArrayList;
@@ -23,10 +23,10 @@ import java.util.ArrayList;
 //A custom RecyclerView Adapter for the Activity Cards
 public class ActivityCardAdapter extends RecyclerView.Adapter<ActivityCardAdapter.ActivityViewHolder>{
 
-    private ArrayList<SpontaneousIncome> incomes;
+    private ArrayList<Income> incomes;
     private Context context;
 
-    public ActivityCardAdapter(ArrayList<SpontaneousIncome> incomes, Context context) {
+    public ActivityCardAdapter(ArrayList<Income> incomes, Context context) {
         this.incomes = incomes;
         this.context = context;
     }
@@ -42,7 +42,7 @@ public class ActivityCardAdapter extends RecyclerView.Adapter<ActivityCardAdapte
     @Override
     public void onBindViewHolder(ActivityCardAdapter.ActivityViewHolder holder, int position) {
         //pass the goals Spontaneous Incomes and Expenses and show them in a CardView inside the RecyclerView
-        holder.CategoryText.setText(incomes.get(position).getType());
+        holder.CategoryText.setText(incomes.get(position).getName());
 
 
     }

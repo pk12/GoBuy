@@ -1,11 +1,11 @@
 package com.example.nightc.gobuy;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -13,7 +13,22 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.Spinner;
+import android.widget.Toast;
+
+import com.example.nightc.gobuy.Activities.Bottom_Tabs_Activity;
+import com.example.nightc.gobuy.GoBuySDK.UserClasses.StableExpense;
+import com.example.nightc.gobuy.GoBuySDK.UserClasses.StableIncome;
+import com.example.nightc.gobuy.GoBuySDK.UserClasses.User;
+import com.example.nightc.gobuy.GoBuySDK.UserClasses.UserData;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
 
 public class SignUp extends AppCompatActivity {
 
@@ -26,6 +41,8 @@ public class SignUp extends AppCompatActivity {
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
+    private static final HashMap<String, StableIncome> SteadyIncomes = new HashMap();
+    private static HashMap<String, StableExpense> SteadyExpenses = new HashMap();
 
 
     /**
@@ -105,17 +122,71 @@ public class SignUp extends AppCompatActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView;
+            //Initialise all the variables that are going to be used in every clause to be able to use them on the final next
+            final Spinner Type;
+            final Spinner PayPeriod;
+            final EditText Amount;
+            final EditText OtherType;
+            Button Add;
+            final View rootView;
+
             if (getArguments().getInt(ARG_SECTION_NUMBER) == 1){
-                 rootView = inflater.inflate(R.layout.fragment_sign_up, container, false);
-                ImageView v = (ImageView) rootView.findViewById(R.id.imageView);
+                 rootView = inflater.inflate(R.layout.add_other_incomes, container, false);
+                 Type = (Spinner) rootView.findViewById(R.id.IncomeTypeSpinner);
+                 PayPeriod = (Spinner) rootView.findViewById(R.id.PayPeriodSpinner);
+                 Amount = (EditText) rootView.findViewById(R.id.Income_AmountEditText);
+                 Add = (Button) rootView.findViewById(R.id.AddIncomeButton);
+
+                 Add.setOnClickListener(new View.OnClickListener() {
+                     @Override
+                     public void onClick(View v) {
+                         if (!Amount.getText().toString().trim().equals("")){
+                             FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                             StableIncome stableIncome = new StableIncome(Type.getSelectedItem().toString(), Double.parseDouble(Amount.getText().toString().trim()),
+                                     PayPeriod.getSelectedItem().toString());
+                             SteadyIncomes.put(String.valueOf(SteadyIncomes.size() + 1), stableIncome);
+                             Toast.makeText(rootView.getContext(), "Income successfully added", Toast.LENGTH_SHORT).show();
+
+                         }
+                         else
+                             Toast.makeText(rootView.getContext(), "Please enter the amount", Toast.LENGTH_SHORT).show();
+                     }
+                 });
 
             }
             else if (getArguments().getInt(ARG_SECTION_NUMBER) == 2){
-                 rootView = inflater.inflate(R.layout.add_job, container, false);
-            }
-            else if (getArguments().getInt(ARG_SECTION_NUMBER) == 3){
-                 rootView = inflater.inflate(R.layout.add_other_incomes, container, false);
+                rootView = inflater.inflate(R.layout.add_expenses, container, false);
+                Type = (Spinner) rootView.findViewById(R.id.ExpenseType);
+                PayPeriod = (Spinner) rootView.findViewById(R.id.PayPeriodSpinner);
+                Amount = (EditText) rootView.findViewById(R.id.ExpenseAmount);
+                ImageButton Add1 = (ImageButton) rootView.findViewById(R.id.AddExpenseButton);
+                OtherType = (EditText) rootView.findViewById(R.id.OtherType);
+
+                //if the type is Other then the user must enter the Type
+                //else the user must only enter the amount
+                Add1.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        if (Type.getSelectedItem().toString().equals("Other")){
+                            if (!Amount.getText().toString().trim().equals("") && !OtherType.getText().toString().trim().equals("")){
+                                StableExpense stableExpense = new StableExpense(OtherType.getText().toString(), Double.parseDouble(Amount.getText().toString()), PayPeriod.getSelectedItem().toString());
+                                SteadyExpenses.put(String.valueOf(SteadyExpenses.size() + 1), stableExpense);
+                                Toast.makeText(rootView.getContext(), "Expense successfully added", Toast.LENGTH_SHORT).show();
+                            }
+                            else
+                                Toast.makeText(rootView.getContext(), "Please complete all the required fields", Toast.LENGTH_SHORT).show();
+                        }
+                        else if (!Amount.getText().toString().trim().equals("")){
+                            StableExpense stableExpense = new StableExpense(Type.getSelectedItem().toString(), Double.parseDouble(Amount.getText().toString()), PayPeriod.getSelectedItem().toString());
+                            SteadyExpenses.put(String .valueOf(SteadyExpenses.size() + 1), stableExpense);
+                            Toast.makeText(rootView.getContext(), "Expense successfully added", Toast.LENGTH_SHORT).show();
+                        }
+                        else
+                            Toast.makeText(rootView.getContext(), "Please complete all the required fields", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
             }
             else {
                 rootView = inflater.inflate(R.layout.add_expenses, container, false);
@@ -145,66 +216,99 @@ public class SignUp extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            // Show 4 total pages.
-            return 4;
+            // Show 3 total pages.
+            return 2;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
+            //If i used a toolbar these would be each tab's name
             switch (position) {
                 case 0:
-
                     return "SECTION 1";
                 case 1:
-
                     return "SECTION 2";
                 case 2:
                     return "SECTION 3";
-                case 4:
-                    return "SECTION 4";
             }
             return null;
         }
     }
 
     //On signUp screen makes the layout change when pressing the next button
+
     public void OnNextSelected(View view){
         final ViewPager pager = (ViewPager) findViewById(R.id.SignUpPager);
+        if (pager.getCurrentItem() == 0){
+            if (SteadyIncomes.isEmpty()){
+                Toast.makeText(this, "You have not entered any incomes", Toast.LENGTH_SHORT).show();
+            }
+            else
+                pager.setCurrentItem(pager.getCurrentItem() + 1);
 
+        }
+        else if (pager.getCurrentItem() == 1){
+            if (SteadyExpenses.isEmpty()){
+                Toast.makeText(this, "You have not entered any expenses", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                //TODO: Upload Data and create logged in activity
+                //Initialize variables
+                DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+                FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                UserData userData = new UserData("N/A", 11, "N/A", null, SteadyIncomes, SteadyExpenses);
+                User user = new User(null, userData, firebaseUser.getUid().toString(), false);
+
+                //Add the user data into Firebase DB
+                reference = reference.child("Users").child(firebaseUser.getUid());
+                reference.setValue(user.toHashMap());
+
+                //Initialize User Goals DB section
+                reference = FirebaseDatabase.getInstance().getReference("Goals").child(firebaseUser.getUid()).child("GoalNumber");
+                reference.setValue(0);
+
+                //Start the LoggedIn Activity
+                Intent intent = new Intent(SignUp.this, Bottom_Tabs_Activity.class);
+                startActivity(intent);
+                this.finish();
+            }
+        }
+
+        // May not use the job field after all
         //if the user wants to add other incomes it will navigate him to other incomes screen
         //if he doesn't want to then it will navigate to Expense screen
-        if (pager.getCurrentItem() == 1){
-
-            View v = getLayoutInflater().inflate(R.layout.fragment_ask_other_income,null);
-            AlertDialog.Builder aBuilder = new AlertDialog.Builder(this);
-
-            aBuilder.setView(v);
-            final AlertDialog alertDialog = aBuilder.create();
-            alertDialog.show();
-
-            Button yes = (Button) v.findViewById(R.id.YesButton);
-            Button no = (Button) v.findViewById(R.id.NoButton);
-
-
-
-            yes.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    pager.setCurrentItem(pager.getCurrentItem() + 1,true);
-                    alertDialog.dismiss();
-                }
-            });
-
-            no.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    pager.setCurrentItem(pager.getCurrentItem() + 2,true);
-                    alertDialog.dismiss();
-                }
-            });
-
-        }else{
-            pager.setCurrentItem(pager.getCurrentItem() + 1,true);
-        }
+//        if (pager.getCurrentItem() == 0){
+//
+//            View v = getLayoutInflater().inflate(R.layout.fragment_ask_other_income,null);
+//            AlertDialog.Builder aBuilder = new AlertDialog.Builder(this);
+//
+//            aBuilder.setView(v);
+//            final AlertDialog alertDialog = aBuilder.create();
+//            alertDialog.show();
+//
+//            Button yes = (Button) v.findViewById(R.id.YesButton);
+//            Button no = (Button) v.findViewById(R.id.NoButton);
+//
+//
+//
+//            yes.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    pager.setCurrentItem(pager.getCurrentItem() + 1,true);
+//                    alertDialog.dismiss();
+//                }
+//            });
+//
+//            no.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    pager.setCurrentItem(pager.getCurrentItem() + 2,true);
+//                    alertDialog.dismiss();
+//                }
+//            });
+//
+//        }else{
+//            pager.setCurrentItem(pager.getCurrentItem() + 1,true);
+//        }
     }
 }

@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.nightc.gobuy.CustomAdapters.ActivityCardAdapter;
-import com.example.nightc.gobuy.GoBuySDK.UserClasses.SpontaneousIncome;
+import com.example.nightc.gobuy.GoBuySDK.UserClasses.Income;
 import com.example.nightc.gobuy.R;
 
 import java.util.ArrayList;
@@ -23,9 +23,9 @@ import java.util.ArrayList;
 //The fragment that will populate the today tab
 
 public class TodayTab extends Fragment {
-    private ArrayList<SpontaneousIncome> spontaneousIncomes;
+    private ArrayList<Income> spontaneousIncomes;
 
-    public TodayTab(ArrayList<SpontaneousIncome> spontaneousIncomes) {
+    public TodayTab(ArrayList<Income> spontaneousIncomes) {
         this.spontaneousIncomes = spontaneousIncomes ;
     }
 

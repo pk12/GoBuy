@@ -22,8 +22,8 @@ import android.widget.TextView;
 
 import com.example.nightc.gobuy.Activities.AddGoalActivity;
 import com.example.nightc.gobuy.Activities.NewIncome_ExpenseActivity;
-import com.example.nightc.gobuy.GoBuySDK.UserClasses.SpontaeousExpense;
-import com.example.nightc.gobuy.GoBuySDK.UserClasses.SpontaneousIncome;
+import com.example.nightc.gobuy.GoBuySDK.UserClasses.Expense;
+import com.example.nightc.gobuy.GoBuySDK.UserClasses.Income;
 import com.example.nightc.gobuy.R;
 
 import org.joda.time.LocalDate;
@@ -144,7 +144,7 @@ public class TabbedFragment extends Fragment {
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                if (position == 0){
+                if (position == 1){
                     ToolbarProgess.setVisibility(View.VISIBLE);
                     DateBar.setVisibility(View.VISIBLE);
                     SaveAmountBar.setVisibility(View.VISIBLE);
@@ -156,14 +156,14 @@ public class TabbedFragment extends Fragment {
                     DateBar.setText(new LocalDate().toString("dd-MMM-yy"));
                 }
                 else {
-//                    ToolbarProgess.setVisibility(View.GONE);
-//                    DateBar.setVisibility(View.GONE);
-//                    SaveAmountBar.setVisibility(View.GONE);
-//                    SpendBar.setVisibility(View.GONE);
-//                    SaveBar.setVisibility(View.GONE);
-//                    SpendAmountBar.setVisibility(View.GONE);
-//                    ToolbarProgess.setVisibility(View.GONE);
-//                    DateBar.setVisibility(View.GONE);
+                    ToolbarProgess.setVisibility(View.INVISIBLE);
+                    DateBar.setVisibility(View.INVISIBLE);
+                    SaveAmountBar.setVisibility(View.INVISIBLE);
+                    SpendBar.setVisibility(View.INVISIBLE);
+                    SaveBar.setVisibility(View.INVISIBLE);
+                    SpendAmountBar.setVisibility(View.INVISIBLE);
+                    ToolbarProgess.setVisibility(View.INVISIBLE);
+                    DateBar.setVisibility(View.INVISIBLE);
                 }
 
             }
@@ -186,8 +186,11 @@ public class TabbedFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        getActivity().getMenuInflater().inflate(R.menu.menu_goal_selection, menu);
+        getActivity().getMenuInflater().inflate(R.menu.bottom_tabs_activity_menu, menu);
+
     }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -254,16 +257,16 @@ public class TabbedFragment extends Fragment {
 
 
 
-    public ArrayList<SpontaneousIncome> DemoIncomes(){
-        SpontaeousExpense expense = new SpontaeousExpense("Coffee",4,1,1);
-        SpontaeousExpense expense1 = new SpontaeousExpense("Coffee",4,1,1);
-        SpontaneousIncome income = new SpontaneousIncome("Mom",6,1,1);
-        SpontaneousIncome income1 = new SpontaneousIncome("Dad",6,1,1);
-        SpontaneousIncome income2 = new SpontaneousIncome("You",6,1,1);
-        SpontaneousIncome income3 = new SpontaneousIncome("Id",6,1,1);
-        SpontaneousIncome income4 = new SpontaneousIncome("Loe",6,1,1);
+    public ArrayList<Income> DemoIncomes(){
+        Expense expense = new Expense("Coffee",4);
+        Expense expense1 = new Expense("Coffee",4);
+        Income income = new Income("Mom",6);
+        Income income1 = new Income("Dad",6);
+        Income income2 = new Income("You",6);
+        Income income3 = new Income("Id",6);
+        Income income4 = new Income("Loe",6);
 
-        ArrayList<SpontaneousIncome> incomes = new ArrayList<SpontaneousIncome>();
+        ArrayList<Income> incomes = new ArrayList<>();
         incomes.add(income);
         incomes.add(income1);
         incomes.add(income2);

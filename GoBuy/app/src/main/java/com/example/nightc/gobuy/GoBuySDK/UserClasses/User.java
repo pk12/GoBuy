@@ -3,40 +3,49 @@ package com.example.nightc.gobuy.GoBuySDK.UserClasses;
 import com.example.nightc.gobuy.GoBuySDK.Goal;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by Oppai on 7/2/2017.
  */
 
 public class User {
-    private long UserID;
-    private Credentials credentials; //a class containg the User's credentials
+    private String UserID;
+    private Credentials credentials; //a class contains the User's credentials if the users uses manual login
     private UserData userData;  //a class containing the User's Data
     private ArrayList<Goal> goals; //An array keeping all the active Goals the user has
+    private boolean isCustomUser;
 
-    public User(Credentials credentials, UserData userData, Goal goal, long UserID) {
+    public User() {
+
+    }
+
+    public User(Credentials credentials, UserData userData, String UserID, boolean isCustomUser) {
         this.credentials = credentials;
         this.userData = userData;
         this.UserID = UserID;
+        this.isCustomUser = isCustomUser;
 
         //creates the array list with the goals
-        //sets up the first goal(Expense and Incomes and then adds it into the list
         goals = new ArrayList<Goal>();
-        setGoalData(goal);
-        addGoal(goal);
+
     }
 
     //inserts the User IncomesAPI and Expense Amount
     //it was the only correct way i could think of
-    public void setGoalData(Goal goal){
-        goal.setSteadyIncome(userData.CalculateIncomeAmount());
-        goal.setSteadyExpense(userData.CalculateBillAmount());
-    }
 
-    public void addGoal(Goal goal){
-        goal.setSteadyExpense(userData.CalculateBillAmount());
-        goal.setSteadyIncome(userData.CalculateIncomeAmount());
-        goals.add(goal);
+
+    public HashMap toHashMap(){
+        HashMap hashMap = new HashMap();
+        //TODO: Create the toHashMap function
+        hashMap.put("UID", this.UserID);
+        if (!this.isCustomUser == true){
+            hashMap.put("Credentials", this.credentials);
+        }
+        hashMap.put("UserData", this.userData);
+
+
+        return hashMap;
     }
 
 
@@ -54,7 +63,7 @@ public class User {
         return goals;
     }
 
-    public long getUserID() {
+    public String getUserID() {
         return UserID;
     }
 

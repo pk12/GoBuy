@@ -305,7 +305,7 @@
 //    public void addJob() {
 //        SQLiteDatabase db = this.getWritableDatabase();
 //        ContentValues values = new ContentValues();
-//        values.put(KEY_TYPE, job.getType());
+//        values.put(KEY_TYPE, job.getName());
 //        values.put(KEY_SALARY, job.getAmount());
 //        values.put(KEY_JOBID, job.getIncomeID());
 //        values.put(KEY_USERID, user.getUserID());
@@ -317,7 +317,7 @@
 //    public void addExtraIncome() {
 //        SQLiteDatabase db = this.getWritableDatabase();
 //        ContentValues values = new ContentValues();
-//        values.put(KEY_TYPE_EXTRAINCOME, income.getType());
+//        values.put(KEY_TYPE_EXTRAINCOME, income.getName());
 //        values.put(KEY_AMOUNT_EXTRAINCOME, income.getAmount());
 //        values.put(KEY_EXTRID, income.getIncomeID());
 //        values.put(KEY_USERID, user.getUserID());
@@ -329,7 +329,7 @@
 //    public void addExpenses() {
 //        SQLiteDatabase db = this.getWritableDatabase();
 //        ContentValues values = new ContentValues();
-//        values.put(KEY_TYPE_EXPENSE, expense.getType());
+//        values.put(KEY_TYPE_EXPENSE, expense.getName());
 //        values.put(KEY_AMOUNT_EXPENSE, expense.getAmount());
 //        values.put(KEY_EXPENSEID, expense.getExpenseID());
 //        values.put(KEY_USERID, user.getUserID());
@@ -392,11 +392,11 @@
 //        //Load Json and get the ArrayList
 //
 //        //Example Loading the ArrayList from the DB
-//        ArrayList<ShoppingInterests> ShoppingInterests = new Gson().fromJson(cursor.getString(4),new TypeToken<List<ShoppingInterests>>(){}.getType());
-//        ArrayList<StableIncome> stableIncome = new Gson().fromJson(cursor.getString(5),new TypeToken<List<StableIncome>>(){}.getType());
-//        ArrayList<StableExpense> stableExpense = new Gson().fromJson(cursor.getString(6),new TypeToken<List<StableExpense>>(){}.getType());
-//        ArrayList<SpontaneousIncome> a2 = new Gson().fromJson(cursor.getString(7),new TypeToken<List<SpontaneousIncome>>(){}.getType());
-//        ArrayList<SpontaeousExpense> a3 = new Gson().fromJson(cursor.getString(8),new TypeToken<List<SpontaeousExpense>>(){}.getType());
+//        ArrayList<ShoppingInterests> ShoppingInterests = new Gson().fromJson(cursor.getString(4),new TypeToken<List<ShoppingInterests>>(){}.getName());
+//        ArrayList<StableIncome> stableIncome = new Gson().fromJson(cursor.getString(5),new TypeToken<List<StableIncome>>(){}.getName());
+//        ArrayList<StableExpense> stableExpense = new Gson().fromJson(cursor.getString(6),new TypeToken<List<StableExpense>>(){}.getName());
+//        ArrayList<SpontaneousIncome> a2 = new Gson().fromJson(cursor.getString(7),new TypeToken<List<SpontaneousIncome>>(){}.getName());
+//        ArrayList<SpontaeousExpense> a3 = new Gson().fromJson(cursor.getString(8),new TypeToken<List<SpontaeousExpense>>(){}.getName());
 //
 //        UserData userData = new UserData(cursor.getString(0),Short.parseShort(cursor.getString(1)),cursor.getString(2),ShoppingInterests,getJob(Integer.parseInt(cursor.getString(3))),
 //                stableIncome,stableExpense,Integer.parseInt(cursor.getString(3)));

@@ -24,8 +24,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -111,20 +109,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 if (task.isSuccessful()){
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "signInWithCredential:success");
-                    final FirebaseUser user = mAuth.getCurrentUser();
-                    final DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
-                    final DatabaseReference ref = rootRef.child("Users").child(user.getUid());
-                    final DatabaseReference goalCounter = FirebaseDatabase.getInstance().getReference("Goals").child(user.getUid()).child("GoalNumber");
 
                     //checks if there is a data snapshot with key: UserID
                     //So it checks if it is a new user
                     if (task.getResult().getAdditionalUserInfo().isNewUser()){
-                            ref.child("Name").setValue(user.getDisplayName());
-                            ref.child("Email").setValue(user.getEmail());
-                            ref.child("Phone").setValue(user.getPhoneNumber());
-                            goalCounter.setValue(0);
-                            Intent i = new Intent(LoginActivity.this, SignUp.class);
-                            startActivity(i);
+
+                        //if it is a new user it starts the SignUp activity
+                        Intent i = new Intent(LoginActivity.this, SignUp.class);
+                        startActivity(i);
+                        LoginActivity.this.finish();
 
                     }
                     else{

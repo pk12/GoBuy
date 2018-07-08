@@ -6,18 +6,20 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.nightc.gobuy.Fragments.SettingsFragment;
 import com.example.nightc.gobuy.Fragments.TabbedFragment;
 import com.example.nightc.gobuy.R;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class Bottom_Tabs_Activity extends AppCompatActivity {
 
 
 
-    TabbedFragment tabbedFragment = new TabbedFragment();
-    SettingsFragment settingsFragment = new SettingsFragment();
+    private TabbedFragment tabbedFragment = new TabbedFragment();
+    private SettingsFragment settingsFragment = new SettingsFragment();
 
     private String FRAGMENT_TAG;
 
@@ -67,6 +69,25 @@ public class Bottom_Tabs_Activity extends AppCompatActivity {
         }
 
     };
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.bottom_tabs_activity_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.LogOut:
+                FirebaseAuth.getInstance().signOut();
+                return true;
+                //Auth.GoogleSignInApi.signOut()
+            default: return false;
+        }
+
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

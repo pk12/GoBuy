@@ -20,6 +20,7 @@ public class Goal {
     private LocalDate DateWanted; //the date which the User wants to have his goal completed
     private LocalDate ExpectedDate; //the date which our algorithms expect the goal to be completed
     private LocalDate DateCreated;  //the date which the Goal was created
+    private boolean IsActive;
 
     private Day day;
 
@@ -36,6 +37,7 @@ public class Goal {
         this.DateWanted = dateWanted;
         this.DateCreated = new LocalDate();
         this.Progress = 0;
+        this.IsActive = false;
 
 
     }
@@ -81,6 +83,7 @@ public class Goal {
         hashMap.put("MoneySaved", this.MoneySaved);
         hashMap.put("MoneyToSavePerDay", this.MoneyToSavePerDay);
         hashMap.put("GoalItem", this.GoalItem);
+        hashMap.put("IsActive", this.IsActive);
 
         return hashMap;
 
@@ -94,6 +97,7 @@ public class Goal {
         this.Progress = new Long((Long) hashMap.get("Progress")).intValue();
         this.MoneySaved = new Long((Long) hashMap.get("MoneySaved")).doubleValue();
         this.MoneyToSavePerDay = new Long((Long) hashMap.get("MoneyToSavePerDay")).doubleValue();
+        this.IsActive = (boolean) hashMap.get("IsActive");
         HashMap hashMap1 = (HashMap) hashMap.get("GoalItem");
         this.GoalItem = new Item();
         this.GoalItem.setCategory((String) hashMap1.get("category"));

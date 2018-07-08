@@ -1,51 +1,50 @@
 package com.example.nightc.gobuy.GoBuySDK.UserClasses;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by Oppai on 7/2/2017.
  */
 
 public class UserData {
-    private int UserID;
     private String Area;
-    private short age;
+    private int age;
     private String gender;
-    private ArrayList<ShoppingInterests> shoppingInterests; //shopping interests are multiple
-    private Job mainJob;
-    private ArrayList<StableIncome> Incomes; //An array of all the extra incomes because there may be multiple extra
-    private ArrayList<StableExpense> expenses; //An array of all the fixed expenses the user has
-    private ArrayList<SpontaneousIncome> SpontaneousIncomes; //contains the Incomes the user creates on a goal Day
-    private ArrayList<SpontaeousExpense> spontaneousExpenses; //contains the Expense the user creates on a goal Day
+    private HashMap<String, ShoppingInterests> shoppingInterests; //shopping interests are multiple
+    private HashMap<String,StableIncome> Incomes; //An array of all the extra incomes because there may be multiple extra
+    private HashMap<String,StableExpense> expenses; //An array of all the fixed expenses the user has
+    private HashMap<String,Income> SpontaneousIncomes; //contains the Incomes the user creates on a goal Day
+    private HashMap<String,Expense> spontaneousExpenses; //contains the Expense the user creates on a goal Day
 
+    public UserData() {
 
-    public UserData(String area, short age, String gender, ArrayList<ShoppingInterests> shoppingInterests,
-                    Job mainJob, ArrayList<StableIncome> extraIncomes, ArrayList<StableExpense> expenses, int UserID) {
+    }
+
+    public UserData(String area, int age, String gender, HashMap<String, ShoppingInterests> shoppingInterests,
+                    HashMap<String, StableIncome> incomes, HashMap<String, StableExpense> expenses) {
         Area = area;
         this.age = age;
         this.gender = gender;
         this.shoppingInterests = shoppingInterests;
-        this.mainJob = mainJob;
-        this.Incomes = extraIncomes;
+        this.Incomes = incomes;
         this.expenses = expenses;
-        this.UserID = UserID;
     }
 
 
     public double CalculateBillAmount(){
         double amount = 0;
-        for (Expense expense : expenses){
-            amount += expense.getAmount();
+        for (HashMap.Entry expense : expenses.entrySet()){
+            amount += ((Expense) expense.getValue()).getAmount();
         }
         return amount;
     }
 
     public double CalculateIncomeAmount(){
-        double amount = mainJob.getAmount();
+        double amount = 0;
         //to be added pay period calculations
 
-        for (StableIncome extraIncome : Incomes){
-            amount += extraIncome.getAmount();
+        for (HashMap.Entry extraIncome : Incomes.entrySet()){
+            amount += ((Income) extraIncome.getValue()).getAmount();
         }
         return amount;
     }
@@ -54,15 +53,11 @@ public class UserData {
     //getters
 
 
-    public int getUserID() {
-        return UserID;
-    }
-
     public String getArea() {
         return Area;
     }
 
-    public short getAge() {
+    public int getAge() {
         return age;
     }
 
@@ -70,27 +65,23 @@ public class UserData {
         return gender;
     }
 
-    public ArrayList<ShoppingInterests> getShoppingInterests() {
+    public HashMap<String,ShoppingInterests> getShoppingInterests() {
         return shoppingInterests;
     }
 
-    public Job getMainJob() {
-        return mainJob;
-    }
-
-    public ArrayList<StableIncome> getExtraIncomes() {
+    public HashMap<String,StableIncome> getIncomes() {
         return Incomes;
     }
 
-    public ArrayList<StableExpense> getExpenses() {
+    public HashMap<String,StableExpense> getExpenses() {
         return expenses;
     }
 
-    public ArrayList<SpontaneousIncome> getSpontaneousIncomes() {
+    public HashMap<String,Income> getSpontaneousIncomes() {
         return SpontaneousIncomes;
     }
 
-    public ArrayList<SpontaeousExpense> getSpontaneousExpenses() {
+    public HashMap<String,Expense> getSpontaneousExpenses() {
         return spontaneousExpenses;
     }
 
@@ -108,7 +99,6 @@ public class UserData {
         this.gender = gender;
     }
 
-    public void setMainJob(Job mainJob) {
-        this.mainJob = mainJob;
-    }
+
+
 }

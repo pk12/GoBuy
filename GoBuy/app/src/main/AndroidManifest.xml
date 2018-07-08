@@ -31,8 +31,9 @@
         <activity
             android:name=".Activities.Bottom_Tabs_Activity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:label="@string/title_activity_bottom__tabs_"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:label="@string/title_activity_bottom__tabs_">
+
+        </activity>
         <!-- makes the app not crash on orientation change -->
         <activity android:name=".Activities.NewIncome_ExpenseActivity" />
         <activity

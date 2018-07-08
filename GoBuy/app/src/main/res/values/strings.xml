@@ -38,7 +38,12 @@
     </string-array>
     <string-array name="Income_Types">
         <item>Rent</item>
-        <item>Part Time</item>
+        <item>Job</item>
+    </string-array>
+    <string-array name="Expense_Types">
+        <item>Rent</item>
+        <item>Bill</item>
+        <item>Other</item>
     </string-array>
     <string name="title_activity_goal_selection">GoalSelectionActivity</string>
     <string name="title_activity_bottom__tabs_">Bottom_Tabs_Activity</string>
