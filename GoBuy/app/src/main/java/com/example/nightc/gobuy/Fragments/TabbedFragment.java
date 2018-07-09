@@ -11,9 +11,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -25,8 +22,6 @@ import com.example.nightc.gobuy.Activities.NewIncome_ExpenseActivity;
 import com.example.nightc.gobuy.GoBuySDK.UserClasses.Expense;
 import com.example.nightc.gobuy.GoBuySDK.UserClasses.Income;
 import com.example.nightc.gobuy.R;
-
-import org.joda.time.LocalDate;
 
 import java.util.ArrayList;
 
@@ -63,19 +58,19 @@ public class TabbedFragment extends Fragment {
     @Override
     public View onCreateView(final LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.tabbed_fragment,container,false);
-        ToolbarProgess = (ProgressBar) v.findViewById(R.id.ProgressToolbar);
-        SaveBar = (TextView) v.findViewById(R.id.SaveText);
-        SaveAmountBar = (TextView) v.findViewById(R.id.SaveAmountText);
-        SpendBar = (TextView) v.findViewById(R.id.SpendText);
-        SpendAmountBar = (TextView) v.findViewById(R.id.SpendAmountText);
-        DateBar = (TextView) v.findViewById(R.id.textDate);
-        //Hide Views when Goals tab is inflated
-        SaveAmountBar.setVisibility(View.GONE);
-        SpendBar.setVisibility(View.GONE);
-        SaveBar.setVisibility(View.GONE);
-        SpendAmountBar.setVisibility(View.GONE);
-        ToolbarProgess.setVisibility(View.GONE);
-        DateBar.setVisibility(View.GONE);
+//        ToolbarProgess = (ProgressBar) v.findViewById(R.id.ProgressToolbar);
+//        SaveBar = (TextView) v.findViewById(R.id.SaveText);
+//        SaveAmountBar = (TextView) v.findViewById(R.id.SaveAmountText);
+//        SpendBar = (TextView) v.findViewById(R.id.SpendText);
+//        SpendAmountBar = (TextView) v.findViewById(R.id.SpendAmountText);
+//        DateBar = (TextView) v.findViewById(R.id.textDate);
+//        //Hide Views when Goals tab is inflated
+//        SaveAmountBar.setVisibility(View.GONE);
+//        SpendBar.setVisibility(View.GONE);
+//        SaveBar.setVisibility(View.GONE);
+//        SpendAmountBar.setVisibility(View.GONE);
+//        ToolbarProgess.setVisibility(View.GONE);
+//        DateBar.setVisibility(View.GONE);
 
 
 
@@ -144,27 +139,27 @@ public class TabbedFragment extends Fragment {
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                if (position == 1){
-                    ToolbarProgess.setVisibility(View.VISIBLE);
-                    DateBar.setVisibility(View.VISIBLE);
-                    SaveAmountBar.setVisibility(View.VISIBLE);
-                    SpendBar.setVisibility(View.VISIBLE);
-                    SaveBar.setVisibility(View.VISIBLE);
-                    SpendAmountBar.setVisibility(View.VISIBLE);
-                    ToolbarProgess.setVisibility(View.VISIBLE);
-                    DateBar.setVisibility(View.VISIBLE);
-                    DateBar.setText(new LocalDate().toString("dd-MMM-yy"));
-                }
-                else {
-                    ToolbarProgess.setVisibility(View.INVISIBLE);
-                    DateBar.setVisibility(View.INVISIBLE);
-                    SaveAmountBar.setVisibility(View.INVISIBLE);
-                    SpendBar.setVisibility(View.INVISIBLE);
-                    SaveBar.setVisibility(View.INVISIBLE);
-                    SpendAmountBar.setVisibility(View.INVISIBLE);
-                    ToolbarProgess.setVisibility(View.INVISIBLE);
-                    DateBar.setVisibility(View.INVISIBLE);
-                }
+//                if (position == 3){
+//                    ToolbarProgess.setVisibility(View.VISIBLE);
+//                    DateBar.setVisibility(View.VISIBLE);
+//                    SaveAmountBar.setVisibility(View.VISIBLE);
+//                    SpendBar.setVisibility(View.VISIBLE);
+//                    SaveBar.setVisibility(View.VISIBLE);
+//                    SpendAmountBar.setVisibility(View.VISIBLE);
+//                    ToolbarProgess.setVisibility(View.VISIBLE);
+//                    DateBar.setVisibility(View.VISIBLE);
+//                    DateBar.setText(new LocalDate().toString("dd-MMM-yy"));
+//                }
+//                else {
+//                    ToolbarProgess.setVisibility(View.INVISIBLE);
+//                    DateBar.setVisibility(View.INVISIBLE);
+//                    SaveAmountBar.setVisibility(View.INVISIBLE);
+//                    SpendBar.setVisibility(View.INVISIBLE);
+//                    SaveBar.setVisibility(View.INVISIBLE);
+//                    SpendAmountBar.setVisibility(View.INVISIBLE);
+//                    ToolbarProgess.setVisibility(View.INVISIBLE);
+//                    DateBar.setVisibility(View.INVISIBLE);
+//                }
 
             }
 
@@ -184,29 +179,6 @@ public class TabbedFragment extends Fragment {
     }
 
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        getActivity().getMenuInflater().inflate(R.menu.bottom_tabs_activity_menu, menu);
-
-    }
-
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
@@ -223,13 +195,13 @@ public class TabbedFragment extends Fragment {
             switch (position){
                 case 0:
                     goalsScreenTab = new GoalsScreenTab();
-                    ToolbarProgess.setVisibility(View.GONE);
-                    DateBar.setVisibility(View.GONE);
+//                    ToolbarProgess.setVisibility(View.GONE);
+//                    DateBar.setVisibility(View.GONE);
                     return goalsScreenTab;
                 default:
                     todayTab = new TodayTab(DemoIncomes());
-                    ToolbarProgess.setVisibility(View.VISIBLE);
-                    DateBar.setVisibility(View.VISIBLE);
+//                    ToolbarProgess.setVisibility(View.VISIBLE);
+//                    DateBar.setVisibility(View.VISIBLE);
                     return todayTab;
             }
         }

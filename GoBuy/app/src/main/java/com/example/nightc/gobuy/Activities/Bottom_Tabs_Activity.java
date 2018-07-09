@@ -2,6 +2,7 @@ package com.example.nightc.gobuy.Activities;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -12,6 +13,11 @@ import android.view.MenuItem;
 import com.example.nightc.gobuy.Fragments.SettingsFragment;
 import com.example.nightc.gobuy.Fragments.TabbedFragment;
 import com.example.nightc.gobuy.R;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class Bottom_Tabs_Activity extends AppCompatActivity {
@@ -80,9 +86,24 @@ public class Bottom_Tabs_Activity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.LogOut:
+                //WORKS
                 FirebaseAuth.getInstance().signOut();
+                GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                        .requestIdToken(getString(R.string.default_web_client_id))
+                        .requestEmail()
+                        .build();
+                GoogleSignInClient mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
+                mGoogleSignInClient.signOut().addOnCompleteListener(this,
+                        new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                Intent intent = new Intent(Bottom_Tabs_Activity.this, LoginActivity.class);
+                                startActivity(intent);
+                                Bottom_Tabs_Activity.this.finish();
+                            }
+                        });
                 return true;
-                //Auth.GoogleSignInApi.signOut()
             default: return false;
         }
 
@@ -94,11 +115,17 @@ public class Bottom_Tabs_Activity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bottom__tabs_);
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        actionBar.setElevation(0);
+        actionBar.setTitle("Hello " + FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
+        actionBar.setSubtitle("Save Today: ");
         getSupportFragmentManager().beginTransaction().replace(R.id.Bottom_Tab_Container, tabbedFragment,FRAGMENT_TAG="GSelection").commit();
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
+
+
 
 
 
