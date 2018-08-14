@@ -36,17 +36,15 @@ public class GoalsScreenTab extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View RootView = inflater.inflate(R.layout.fragment_goal_selection,container,false);
-
         RecyclerView rv = (RecyclerView) RootView.findViewById(R.id.GoalRecyclerView);
 
         rv.setHasFixedSize(true);
-
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(inflater.getContext());
         rv.setLayoutManager(mLayoutManager);
-
         GoalCardsAdapter goalCardsAdapter = new GoalCardsAdapter(goals);
         FetchData(goalCardsAdapter);
         rv.setAdapter(goalCardsAdapter);
+
 
         return RootView;
 
@@ -55,8 +53,7 @@ public class GoalsScreenTab extends Fragment {
     }
 
     //MUST CREATE ASYNC TASK TO LOAD THE DATA FROM THE DB
-    public ArrayList<Goal> FetchData(final GoalCardsAdapter adapter){
-
+    public void FetchData(final GoalCardsAdapter adapter){
 
         FirebaseUser User = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
@@ -85,8 +82,8 @@ public class GoalsScreenTab extends Fragment {
             }
         });
 
-        return goals;
     }
+
 
 
 }

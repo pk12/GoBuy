@@ -67,7 +67,7 @@ public class AddGoalActivity extends AppCompatActivity {
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             if (!dataSnapshot.exists()){
                                 Item item = new Item(User.getUid().toString(),Name.getText().toString().trim(),"Something", Double.parseDouble(Price.getText().toString().trim()));
-                                Goal goal = new Goal(item,2,2, new LocalDate(dateWanted.getText().toString()),200);
+                                Goal goal = new Goal(item,2,2, new LocalDate(dateWanted.getText().toString()), (int) (GoalNumber[0] + 1));
                                 reference[0].setValue(goal.toHashMap());
                                 finalGoalNo.setValue(GoalNumber[0] + 1);
                             }
@@ -85,8 +85,8 @@ public class AddGoalActivity extends AppCompatActivity {
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             if (dataSnapshot.exists()){
                                 Log.d("DATA VALUE", String.valueOf(dataSnapshot.getValue()));
-                                GoalNumber[0] = (long) dataSnapshot.getValue();
-                                reference[0] = reference[0].child("Goals").child(User.getUid()).child(String.valueOf(GoalNumber[0] + 1));
+                                GoalNumber[0] = (long) dataSnapshot.getValue(); //get the Goal Number value
+                                reference[0] = reference[0].child("Goals").child(User.getUid()).child(String.valueOf(GoalNumber[0] + 1)); //create a data child with the new goal number
                                 reference[0].addListenerForSingleValueEvent(valueEventListener);
                             }
                         }

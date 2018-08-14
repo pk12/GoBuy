@@ -15,7 +15,7 @@
         android:foreground="?android:attr/selectableItemBackground">
 
         <android.support.v7.widget.SwitchCompat
-            android:id="@+id/switchCompat"
+            android:id="@+id/goalSwitch"
             style="@android:style/Widget.Material.CompoundButton.Switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

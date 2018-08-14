@@ -37,7 +37,7 @@ public class User {
 
     public HashMap toHashMap(){
         HashMap hashMap = new HashMap();
-        //TODO: Create the toHashMap function
+
         hashMap.put("UID", this.UserID);
         if (!this.isCustomUser == true){
             hashMap.put("Credentials", this.credentials);

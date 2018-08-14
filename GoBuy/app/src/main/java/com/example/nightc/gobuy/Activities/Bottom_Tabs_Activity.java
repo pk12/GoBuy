@@ -7,11 +7,14 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.example.nightc.gobuy.Fragments.SettingsFragment;
 import com.example.nightc.gobuy.Fragments.TabbedFragment;
+import com.example.nightc.gobuy.GoBuySDK.UserClasses.ActiveGoalHandler;
 import com.example.nightc.gobuy.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -19,10 +22,15 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.squareup.picasso.Picasso;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Bottom_Tabs_Activity extends AppCompatActivity {
 
-
+    //Initialise Goal Handler, which runs here as a static variable across the whole app
+    //the data are filled while loading the data from the DB
+    public static ActiveGoalHandler goalHandler = new ActiveGoalHandler();
 
     private TabbedFragment tabbedFragment = new TabbedFragment();
     private SettingsFragment settingsFragment = new SettingsFragment();
@@ -115,10 +123,18 @@ public class Bottom_Tabs_Activity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bottom__tabs_);
-        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
-        actionBar.setElevation(0);
-        actionBar.setTitle("Hello " + FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
-        actionBar.setSubtitle("Save Today: ");
+        android.support.v7.widget.Toolbar toolbar = (Toolbar) findViewById(R.id.Bottom_tabs_toolbar);
+        CircleImageView imageView = (CircleImageView) findViewById(R.id.myImageontoolbar);
+        //Fetch the User icon and add it on the toolbar
+        Picasso.get().load(FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl())
+                .error(R.drawable.ic_sync_black_24dp).into(imageView);
+        //actionBar.setElevation(0);
+        toolbar.setTitle("");
+        TextView title = (TextView) findViewById(R.id.Bottom_tabs_title);
+        title.setText(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
+        setSupportActionBar(toolbar);
+
+        //actionBar.setSubtitle("Save Today: ");
         getSupportFragmentManager().beginTransaction().replace(R.id.Bottom_Tab_Container, tabbedFragment,FRAGMENT_TAG="GSelection").commit();
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);

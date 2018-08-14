@@ -27,23 +27,32 @@
     <string name="title_activity_sign_up">SignUp</string>
     <string name="title_activity_login">LoginActivity</string>
     <string-array name="Job_types">
+        <item></item>
         <item>Health</item>
         <item>IT</item>
         <item>Agriculture</item>
     </string-array>
     <string-array name="Time_Period">
+        <item>Select Pay Period</item>
         <item>Daily</item>
         <item>Monthly</item>
         <item>Annual</item>
     </string-array>
     <string-array name="Income_Types">
+        <item>Select Income type</item>
         <item>Rent</item>
         <item>Job</item>
     </string-array>
     <string-array name="Expense_Types">
+        <item>Select Expsense type</item>
         <item>Rent</item>
         <item>Bill</item>
         <item>Other</item>
+    </string-array>
+    <string-array name="Income_ExpenseAsk">
+        <item>Select</item>
+        <item>Income</item>
+        <item>Expense</item>
     </string-array>
     <string name="title_activity_goal_selection">GoalSelectionActivity</string>
     <string name="title_activity_bottom__tabs_">Bottom_Tabs_Activity</string>

@@ -43,6 +43,8 @@ public class SignUp extends AppCompatActivity {
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private static final HashMap<String, StableIncome> SteadyIncomes = new HashMap();
     private static HashMap<String, StableExpense> SteadyExpenses = new HashMap();
+    private static double totalIncome = 0;
+    private static double totalExpense = 0;
 
 
     /**
@@ -141,9 +143,9 @@ public class SignUp extends AppCompatActivity {
                      @Override
                      public void onClick(View v) {
                          if (!Amount.getText().toString().trim().equals("")){
-                             FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
                              StableIncome stableIncome = new StableIncome(Type.getSelectedItem().toString(), Double.parseDouble(Amount.getText().toString().trim()),
                                      PayPeriod.getSelectedItem().toString());
+                             totalIncome += stableIncome.getAmount();
                              SteadyIncomes.put(String.valueOf(SteadyIncomes.size() + 1), stableIncome);
                              Toast.makeText(rootView.getContext(), "Income successfully added", Toast.LENGTH_SHORT).show();
 
@@ -172,6 +174,8 @@ public class SignUp extends AppCompatActivity {
                             if (!Amount.getText().toString().trim().equals("") && !OtherType.getText().toString().trim().equals("")){
                                 StableExpense stableExpense = new StableExpense(OtherType.getText().toString(), Double.parseDouble(Amount.getText().toString()), PayPeriod.getSelectedItem().toString());
                                 SteadyExpenses.put(String.valueOf(SteadyExpenses.size() + 1), stableExpense);
+
+                                totalExpense += stableExpense.getAmount();
                                 Toast.makeText(rootView.getContext(), "Expense successfully added", Toast.LENGTH_SHORT).show();
                             }
                             else
@@ -180,6 +184,7 @@ public class SignUp extends AppCompatActivity {
                         else if (!Amount.getText().toString().trim().equals("")){
                             StableExpense stableExpense = new StableExpense(Type.getSelectedItem().toString(), Double.parseDouble(Amount.getText().toString()), PayPeriod.getSelectedItem().toString());
                             SteadyExpenses.put(String .valueOf(SteadyExpenses.size() + 1), stableExpense);
+                            totalExpense += stableExpense.getAmount();
                             Toast.makeText(rootView.getContext(), "Expense successfully added", Toast.LENGTH_SHORT).show();
                         }
                         else
@@ -252,16 +257,18 @@ public class SignUp extends AppCompatActivity {
                 Toast.makeText(this, "You have not entered any expenses", Toast.LENGTH_SHORT).show();
             }
             else {
-                //TODO: Upload Data and create logged in activity
+
                 //Initialize variables
                 DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
                 FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-                UserData userData = new UserData("N/A", 11, "N/A", null, SteadyIncomes, SteadyExpenses);
+                UserData userData = new UserData("N/A", 11, "N/A", null, SteadyIncomes, SteadyExpenses, totalIncome, totalExpense);
                 User user = new User(null, userData, firebaseUser.getUid().toString(), false);
 
                 //Add the user data into Firebase DB
                 reference = reference.child("Users").child(firebaseUser.getUid());
                 reference.setValue(user.toHashMap());
+
+
 
                 //Initialize User Goals DB section
                 reference = FirebaseDatabase.getInstance().getReference("Goals").child(firebaseUser.getUid()).child("GoalNumber");

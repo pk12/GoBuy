@@ -9,11 +9,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -101,33 +99,9 @@ public class TabbedFragment extends Fragment {
                 //if Today Tab active then asks for new income or expense and begins add new Income_Expense activity
                 //May change to In Activity Selection
                 else if (mViewPager.getCurrentItem() == 1){
-                    View v = getActivity().getLayoutInflater().inflate(R.layout.fragment_ask_income_expense,null);
-                    AlertDialog.Builder aBuilder = new AlertDialog.Builder(getActivity());
 
-                    aBuilder.setView(v);
-                    final AlertDialog alertDialog = aBuilder.create();
-                    alertDialog.show();
-
-                    Button Expense = (Button) v.findViewById(R.id.ExpenseButton);
-                    Button Income = (Button) v.findViewById(R.id.IncomeButton);
-
-                    View.OnClickListener listener = new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent intent = new Intent(getContext(),NewIncome_ExpenseActivity.class);
-                            if (v.getId() == R.id.ExpenseButton)
-                                intent.putExtra("Type","Expense");
-                            else
-                                intent.putExtra("Type","Income");
-
-                            startActivity(intent);
-                            alertDialog.dismiss();
-
-                        }
-                    };
-
-                    Expense.setOnClickListener(listener);
-                    Income.setOnClickListener(listener);
+                    Intent i = new Intent(TabbedFragment.this.getActivity(), NewIncome_ExpenseActivity.class);
+                    startActivity(i);
 
 
                 }

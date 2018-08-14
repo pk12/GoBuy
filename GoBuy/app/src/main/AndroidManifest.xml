@@ -31,7 +31,7 @@
         <activity
             android:name=".Activities.Bottom_Tabs_Activity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:theme="@style/AppTheme"
+            android:theme="@style/AppTheme.NoActionBar"
         android:label="@string/title_activity_bottom__tabs_">
 
         </activity>

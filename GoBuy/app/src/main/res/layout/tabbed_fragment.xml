@@ -15,25 +15,25 @@
             android:layout_height="wrap_content"
             app:contentScrim="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
-            app:toolbarId="@+id/toolbar">
+            app:toolbarId="@+id/Bottom_tabs_toolbar">
 
+
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tabs"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tabIndicatorColor="@color/primary_light"
+                app:tabSelectedTextColor="@color/primary_light"
+                app:tabTextColor="?android:attr/textColorPrimaryInverse">
+
+            </android.support.design.widget.TabLayout>
 
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-
-                <android.support.design.widget.TabLayout
-                    android:id="@+id/tabs"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:tabIndicatorColor="@color/primary_light"
-                    app:tabSelectedTextColor="@color/primary_light"
-                    app:tabTextColor="?android:attr/textColorPrimaryInverse">
-
-                </android.support.design.widget.TabLayout>
 
                 <!--<android.support.constraint.ConstraintLayout-->
                     <!--android:id="@+id/ToolBar_Layout"-->

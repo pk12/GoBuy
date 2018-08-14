@@ -11,33 +11,31 @@ import java.util.HashMap;
 
 /* the calculations will dynamically change when the product price needs less than a day to buy */
 public class Goal {
+    private int goalID;
     private Item GoalItem;
     private int Progress;
     private double steadyIncome;
     private double SteadyExpense;
-    private double MoneySaved; //API for the money that have been saved for the goal
-    private double MoneyToSavePerDay; //a class that calculates the money to be saved each day  //Desription: Money you save each day and have available to spend
+    private double moneySavedForGoal; //at the end of the day
     private LocalDate DateWanted; //the date which the User wants to have his goal completed
     private LocalDate ExpectedDate; //the date which our algorithms expect the goal to be completed
     private LocalDate DateCreated;  //the date which the Goal was created
     private boolean IsActive;
 
-    private Day day;
 
     public Goal(){
 
     }
 
-
-    public Goal(Item goalItem, double incomes, double Expenses, LocalDate dateWanted, double moneySaved) {
+    public Goal(Item goalItem, double incomes, double Expenses, LocalDate dateWanted, int goalID) {
         this.steadyIncome = incomes; //the system will fetch the stable Incomes from the UserData
         this.SteadyExpense = Expenses; //so that the user wont need to add them again,making the proccess easier
         this.GoalItem = goalItem;
-        this.MoneySaved = moneySaved;
         this.DateWanted = dateWanted;
         this.DateCreated = new LocalDate();
         this.Progress = 0;
         this.IsActive = false;
+        this.goalID = goalID;
 
 
     }
@@ -61,16 +59,8 @@ public class Goal {
     //by the Working Days of each year to calculate the daily income
     //ELSE we ask for the monthly IncomesAPI and divide it by the working days(or all the days of the month since the next method calculates even the non working days)
     //to calculate the daily income
-    public void CalMoneySavedPerMonth(){
-        MoneyToSavePerDay = (steadyIncome - SteadyExpense);
-    }
 
 
-
-    //Starts a new day each time it changes,to reset the daily tracking status
-    public void startNewDay(){
-        day = new Day(MoneyToSavePerDay - MoneyToSavePerDay, MoneyToSavePerDay);
-    }
 
 
     public HashMap toHashMap(){
@@ -80,10 +70,9 @@ public class Goal {
         hashMap.put("SteadyExpense", this.SteadyExpense);
         hashMap.put("SteadyIncome", this.steadyIncome);
         hashMap.put("Progress", this.Progress);
-        hashMap.put("MoneySaved", this.MoneySaved);
-        hashMap.put("MoneyToSavePerDay", this.MoneyToSavePerDay);
         hashMap.put("GoalItem", this.GoalItem);
         hashMap.put("IsActive", this.IsActive);
+        hashMap.put("GoalID", this.goalID);
 
         return hashMap;
 
@@ -95,9 +84,8 @@ public class Goal {
         this.SteadyExpense = new Long((Long) hashMap.get("SteadyExpense")).doubleValue();
         this.steadyIncome = new Long((Long) hashMap.get("SteadyIncome")).doubleValue();
         this.Progress = new Long((Long) hashMap.get("Progress")).intValue();
-        this.MoneySaved = new Long((Long) hashMap.get("MoneySaved")).doubleValue();
-        this.MoneyToSavePerDay = new Long((Long) hashMap.get("MoneyToSavePerDay")).doubleValue();
         this.IsActive = (boolean) hashMap.get("IsActive");
+        this.goalID = new Long((Long) hashMap.get("GoalID")).intValue();
         HashMap hashMap1 = (HashMap) hashMap.get("GoalItem");
         this.GoalItem = new Item();
         this.GoalItem.setCategory((String) hashMap1.get("category"));
@@ -126,14 +114,6 @@ public class Goal {
         return SteadyExpense;
     }
 
-    public double getMoneySaved() {
-        return MoneySaved;
-    }
-
-    public double getMoneyToSavePerDay() {
-        return MoneyToSavePerDay;
-    }
-
     public int getProgress() {
         return Progress;
     }
@@ -150,10 +130,13 @@ public class Goal {
         return DateCreated;
     }
 
-    public Day getDay() {
-        return day;
+    public int getGoalID() {
+        return goalID;
     }
 
+    public boolean isActive() {
+        return IsActive;
+    }
     //Setters
 
     public void setGoalItem(Item goalItem) {
@@ -168,16 +151,5 @@ public class Goal {
         SteadyExpense = steadyExpense;
     }
 
-    public void setMoneySaved(double moneySaved) {
-        MoneySaved = moneySaved;
-    }
 
-    public void setMoneyToSavePerDay(double moneyToSavePerDay) {
-        MoneyToSavePerDay = moneyToSavePerDay;
-    }
-
-
-    public void setDay(Day day) {
-        this.day = day;
-    }
 }
