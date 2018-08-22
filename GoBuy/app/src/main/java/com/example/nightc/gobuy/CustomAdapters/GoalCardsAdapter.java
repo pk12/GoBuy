@@ -2,6 +2,7 @@ package com.example.nightc.gobuy.CustomAdapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SwitchCompat;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,7 +59,7 @@ public class GoalCardsAdapter extends RecyclerView.Adapter<GoalCardsAdapter.Goal
                     //Goal is Activated
                     activeGoals.add(goal);
                     //Update the DB
-                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Goals/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/" + goal.getGoalID() + "/IsActive");
+                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Goals/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/" + goal.getGoalItem().getName() + "/IsActive");
                     reference.setValue(true);
                     //Add the Goal to the GoalHandler
                     Bottom_Tabs_Activity.goalHandler.getActiveGoals().add(goal);
@@ -67,7 +68,7 @@ public class GoalCardsAdapter extends RecyclerView.Adapter<GoalCardsAdapter.Goal
                     //Goal is deactivated
                     activeGoals.remove(goal);
                     //Update the db
-                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Goals/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/" + goal.getGoalID() + "/IsActive");
+                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Goals/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/" + goal.getGoalItem().getName() + "/IsActive");
                     reference.setValue(false);
                     //Remove the Goal from the GoalHandler
                     Bottom_Tabs_Activity.goalHandler.getActiveGoals().remove(goal);
@@ -97,7 +98,7 @@ public class GoalCardsAdapter extends RecyclerView.Adapter<GoalCardsAdapter.Goal
     }
 
     //A viewholder Subclass of the adapter to show the content of the view(CardView Views)
-    public class GoalViewHolder extends RecyclerView.ViewHolder {
+    public class GoalViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnCreateContextMenuListener {
         private ImageView ItemIcon;
         private TextView ItemName;
         private TextView DateWanted;
@@ -109,6 +110,19 @@ public class GoalCardsAdapter extends RecyclerView.Adapter<GoalCardsAdapter.Goal
             ItemName = (TextView) itemView.findViewById(R.id.GoalNameText);
             DateWanted = (TextView) itemView.findViewById(R.id.DateWantedText);
             switchCompat = (SwitchCompat) itemView.findViewById(R.id.goalSwitch);
+            itemView.setOnCreateContextMenuListener(this);
+        }
+
+
+        @Override
+        public void onClick(View v) {
+
+        }
+
+
+        @Override
+        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+            menu = v.findViewById()
         }
     }
 }

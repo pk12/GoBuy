@@ -81,11 +81,11 @@ public class Goal {
     public void HashMapToGoal(HashMap hashMap){
         this.DateWanted = new LocalDate(hashMap.get("DateWanted"));
         this.DateCreated = new LocalDate(hashMap.get("DateCreated"));
-        this.SteadyExpense = new Long((Long) hashMap.get("SteadyExpense")).doubleValue();
-        this.steadyIncome = new Long((Long) hashMap.get("SteadyIncome")).doubleValue();
-        this.Progress = new Long((Long) hashMap.get("Progress")).intValue();
+        this.SteadyExpense = Long.valueOf((Long) hashMap.get("SteadyExpense")).doubleValue();
+        this.steadyIncome = Long.valueOf((Long) hashMap.get("SteadyIncome")).doubleValue();
+        this.Progress = Long.valueOf((Long) hashMap.get("Progress")).intValue();
         this.IsActive = (boolean) hashMap.get("IsActive");
-        this.goalID = new Long((Long) hashMap.get("GoalID")).intValue();
+        this.goalID = Long.valueOf((Long) hashMap.get("GoalID")).intValue();
         HashMap hashMap1 = (HashMap) hashMap.get("GoalItem");
         this.GoalItem = new Item();
         this.GoalItem.setCategory((String) hashMap1.get("category"));
@@ -94,7 +94,7 @@ public class Goal {
             this.GoalItem.setPrice((Double) hashMap1.get("price"));
         }
         else {
-            this.GoalItem.setPrice((new Long((Long) hashMap1.get("price")).doubleValue()));
+            this.GoalItem.setPrice((Long.valueOf((Long) hashMap1.get("price")).doubleValue()));
         }
         this.GoalItem.setUserID((String) hashMap1.get("userID"));
     }

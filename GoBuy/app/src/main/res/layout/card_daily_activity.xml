@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="4dp"
+    android:layout_margin="5dp"
     app:cardCornerRadius="4dp"
-    app:cardElevation="3dp">
+    app:cardElevation="4dp">
     <!--Solution to spacing problem,set the card width to match parent so that it fits in the whole
     Recycler view,and when changed to grid it will adjust properly-->
 
@@ -27,29 +27,30 @@
             android:id="@+id/Category_MoneyView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
             android:layout_marginLeft="8dp"
             android:drawableEnd="@drawable/ic_euro_symbol_black_24dp"
-            android:text="10"
             android:textAppearance="@android:style/TextAppearance.Material.Small"
             android:textColor="@color/colorPrimaryDark"
             app:layout_constraintBaseline_toBaselineOf="@+id/Category_NameView"
+            app:layout_constraintEnd_toStartOf="@+id/DeleteActivity"
             app:layout_constraintLeft_toRightOf="@+id/Category_NameView" />
 
         <TextView
             android:id="@+id/Category_NameView"
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_marginEnd="8dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:layout_marginLeft="8dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:drawablePadding="10dp"
             android:paddingLeft="1dp"
             android:paddingRight="1dp"
             android:text="Cofee"
             android:textAppearance="@android:style/TextAppearance.Material.Small"
             android:textColor="@color/colorAccent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginTop="8dp"
             app:layout_constraintTop_toBottomOf="@+id/Category_ImageView" />
 
         <ImageView
@@ -68,14 +69,11 @@
         <ImageButton
             android:id="@+id/DeleteActivity"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
+            android:layout_height="0dp"
             android:background="@null"
             android:foreground="?android:attr/selectableItemBackground"
             android:scaleType="fitCenter"
-            app:layout_constraintBottom_toBottomOf="@+id/Category_MoneyView"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintLeft_toRightOf="@+id/Category_MoneyView"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/Category_ImageView"
             app:srcCompat="@drawable/ic_delete_24dp" />

@@ -5,7 +5,6 @@ import com.example.nightc.gobuy.GoBuySDK.UserClasses.Income;
 
 import org.joda.time.LocalDate;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -18,8 +17,8 @@ import java.util.HashMap;
 
 public class Day {
     private LocalDate date; //May have to change the Data Type
-    private ArrayList<Expense> spontaneousExpenses; //to be sent to user Data
-    private ArrayList<Income> spontaneousIncomes;
+    private HashMap<String,Expense> spontaneousExpenses; //to be sent to user Data
+    private HashMap<String,Income> spontaneousIncomes;
 
     //output
     private double MoneyLeftToSpend;
@@ -28,8 +27,8 @@ public class Day {
 
 
     public Day(double moneyLeftToSpend, double moneytosave) {
-        spontaneousExpenses = new ArrayList<>();
-        spontaneousIncomes = new ArrayList<>();
+        spontaneousExpenses = new HashMap<>();
+        spontaneousIncomes = new HashMap<>();
         MoneyToSave = moneytosave;
         this.date = new LocalDate();
         MoneyLeftToSpend = moneyLeftToSpend;
@@ -50,11 +49,11 @@ public class Day {
         return date;
     }
 
-    public ArrayList<Expense> getSpontaneousExpenses() {
+    public HashMap<String,Expense> getSpontaneousExpenses() {
         return spontaneousExpenses;
     }
 
-    public ArrayList<Income> getSpontaneousIncomes() {
+    public HashMap<String,Income> getSpontaneousIncomes() {
         return spontaneousIncomes;
     }
 

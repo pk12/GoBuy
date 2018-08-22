@@ -10,10 +10,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.nightc.gobuy.GoBuySDK.UserClasses.Expense;
 import com.example.nightc.gobuy.GoBuySDK.UserClasses.Income;
 import com.example.nightc.gobuy.R;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * Created by Oppai on 7/17/2017.
@@ -24,11 +26,21 @@ import java.util.ArrayList;
 public class ActivityCardAdapter extends RecyclerView.Adapter<ActivityCardAdapter.ActivityViewHolder>{
 
     private ArrayList<Income> incomes;
+    private ArrayList<Expense> expenses;
     private Context context;
+    private boolean isIncome; //Check which list is not empty to return on the getItemCount
 
     public ActivityCardAdapter(ArrayList<Income> incomes, Context context) {
         this.incomes = incomes;
         this.context = context;
+        isIncome = true;
+    }
+
+    public ActivityCardAdapter(Collection<Expense> expenses, Context context){
+        //did this to be able to keep both constructors
+        this.expenses = (ArrayList<Expense>) expenses;
+        this.context = context;
+        isIncome = false;
     }
 
     //populate the view holder with the layout inside the RecyclerView
@@ -42,14 +54,30 @@ public class ActivityCardAdapter extends RecyclerView.Adapter<ActivityCardAdapte
     @Override
     public void onBindViewHolder(ActivityCardAdapter.ActivityViewHolder holder, int position) {
         //pass the goals Spontaneous Incomes and Expenses and show them in a CardView inside the RecyclerView
-        holder.CategoryText.setText(incomes.get(position).getName());
+        if (isIncome){
+            holder.CategoryText.setText(incomes.get(position).getName());
+            holder.Amount.setText(String.valueOf(incomes.get(position).getAmount()));
+        }
+        else {
+            holder.CategoryText.setText(expenses.get(position).getName());
+            holder.Amount.setText(String.valueOf(expenses.get(position).getAmount()));
+        }
+
+
+
 
 
     }
 
+    //TODO: Add Delete button functinality
+
+
     @Override
     public int getItemCount() {
-        return incomes.size();
+        if (isIncome)
+            return incomes.size();
+        else
+            return expenses.size();
     }
 
 
@@ -60,11 +88,13 @@ public class ActivityCardAdapter extends RecyclerView.Adapter<ActivityCardAdapte
         private ImageView CategoryIcon;
         private TextView CategoryText;
         private Drawable TransactionType;
+        private TextView Amount;
 
         public ActivityViewHolder(View itemView) {
             super(itemView);
             CategoryIcon = (ImageView) itemView.findViewById(R.id.Category_ImageView);
             CategoryText = (TextView) itemView.findViewById(R.id.Category_NameView);
+            Amount = (TextView) itemView.findViewById(R.id.Category_MoneyView);
             TransactionType = null;
             itemView.setOnClickListener(this);
 

@@ -51,12 +51,22 @@ public class NewIncome_ExpenseActivity extends AppCompatActivity {
                             Bottom_Tabs_Activity.goalHandler.getDay().getDate().toString());
 
                     ActiveGoalHandler handler = Bottom_Tabs_Activity.goalHandler;
-                   //add the amount in the correct list
-                    if (spinner.getSelectedItem().toString().equals("Income"))
-                        handler.getDay().getSpontaneousIncomes().add(new Income(description.getText().toString(), Double.parseDouble(amount.getText().toString())));
-                    else if (spinner.getSelectedItem().toString().equals("Expense"))
-                        handler.getDay().getSpontaneousExpenses().add(new Expense(description.getText().toString(), Double.parseDouble(amount.getText().toString())));
+                    //add the amount in the correct list
 
+                    // Check if the income/expense already exists
+                    //Solution instead of arraylist use hashmap<Description, Object> and putifabsent
+                    if (spinner.getSelectedItem().toString().equals("Income"))
+                        if (handler.getDay().getSpontaneousIncomes().putIfAbsent(description.getText().toString() ,new Income(description.getText().toString(), Double.parseDouble(amount.getText().toString()))) != null)
+                            Toast.makeText(this, "Income already exists", Toast.LENGTH_SHORT).show();
+                        else
+                            this.finish();
+                    else if (spinner.getSelectedItem().toString().equals("Expense"))
+                        if (handler.getDay().getSpontaneousExpenses().putIfAbsent(description.getText().toString() ,new Expense(description.getText().toString(), Double.parseDouble(amount.getText().toString()))) != null)
+                            Toast.makeText(this, "Expense already exists", Toast.LENGTH_SHORT).show();
+                        else
+                            this.finish();
+
+                    //Upload the day with the new data
                     reference.setValue(handler.getDay().toHashMap());
                 }
 

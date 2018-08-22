@@ -3,12 +3,12 @@ package com.example.nightc.gobuy.Activities;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.nightc.gobuy.Fragments.DatePickerFragment;
 import com.example.nightc.gobuy.GoBuySDK.Goal;
@@ -52,54 +52,74 @@ public class AddGoalActivity extends AppCompatActivity {
 
                 if (!dateWanted.getText().toString().trim().equals("Select Date") && !Name.getText().toString().trim().equals("") && !Price.getText().toString().trim().equals("")){
                     final FirebaseUser User = FirebaseAuth.getInstance().getCurrentUser();
-                    final DatabaseReference[] reference = {FirebaseDatabase.getInstance().getReference()};
+                    final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Goals/" + User.getUid() + "/" + Name.getText().toString());
                     DatabaseReference GoalNo = FirebaseDatabase.getInstance().getReference();
                     final long[] GoalNumber = new long[1];
+
+                    //DONE: Change the goalID from int to the GoalName using as ID the goal Name to avoid double goals
+                    reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            if (!dataSnapshot.exists()){
+                                Item item = new Item(User.getUid().toString(),Name.getText().toString().trim(),"Something", Double.parseDouble(Price.getText().toString().trim()));
+                                Goal goal = new Goal(item,2,2, new LocalDate(dateWanted.getText().toString()), 1);
+                                reference.setValue(goal.toHashMap());
+                                AddGoalActivity.this.finish();
+                            }
+                            else
+                                Toast.makeText(AddGoalActivity.this, "Goal already exists", Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                            Toast.makeText(AddGoalActivity.this, "Database connection failed", Toast.LENGTH_SHORT).show();
+                        }
+                    });
 
 
 
 
                     //Adds the data to the reference if there is no Goal ID like this
-                    GoalNo = GoalNo.child("Goals").child(User.getUid()).child("GoalNumber"); //needed here to be able to use GoalNo in the Listener
-                    final DatabaseReference finalGoalNo = GoalNo; //Temp final variable to use the GoalNo in the Listener
-                    final ValueEventListener valueEventListener = new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            if (!dataSnapshot.exists()){
-                                Item item = new Item(User.getUid().toString(),Name.getText().toString().trim(),"Something", Double.parseDouble(Price.getText().toString().trim()));
-                                Goal goal = new Goal(item,2,2, new LocalDate(dateWanted.getText().toString()), (int) (GoalNumber[0] + 1));
-                                reference[0].setValue(goal.toHashMap());
-                                finalGoalNo.setValue(GoalNumber[0] + 1);
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    }; //Creates the listener but doesnt add it on the reference yet because we need this to run after the fetch of GoalNo
-
-                    //Get the Value of the total goal number of the Current User
-                    GoalNo.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            if (dataSnapshot.exists()){
-                                Log.d("DATA VALUE", String.valueOf(dataSnapshot.getValue()));
-                                GoalNumber[0] = (long) dataSnapshot.getValue(); //get the Goal Number value
-                                reference[0] = reference[0].child("Goals").child(User.getUid()).child(String.valueOf(GoalNumber[0] + 1)); //create a data child with the new goal number
-                                reference[0].addListenerForSingleValueEvent(valueEventListener);
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
-                    this.finish();
+//                    GoalNo = GoalNo.child("Goals").child(User.getUid()).child("GoalNumber"); //needed here to be able to use GoalNo in the Listener
+//                    final DatabaseReference finalGoalNo = GoalNo; //Temp final variable to use the GoalNo in the Listener
+//                    final ValueEventListener valueEventListener = new ValueEventListener() {
+//                        @Override
+//                        public void onDataChange(DataSnapshot dataSnapshot) {
+//                            if (!dataSnapshot.exists()){
+//                                Item item = new Item(User.getUid().toString(),Name.getText().toString().trim(),"Something", Double.parseDouble(Price.getText().toString().trim()));
+//                                Goal goal = new Goal(item,2,2, new LocalDate(dateWanted.getText().toString()), (int) (GoalNumber[0] + 1));
+//                                reference[0].setValue(goal.toHashMap());
+//                                finalGoalNo.setValue(GoalNumber[0] + 1);
+//                            }
+//                        }
+//
+//                        @Override
+//                        public void onCancelled(DatabaseError databaseError) {
+//
+//                        }
+//                    }; //Creates the listener but doesnt add it on the reference yet because we need this to run after the fetch of GoalNo
+//
+//                    //Get the Value of the total goal number of the Current User
+//                    GoalNo.addListenerForSingleValueEvent(new ValueEventListener() {
+//                        @Override
+//                        public void onDataChange(DataSnapshot dataSnapshot) {
+//                            if (dataSnapshot.exists()){
+//                                Log.d("DATA VALUE", String.valueOf(dataSnapshot.getValue()));
+//                                GoalNumber[0] = (long) dataSnapshot.getValue(); //get the Goal Number value
+//                                reference[0] = reference[0].child("Goals").child(User.getUid()).child(String.valueOf(GoalNumber[0] + 1)); //create a data child with the new goal number
+//                                reference[0].addListenerForSingleValueEvent(valueEventListener);
+//                            }
+//                        }
+//
+//                        @Override
+//                        public void onCancelled(DatabaseError databaseError) {
+//
+//                        }
+//                    });
 
                 }
                 else
+                    Toast.makeText(AddGoalActivity.this, "Please complete the required fields", Toast.LENGTH_SHORT).show();
                     return false;
 
 

@@ -3,7 +3,7 @@ package com.example.nightc.gobuy.Fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,9 +38,12 @@ public class GoalsScreenTab extends Fragment {
         View RootView = inflater.inflate(R.layout.fragment_goal_selection,container,false);
         RecyclerView rv = (RecyclerView) RootView.findViewById(R.id.GoalRecyclerView);
 
+        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
+        rv.setLayoutManager(layoutManager);
+
         rv.setHasFixedSize(true);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(inflater.getContext());
-        rv.setLayoutManager(mLayoutManager);
+//        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(inflater.getContext());
+//        rv.setLayoutManager(mLayoutManager);
         GoalCardsAdapter goalCardsAdapter = new GoalCardsAdapter(goals);
         FetchData(goalCardsAdapter);
         rv.setAdapter(goalCardsAdapter);

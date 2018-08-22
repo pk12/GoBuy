@@ -1,5 +1,7 @@
 package com.example.nightc.gobuy.GoBuySDK.UserClasses;
 
+import java.util.HashMap;
+
 /**
  * Created by Oppai on 7/17/2017.
  */
@@ -14,7 +16,14 @@ public class Income {
         Amount = amount;
     }
 
+    public Income() {
 
+    }
+
+    public void hashMapToIncome(HashMap hashMap){
+        Name = (String) hashMap.get("name");
+        Amount = new Long((Long) hashMap.get("amount")).doubleValue();
+    }
 
     //Getters
     public String getName() {

@@ -173,7 +173,7 @@ public class TabbedFragment extends Fragment {
 //                    DateBar.setVisibility(View.GONE);
                     return goalsScreenTab;
                 default:
-                    todayTab = new TodayTab(DemoIncomes());
+                    todayTab = new TodayTab();
 //                    ToolbarProgess.setVisibility(View.VISIBLE);
 //                    DateBar.setVisibility(View.VISIBLE);
                     return todayTab;

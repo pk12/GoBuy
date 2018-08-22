@@ -28,9 +28,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Bottom_Tabs_Activity extends AppCompatActivity {
 
-    //Initialise Goal Handler, which runs here as a static variable across the whole app
-    //the data are filled while loading the data from the DB
-    public static ActiveGoalHandler goalHandler = new ActiveGoalHandler();
+    public static ActiveGoalHandler goalHandler;
 
     private TabbedFragment tabbedFragment = new TabbedFragment();
     private SettingsFragment settingsFragment = new SettingsFragment();
@@ -46,6 +44,7 @@ public class Bottom_Tabs_Activity extends AppCompatActivity {
             android.support.v4.app.FragmentManager fmV4 = getSupportFragmentManager();
             android.support.v4.app.FragmentTransaction TransactionV4 = fmV4.beginTransaction();
             FragmentTransaction fragmentTransaction = fm.beginTransaction();
+
 
             //Switching between fragments when a bottom tab is pressed
             switch (item.getItemId()) {
@@ -122,6 +121,12 @@ public class Bottom_Tabs_Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        //Initialise Goal Handler, which runs here as a static variable across the whole app
+        //the data are filled while loading the data from the DB
+        //Has to be initialised here or else when switching accounts the Handler wont change
+        goalHandler = new ActiveGoalHandler();
+
+
         setContentView(R.layout.activity_bottom__tabs_);
         android.support.v7.widget.Toolbar toolbar = (Toolbar) findViewById(R.id.Bottom_tabs_toolbar);
         CircleImageView imageView = (CircleImageView) findViewById(R.id.myImageontoolbar);

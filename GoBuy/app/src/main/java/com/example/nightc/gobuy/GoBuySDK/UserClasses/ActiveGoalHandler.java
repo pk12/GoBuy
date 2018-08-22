@@ -4,8 +4,11 @@ import com.example.nightc.gobuy.GoBuySDK.Day;
 import com.example.nightc.gobuy.GoBuySDK.Goal;
 import com.example.nightc.gobuy.GoBuySDK.GoalComparator;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.joda.time.LocalDate;
 
@@ -33,8 +36,23 @@ public class ActiveGoalHandler {
         this.day = new Day(moneyToSpendPerDay,moneyToSavePerDay);
 
         //send to db
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Days/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/" + new LocalDate());
-        reference.setValue(this.day.toHashMap());
+        final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Days/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/" + new LocalDate());
+
+        //Checks if the day has already been created to avoid daily data overwrite on new login
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (!dataSnapshot.exists())
+                    reference.setValue(ActiveGoalHandler.this.day.toHashMap());
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
     }
 
