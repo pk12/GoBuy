@@ -143,8 +143,10 @@ public class SignUp extends AppCompatActivity {
                      @Override
                      public void onClick(View v) {
                          if (!Amount.getText().toString().trim().equals("")){
+                             //Create Income
                              StableIncome stableIncome = new StableIncome(Type.getSelectedItem().toString(), Double.parseDouble(Amount.getText().toString().trim()),
                                      PayPeriod.getSelectedItem().toString());
+                             //Add the amount to the variable to use on firebase
                              totalIncome += stableIncome.getAmount();
                              SteadyIncomes.put(String.valueOf(SteadyIncomes.size() + 1), stableIncome);
                              Toast.makeText(rootView.getContext(), "Income successfully added", Toast.LENGTH_SHORT).show();

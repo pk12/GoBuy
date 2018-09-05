@@ -1,5 +1,7 @@
 package com.example.nightc.gobuy.GoBuySDK;
 
+import com.example.nightc.gobuy.GoBuySDK.UserClasses.Income;
+
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
 
@@ -15,6 +17,7 @@ public class Goal {
     private Item GoalItem;
     private int Progress;
     private double steadyIncome;
+    private double moneyToSave; //Money needed exclusively for this goal
     private double SteadyExpense;
     private double moneySavedForGoal; //at the end of the day
     private LocalDate DateWanted; //the date which the User wants to have his goal completed
@@ -42,10 +45,14 @@ public class Goal {
 
 
 
-    public boolean Achievable(){
+    public boolean isAchievable(){
         if (Days.daysBetween(this.ExpectedDate,this.DateWanted).getDays() >= 0)
             return true;
         return false;
+    }
+
+    public void calculateMoneyToSave(Income income){
+
     }
 
 
@@ -151,5 +158,7 @@ public class Goal {
         SteadyExpense = steadyExpense;
     }
 
-
+    public void setMoneyToSave(double moneyToSave) {
+        this.moneyToSave = moneyToSave;
+    }
 }

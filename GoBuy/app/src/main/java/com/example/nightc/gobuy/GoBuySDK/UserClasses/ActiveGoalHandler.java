@@ -69,8 +69,19 @@ public class ActiveGoalHandler {
         }
     }
 
-    public void updateDatabase(){
+    //TODO: Make this function with the efficient way first
+   //TO run each time a goal is activated on the Trigger
+   //May make it to run for the specific goal activated to be more efficient
+    public void calcMoneyToSavePerDay(){
+        //Fetch totalIncome and totalExpenses from firebase
 
+        //get all the active goals
+
+        //check for each one the amount needed
+
+        //Set the amount in the goal
+
+        // += the moneytosaveperday variable
     }
 
     //Getters

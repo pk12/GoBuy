@@ -1,13 +1,16 @@
 package com.example.nightc.gobuy.CustomAdapters;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SwitchCompat;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.example.nightc.gobuy.Activities.Bottom_Tabs_Activity;
@@ -29,12 +32,14 @@ public class GoalCardsAdapter extends RecyclerView.Adapter<GoalCardsAdapter.Goal
 
     private ArrayList<Goal> goals;
     private ArrayList<Goal> activeGoals;
+    private Context context;
 
 
 
-    public GoalCardsAdapter(ArrayList<Goal> goals) {
+    public GoalCardsAdapter(ArrayList<Goal> goals, Context context) {
         this.goals = goals;
         this.activeGoals = new ArrayList<>();
+        this.context = context;
     }
 
 
@@ -48,10 +53,12 @@ public class GoalCardsAdapter extends RecyclerView.Adapter<GoalCardsAdapter.Goal
 
     //populate the Viewholder with each goal Instance
     @Override
-    public void onBindViewHolder(GoalViewHolder holder, final int position) {
+    public void onBindViewHolder(final GoalViewHolder holder, final int position) {
         final Goal goal = goals.get(position);
         holder.DateWanted.setText(goal.getDateWanted().toString());
         holder.ItemName.setText(goal.getGoalItem().getName());
+
+        //Handle Trigger
         holder.switchCompat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -77,11 +84,44 @@ public class GoalCardsAdapter extends RecyclerView.Adapter<GoalCardsAdapter.Goal
             }
         });
 
+
         if (goal.isActive())
             holder.switchCompat.setChecked(true);
         else
             holder.switchCompat.setChecked(false);
 
+        //Handle options button
+        final Button button = holder.optionsButton;
+        holder.optionsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PopupMenu popupMenu = new PopupMenu(context, button);
+
+                popupMenu.inflate(R.menu.recycler_view_context_menu);
+
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()){
+                            case R.id.Delete:
+
+                                //Remove from handler
+                                //toggles false so that if it is active then it is removed from the active list on the switchCompat listener
+                                holder.switchCompat.setChecked(false);
+                                //Remove form Firebase
+                                FirebaseDatabase.getInstance().getReference("Goals/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/" + goal.getGoalItem().getName()).removeValue();
+
+                                goals.remove(position);
+                                notifyItemRemoved(position);
+                                return true;
+                        }
+
+                        return false;
+                    }
+                });
+                popupMenu.show();
+            }
+        });
     }
 
 
@@ -98,11 +138,12 @@ public class GoalCardsAdapter extends RecyclerView.Adapter<GoalCardsAdapter.Goal
     }
 
     //A viewholder Subclass of the adapter to show the content of the view(CardView Views)
-    public class GoalViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnCreateContextMenuListener {
+    public class GoalViewHolder extends RecyclerView.ViewHolder {
         private ImageView ItemIcon;
         private TextView ItemName;
         private TextView DateWanted;
         private SwitchCompat switchCompat;
+        private Button optionsButton;
 
         public GoalViewHolder(View itemView) {
             super(itemView);
@@ -110,19 +151,9 @@ public class GoalCardsAdapter extends RecyclerView.Adapter<GoalCardsAdapter.Goal
             ItemName = (TextView) itemView.findViewById(R.id.GoalNameText);
             DateWanted = (TextView) itemView.findViewById(R.id.DateWantedText);
             switchCompat = (SwitchCompat) itemView.findViewById(R.id.goalSwitch);
-            itemView.setOnCreateContextMenuListener(this);
+            optionsButton = (Button) itemView.findViewById(R.id.OptionsButton);
         }
 
 
-        @Override
-        public void onClick(View v) {
-
-        }
-
-
-        @Override
-        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-            menu = v.findViewById()
-        }
     }
 }

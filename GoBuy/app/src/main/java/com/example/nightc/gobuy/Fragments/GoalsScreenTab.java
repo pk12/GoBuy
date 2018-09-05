@@ -1,5 +1,6 @@
 package com.example.nightc.gobuy.Fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -30,6 +31,7 @@ import java.util.HashMap;
 
 public class GoalsScreenTab extends Fragment {
     private ArrayList<Goal> goals = new ArrayList<Goal>();
+    private Context context;
 
 
     @Nullable
@@ -44,7 +46,7 @@ public class GoalsScreenTab extends Fragment {
         rv.setHasFixedSize(true);
 //        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(inflater.getContext());
 //        rv.setLayoutManager(mLayoutManager);
-        GoalCardsAdapter goalCardsAdapter = new GoalCardsAdapter(goals);
+        GoalCardsAdapter goalCardsAdapter = new GoalCardsAdapter(goals, getContext());
         FetchData(goalCardsAdapter);
         rv.setAdapter(goalCardsAdapter);
 
@@ -52,6 +54,14 @@ public class GoalsScreenTab extends Fragment {
         return RootView;
 
 
+
+    }
+
+    //Must wait for the app to attach the context to the fragment before using the context in the Toast and anywhere else
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.context = context;
 
     }
 
@@ -76,7 +86,7 @@ public class GoalsScreenTab extends Fragment {
 
                 }
                 adapter.notifyDataSetChanged();
-                Toast.makeText(GoalsScreenTab.this.getContext(), "Data successfully fetched", Toast.LENGTH_SHORT).show();
+                Toast.makeText(GoalsScreenTab.this.context, "Data successfully fetched", Toast.LENGTH_SHORT).show();
             }
 
             @Override
