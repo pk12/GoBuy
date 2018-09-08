@@ -20,6 +20,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import org.joda.time.LocalDate;
+
 import java.util.ArrayList;
 
 
@@ -31,14 +33,12 @@ import java.util.ArrayList;
 public class GoalCardsAdapter extends RecyclerView.Adapter<GoalCardsAdapter.GoalViewHolder> {
 
     private ArrayList<Goal> goals;
-    private ArrayList<Goal> activeGoals;
     private Context context;
 
 
 
     public GoalCardsAdapter(ArrayList<Goal> goals, Context context) {
         this.goals = goals;
-        this.activeGoals = new ArrayList<>();
         this.context = context;
     }
 
@@ -64,21 +64,30 @@ public class GoalCardsAdapter extends RecyclerView.Adapter<GoalCardsAdapter.Goal
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked){
                     //Goal is Activated
-                    activeGoals.add(goal);
+                    goal.setDateActivated(new LocalDate());
+                    //Calculate how much we have to save per day on the goal and add it to the total amount to save on the goal handler
+                    Bottom_Tabs_Activity.goalHandler.incrementMoneyToSave(goal.calculateMoneyToSave());
                     //Update the DB
                     DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Goals/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/" + goal.getGoalItem().getName() + "/IsActive");
                     reference.setValue(true);
                     //Add the Goal to the GoalHandler
                     Bottom_Tabs_Activity.goalHandler.getActiveGoals().add(goal);
+                    //ReCalculate moneyToSpend
+                    Bottom_Tabs_Activity.goalHandler.calculateMoneyToSpend();
                 }
                 else {
                     //Goal is deactivated
-                    activeGoals.remove(goal);
                     //Update the db
                     DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Goals/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/" + goal.getGoalItem().getName() + "/IsActive");
                     reference.setValue(false);
+                    //Remove the amount from totalMoneyToSave
+                    //NOTE: we use - to remove the amount from the variable
+                    Bottom_Tabs_Activity.goalHandler.incrementMoneyToSave(- goal.getMoneyToSave());
                     //Remove the Goal from the GoalHandler
                     Bottom_Tabs_Activity.goalHandler.getActiveGoals().remove(goal);
+                    //ReCalculate moneyToSpend
+                    Bottom_Tabs_Activity.goalHandler.calculateMoneyToSpend();
+
                 }
 
             }
@@ -130,12 +139,6 @@ public class GoalCardsAdapter extends RecyclerView.Adapter<GoalCardsAdapter.Goal
         return goals.size();
     }
 
-    //getter
-
-
-    public ArrayList<Goal> getActiveGoals() {
-        return activeGoals;
-    }
 
     //A viewholder Subclass of the adapter to show the content of the view(CardView Views)
     public class GoalViewHolder extends RecyclerView.ViewHolder {

@@ -62,7 +62,7 @@ public class AddGoalActivity extends AppCompatActivity {
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             if (!dataSnapshot.exists()){
                                 Item item = new Item(User.getUid().toString(),Name.getText().toString().trim(),"Something", Double.parseDouble(Price.getText().toString().trim()));
-                                Goal goal = new Goal(item,2,2, new LocalDate(dateWanted.getText().toString()), 1);
+                                Goal goal = new Goal(item,new LocalDate(dateWanted.getText().toString()));
                                 reference.setValue(goal.toHashMap());
                                 AddGoalActivity.this.finish();
                             }

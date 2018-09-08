@@ -4,7 +4,8 @@ import android.animation.LayoutTransition;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,19 +50,22 @@ public class TodayTab extends Fragment {
 
 
         RecyclerView recyclerView = (RecyclerView) v.findViewById(R.id.ActivityRecycler);
-        final RecyclerView Expenses = (RecyclerView) v.findViewById(R.id.ActivityRecyclerExpenses);
+        RecyclerView Expenses = (RecyclerView) v.findViewById(R.id.ActivityRecyclerExpenses);
         recyclerView.setHasFixedSize(true);
         Expenses.setHasFixedSize(true);
 
-//        GridLayoutManager layoutManager = new GridLayoutManager(getContext(),2);
-//        GridLayoutManager layoutManager1 = new GridLayoutManager(getContext(), 2);
-        GridLayoutManager LayoutManager = new GridLayoutManager(getContext(), 2);
-        GridLayoutManager LayoutManager1 = new GridLayoutManager(getContext(), 2);
+        LinearLayoutManager LayoutManager = new LinearLayoutManager(getContext());
+        LinearLayoutManager LayoutManager1 = new LinearLayoutManager(getContext());
+
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), LayoutManager.getOrientation());
+        DividerItemDecoration dividerItemDecoration1 = new DividerItemDecoration(Expenses.getContext(), LayoutManager1.getOrientation());
 
         //RecyclerView 1
         recyclerView.setLayoutManager(LayoutManager);
+        recyclerView.addItemDecoration(dividerItemDecoration);
         //RecyclerView 2
         Expenses.setLayoutManager(LayoutManager1);
+        Expenses.addItemDecoration(dividerItemDecoration1);
 
 
         final ActivityCardAdapter activityCardAdapter = new ActivityCardAdapter(spontaneousIncomes,getContext());

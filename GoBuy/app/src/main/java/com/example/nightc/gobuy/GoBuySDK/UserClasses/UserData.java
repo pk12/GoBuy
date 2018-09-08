@@ -10,8 +10,8 @@ public class UserData {
     private String Area;
     private int age;
     private String gender;
-    private double totalIncome;
-    private double totalExpense;
+    private double totalDailyIncome;
+    private double totalDailyExpense;
     private HashMap<String, ShoppingInterests> shoppingInterests; //shopping interests are multiple
     private HashMap<String,StableIncome> Incomes; //An array of all the extra incomes because there may be multiple extra
     private HashMap<String,StableExpense> expenses; //An array of all the fixed expenses the user has
@@ -23,15 +23,15 @@ public class UserData {
     }
 
     public UserData(String area, int age, String gender, HashMap<String, ShoppingInterests> shoppingInterests,
-                    HashMap<String, StableIncome> incomes, HashMap<String, StableExpense> expenses, double totalIncome, double totalExpense) {
+                    HashMap<String, StableIncome> incomes, HashMap<String, StableExpense> expenses, double totalDailyIncome, double totalDailyExpense) {
         Area = area;
         this.age = age;
         this.gender = gender;
         this.shoppingInterests = shoppingInterests;
         this.Incomes = incomes;
         this.expenses = expenses;
-        this.totalExpense = totalExpense;
-        this.totalIncome = totalIncome;
+        this.totalDailyExpense = totalDailyExpense;
+        this.totalDailyIncome = totalDailyIncome;
     }
 
 
@@ -89,12 +89,12 @@ public class UserData {
         return spontaneousExpenses;
     }
 
-    public double getTotalIncome() {
-        return totalIncome;
+    public double getTotalDailyIncome() {
+        return totalDailyIncome;
     }
 
-    public double getTotalExpense() {
-        return totalExpense;
+    public double getTotalDailyExpense() {
+        return totalDailyExpense;
     }
 
     //setters

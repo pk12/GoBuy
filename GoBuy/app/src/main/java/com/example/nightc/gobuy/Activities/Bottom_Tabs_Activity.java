@@ -124,7 +124,7 @@ public class Bottom_Tabs_Activity extends AppCompatActivity {
         //Initialise Goal Handler, which runs here as a static variable across the whole app
         //the data are filled while loading the data from the DB
         //Has to be initialised here or else when switching accounts the Handler wont change
-        goalHandler = new ActiveGoalHandler();
+        goalHandler = new ActiveGoalHandler(Bottom_Tabs_Activity.this);
 
 
         setContentView(R.layout.activity_bottom__tabs_);
@@ -141,6 +141,7 @@ public class Bottom_Tabs_Activity extends AppCompatActivity {
 
         //actionBar.setSubtitle("Save Today: ");
         getSupportFragmentManager().beginTransaction().replace(R.id.Bottom_Tab_Container, tabbedFragment,FRAGMENT_TAG="GSelection").commit();
+
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);

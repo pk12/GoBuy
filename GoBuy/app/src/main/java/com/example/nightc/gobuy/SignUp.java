@@ -43,8 +43,8 @@ public class SignUp extends AppCompatActivity {
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private static final HashMap<String, StableIncome> SteadyIncomes = new HashMap();
     private static HashMap<String, StableExpense> SteadyExpenses = new HashMap();
-    private static double totalIncome = 0;
-    private static double totalExpense = 0;
+    private static double totalDailyIncome = 0;
+    private static double totalDailyExpense = 0;
 
 
     /**
@@ -147,7 +147,18 @@ public class SignUp extends AppCompatActivity {
                              StableIncome stableIncome = new StableIncome(Type.getSelectedItem().toString(), Double.parseDouble(Amount.getText().toString().trim()),
                                      PayPeriod.getSelectedItem().toString());
                              //Add the amount to the variable to use on firebase
-                             totalIncome += stableIncome.getAmount();
+                             //Convert totalDailyIncome to Daily
+                             String payPeriod = PayPeriod.getSelectedItem().toString();
+                             if (payPeriod.equals("Annual")){
+                                 totalDailyIncome += Math.round(stableIncome.getAmount() / 365);
+                             }
+                             else if (payPeriod.equals("Monthly")){
+                                 totalDailyIncome += Math.round(stableIncome.getAmount() / 30);
+                             }
+                             else {
+                                 totalDailyIncome += stableIncome.getAmount();
+                             }
+
                              SteadyIncomes.put(String.valueOf(SteadyIncomes.size() + 1), stableIncome);
                              Toast.makeText(rootView.getContext(), "Income successfully added", Toast.LENGTH_SHORT).show();
 
@@ -177,7 +188,18 @@ public class SignUp extends AppCompatActivity {
                                 StableExpense stableExpense = new StableExpense(OtherType.getText().toString(), Double.parseDouble(Amount.getText().toString()), PayPeriod.getSelectedItem().toString());
                                 SteadyExpenses.put(String.valueOf(SteadyExpenses.size() + 1), stableExpense);
 
-                                totalExpense += stableExpense.getAmount();
+                                //Convert amount to Daily
+                                String payPeriod = PayPeriod.getSelectedItem().toString();
+                                if (payPeriod.equals("Annual")){
+                                    totalDailyExpense += Math.round(stableExpense.getAmount() / 365);
+                                }
+                                else if (payPeriod.equals("Monthly")){
+                                    totalDailyExpense += Math.round(stableExpense.getAmount() / 30);
+                                }
+                                else {
+                                    totalDailyExpense += stableExpense.getAmount();
+                                }
+
                                 Toast.makeText(rootView.getContext(), "Expense successfully added", Toast.LENGTH_SHORT).show();
                             }
                             else
@@ -186,7 +208,19 @@ public class SignUp extends AppCompatActivity {
                         else if (!Amount.getText().toString().trim().equals("")){
                             StableExpense stableExpense = new StableExpense(Type.getSelectedItem().toString(), Double.parseDouble(Amount.getText().toString()), PayPeriod.getSelectedItem().toString());
                             SteadyExpenses.put(String .valueOf(SteadyExpenses.size() + 1), stableExpense);
-                            totalExpense += stableExpense.getAmount();
+
+                            //Convert to Daily
+                            String payPeriod = PayPeriod.getSelectedItem().toString();
+                            if (payPeriod.equals("Annual")){
+                                totalDailyExpense += Math.round(stableExpense.getAmount() / 365);
+                            }
+                            else if (payPeriod.equals("Monthly")){
+                                totalDailyExpense += Math.round(stableExpense.getAmount() / 30);
+                            }
+                            else {
+                                totalDailyExpense += stableExpense.getAmount();
+                            }
+
                             Toast.makeText(rootView.getContext(), "Expense successfully added", Toast.LENGTH_SHORT).show();
                         }
                         else
@@ -202,6 +236,8 @@ public class SignUp extends AppCompatActivity {
 //            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
             return rootView;
         }
+
+
     }
 
     /**
@@ -223,7 +259,7 @@ public class SignUp extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
+            // Show 2 total pages.
             return 2;
         }
 
@@ -263,7 +299,7 @@ public class SignUp extends AppCompatActivity {
                 //Initialize variables
                 DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
                 FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-                UserData userData = new UserData("N/A", 11, "N/A", null, SteadyIncomes, SteadyExpenses, totalIncome, totalExpense);
+                UserData userData = new UserData("N/A", 11, "N/A", null, SteadyIncomes, SteadyExpenses, totalDailyIncome, totalDailyExpense);
                 User user = new User(null, userData, firebaseUser.getUid().toString(), false);
 
                 //Add the user data into Firebase DB
@@ -275,6 +311,7 @@ public class SignUp extends AppCompatActivity {
                 //Initialize User Goals DB section
                 reference = FirebaseDatabase.getInstance().getReference("Goals").child(firebaseUser.getUid()).child("GoalNumber");
                 reference.setValue(0);
+
 
                 //Start the LoggedIn Activity
                 Intent intent = new Intent(SignUp.this, Bottom_Tabs_Activity.class);

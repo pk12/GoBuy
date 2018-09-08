@@ -17,11 +17,7 @@ import android.widget.TextView;
 
 import com.example.nightc.gobuy.Activities.AddGoalActivity;
 import com.example.nightc.gobuy.Activities.NewIncome_ExpenseActivity;
-import com.example.nightc.gobuy.GoBuySDK.UserClasses.Expense;
-import com.example.nightc.gobuy.GoBuySDK.UserClasses.Income;
 import com.example.nightc.gobuy.R;
-
-import java.util.ArrayList;
 
 public class TabbedFragment extends Fragment {
 
@@ -69,7 +65,6 @@ public class TabbedFragment extends Fragment {
 //        SpendAmountBar.setVisibility(View.GONE);
 //        ToolbarProgess.setVisibility(View.GONE);
 //        DateBar.setVisibility(View.GONE);
-
 
 
         // Create the adapter that will return a fragment for each of the three
@@ -134,7 +129,7 @@ public class TabbedFragment extends Fragment {
 //                    ToolbarProgess.setVisibility(View.INVISIBLE);
 //                    DateBar.setVisibility(View.INVISIBLE);
 //                }
-
+//
             }
 
             @Override
@@ -199,27 +194,6 @@ public class TabbedFragment extends Fragment {
         }
     }
 
-
-
-
-
-    public ArrayList<Income> DemoIncomes(){
-        Expense expense = new Expense("Coffee",4);
-        Expense expense1 = new Expense("Coffee",4);
-        Income income = new Income("Mom",6);
-        Income income1 = new Income("Dad",6);
-        Income income2 = new Income("You",6);
-        Income income3 = new Income("Id",6);
-        Income income4 = new Income("Loe",6);
-
-        ArrayList<Income> incomes = new ArrayList<>();
-        incomes.add(income);
-        incomes.add(income1);
-        incomes.add(income2);
-        incomes.add(income3);
-        incomes.add(income4);
-        return incomes;
-    }
 
 }
 

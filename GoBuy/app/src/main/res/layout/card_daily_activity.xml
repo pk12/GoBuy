@@ -1,27 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="5dp"
-    app:cardCornerRadius="4dp"
-    app:cardElevation="4dp">
-    <!--Solution to spacing problem,set the card width to match parent so that it fits in the whole
-    Recycler view,and when changed to grid it will adjust properly-->
 
 
     <!--IMPORTANT: Make the card look excactly as you want it to look at the LinearManager and it will-->
     <!--look correct at the Grid Manager too-->
-
-
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+<android.support.constraint.ConstraintLayout
         android:foreground="?android:attr/selectableItemBackground"
         android:orientation="vertical"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp">
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/Category_MoneyView"
@@ -53,21 +42,20 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/OptionsButton"
-            style="@style/Widget.AppCompat.Button.Small"
-            android:layout_width="20dp"
-            android:layout_height="0dp"
-            android:background="@android:color/transparent"
-            android:clickable="true"
-            android:focusable="true"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:gravity="center"
-            android:text="&#8942;"
-            android:textAppearance="?android:textAppearanceLarge"
-            android:textColor="@color/common_google_signin_btn_text_light_default"
-            app:layout_constraintBottom_toBottomOf="@+id/GoalNameText"
-            app:layout_constraintEnd_toEndOf="parent" />
+    <Button
+        android:id="@+id/OptionsButton"
+        style="@style/Widget.AppCompat.Button.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:background="@android:color/transparent"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:gravity="center"
+        android:text="&#8942;"
+        android:textAppearance="?android:textAppearanceLarge"
+        android:textColor="@color/common_google_signin_btn_text_light_default"
+        app:layout_constraintBottom_toBottomOf="@+id/GoalNameText"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     </android.support.constraint.ConstraintLayout>
-</android.support.v7.widget.CardView>

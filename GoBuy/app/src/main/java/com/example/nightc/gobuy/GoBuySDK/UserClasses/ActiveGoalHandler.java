@@ -1,5 +1,6 @@
 package com.example.nightc.gobuy.GoBuySDK.UserClasses;
 
+import com.example.nightc.gobuy.Activities.Bottom_Tabs_Activity;
 import com.example.nightc.gobuy.GoBuySDK.Day;
 import com.example.nightc.gobuy.GoBuySDK.Goal;
 import com.example.nightc.gobuy.GoBuySDK.GoalComparator;
@@ -22,13 +23,20 @@ public class ActiveGoalHandler {
 
     private ArrayList<Goal> activeGoals; //all the active activeGoals sorted based on the priority(Top to Bottom) the priority comparator will be the days between the creation of this goal and the DateWanted
     private double moneySaved = 0; //Must be added here
-    private double moneyToSavePerDay = 5;
-    private double moneyToSpendPerDay = 5; //Desription: Money you save each day and have available to spend
+    private double moneyToSavePerDay;
+    private double moneyToSpendPerDay; //Desription: Money you save each day and have available to spend
+    private double dailyIncomes;
+    private double dailyExpenses;
+    private Bottom_Tabs_Activity bottom_tabs_activity; //To be able to get the Support Action bar
     private Day day;
 
-    public ActiveGoalHandler(){
+    public ActiveGoalHandler(Bottom_Tabs_Activity bottom_tabs_activity){
         this.activeGoals = new ArrayList<>();
+        this.moneyToSavePerDay = 0;
+        this.moneyToSpendPerDay = 0;
+        this.bottom_tabs_activity = bottom_tabs_activity;
         starNewDay();
+        getDailyValues();
     }
 
 
@@ -69,19 +77,56 @@ public class ActiveGoalHandler {
         }
     }
 
-    //TODO: Make this function with the efficient way first
-   //TO run each time a goal is activated on the Trigger
-   //May make it to run for the specific goal activated to be more efficient
-    public void calcMoneyToSavePerDay(){
-        //Fetch totalIncome and totalExpenses from firebase
 
-        //get all the active goals
+    //Get Daily incomes and Expenses
+    public void getDailyValues() {
+        final double[] dailyIncome = new double[1];
+        final double[] dailyExpenses = new double[1];
+        //Get dailyIncomes
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/UserData/");
+        reference.child("/totalDailyIncome/").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                dailyIncome[0] = new Long((Long) dataSnapshot.getValue()).doubleValue();
+                ActiveGoalHandler.this.dailyIncomes = dailyIncome[0];
+            }
 
-        //check for each one the amount needed
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
 
-        //Set the amount in the goal
+            }
+        });
 
-        // += the moneytosaveperday variable
+        //Get dailyExpenses
+        reference.child("totalDailyExpense").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                dailyExpenses[0] = new Long((Long) dataSnapshot.getValue()).doubleValue();
+                ActiveGoalHandler.this.dailyExpenses = dailyExpenses[0];
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+    }
+
+    public void calculateMoneyToSpend(){
+        this.moneyToSpendPerDay = this.dailyIncomes - this.moneyToSavePerDay - this.dailyExpenses;
+    }
+
+
+    public void incrementMoneyToSave(double amount){
+        this.moneyToSavePerDay += amount;
+        FirebaseDatabase.getInstance().getReference("Days/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/" + day.getDate() + "/" + "MoneyToSave/").setValue(this.moneyToSavePerDay);
+        //TODO: add a textview on the bottom tabs activity toolbar and insert the information there
+        bottom_tabs_activity.getSupportActionBar().setSubtitle("Today you have to save " + moneyToSavePerDay);
+
     }
 
     //Getters
