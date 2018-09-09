@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -53,16 +54,26 @@ public class GoalCardsAdapter extends RecyclerView.Adapter<GoalCardsAdapter.Goal
 
     //populate the Viewholder with each goal Instance
     @Override
-    public void onBindViewHolder(final GoalViewHolder holder, final int position) {
+    public void onBindViewHolder(final GoalViewHolder holder, int position) {
         final Goal goal = goals.get(position);
         holder.DateWanted.setText(goal.getDateWanted().toString());
         holder.ItemName.setText(goal.getGoalItem().getName());
 
         //Handle Trigger
+        //check if it is user touched
+        final boolean[] isTouched = new boolean[1];
+        holder.switchCompat.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                isTouched[0] = true;
+                return false;
+            }
+        });
+
         holder.switchCompat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
+                if (isChecked && isTouched[0]){
                     //Goal is Activated
                     goal.setDateActivated(new LocalDate());
                     //Calculate how much we have to save per day on the goal and add it to the total amount to save on the goal handler
@@ -75,7 +86,7 @@ public class GoalCardsAdapter extends RecyclerView.Adapter<GoalCardsAdapter.Goal
                     //ReCalculate moneyToSpend
                     Bottom_Tabs_Activity.goalHandler.calculateMoneyToSpend();
                 }
-                else {
+                else if (!isChecked && isTouched[0]){
                     //Goal is deactivated
                     //Update the db
                     DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Goals/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/" + goal.getGoalItem().getName() + "/IsActive");
@@ -120,8 +131,8 @@ public class GoalCardsAdapter extends RecyclerView.Adapter<GoalCardsAdapter.Goal
                                 //Remove form Firebase
                                 FirebaseDatabase.getInstance().getReference("Goals/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/" + goal.getGoalItem().getName()).removeValue();
 
-                                goals.remove(position);
-                                notifyItemRemoved(position);
+                                goals.remove(holder.getAdapterPosition());
+                                notifyItemRemoved(holder.getAdapterPosition());
                                 return true;
                         }
 

@@ -52,7 +52,7 @@ public class Goal {
         //Remove the amount needed because of the already saved money
         price -= moneySavedForGoal;
         //Calculate moneyToSavePerDay
-        Days daysLeft = Days.daysBetween(this.DateWanted, this.dateActivated);
+        Days daysLeft = Days.daysBetween(this.dateActivated, this.DateWanted);
         this.moneyToSave = Math.ceil(price / daysLeft.getDays());
         //upload to DB for ReFetch from the RecyclerView
         FirebaseDatabase.getInstance().getReference("Goals/" + GoalItem.getUserID() + "/" + GoalItem.getName() + "/moneyToSave/").setValue(this.moneyToSave);

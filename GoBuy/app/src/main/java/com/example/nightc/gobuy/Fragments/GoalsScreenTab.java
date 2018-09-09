@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.nightc.gobuy.Activities.Bottom_Tabs_Activity;
 import com.example.nightc.gobuy.CustomAdapters.GoalCardsAdapter;
 import com.example.nightc.gobuy.GoBuySDK.Goal;
 import com.example.nightc.gobuy.R;
@@ -75,6 +76,7 @@ public class GoalsScreenTab extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 HashMap hashMap;
+                Bottom_Tabs_Activity.goalHandler.setMoneyToSavePerDay(0);
                 goals.clear();
                 for (DataSnapshot snapshot: dataSnapshot.getChildren()){
                     if (!snapshot.getKey().toString().equals("GoalNumber")){
@@ -82,10 +84,18 @@ public class GoalsScreenTab extends Fragment {
                         Goal goal = new Goal();
                         goal.HashMapToGoal(hashMap);
                         goals.add(goal);
+                        //Adds to the active goals and calculates the MoneyToSave here instead of the OnCheckedChange
+                        if (goal.isActive()){
+                            Bottom_Tabs_Activity.goalHandler.getActiveGoals().add(goal);
+                            Bottom_Tabs_Activity.goalHandler.incrementMoneyToSave(goal.calculateMoneyToSave());
+                        }
                     }
 
                 }
+                //Update recyclerView
                 adapter.notifyDataSetChanged();
+                //Update MoneyToSaveToday
+                getActivity().findViewById(R.id.save_today_textview);
                 Toast.makeText(GoalsScreenTab.this.context, "Data successfully fetched", Toast.LENGTH_SHORT).show();
             }
 

@@ -3,6 +3,7 @@ package com.example.nightc.gobuy.Activities;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -10,7 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
+import android.widget.ImageView;
 
 import com.example.nightc.gobuy.Fragments.SettingsFragment;
 import com.example.nightc.gobuy.Fragments.TabbedFragment;
@@ -23,8 +24,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Bottom_Tabs_Activity extends AppCompatActivity {
 
@@ -124,19 +123,24 @@ public class Bottom_Tabs_Activity extends AppCompatActivity {
         //Initialise Goal Handler, which runs here as a static variable across the whole app
         //the data are filled while loading the data from the DB
         //Has to be initialised here or else when switching accounts the Handler wont change
-        goalHandler = new ActiveGoalHandler(Bottom_Tabs_Activity.this);
+        goalHandler = new ActiveGoalHandler(this);
 
 
         setContentView(R.layout.activity_bottom__tabs_);
         android.support.v7.widget.Toolbar toolbar = (Toolbar) findViewById(R.id.Bottom_tabs_toolbar);
-        CircleImageView imageView = (CircleImageView) findViewById(R.id.myImageontoolbar);
+        //CircleImageView imageView = (CircleImageView) findViewById(R.id.myImageontoolbar);
+        ImageView userLogo = new ImageView(this);
+
         //Fetch the User icon and add it on the toolbar
         Picasso.get().load(FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl())
-                .error(R.drawable.ic_sync_black_24dp).into(imageView);
-        //actionBar.setElevation(0);
-        toolbar.setTitle("");
-        TextView title = (TextView) findViewById(R.id.Bottom_tabs_title);
-        title.setText(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
+                .error(R.drawable.ic_sync_black_24dp).into(userLogo);
+
+        Drawable user_logo = getResources().getDrawable(R.drawable.user_logo);
+        userLogo.setImageDrawable(user_logo);
+        toolbar.setTitle(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
+        toolbar.setLogo(user_logo);
+
+
         setSupportActionBar(toolbar);
 
         //actionBar.setSubtitle("Save Today: ");

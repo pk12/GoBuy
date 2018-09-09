@@ -52,19 +52,7 @@ public class TabbedFragment extends Fragment {
     @Override
     public View onCreateView(final LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.tabbed_fragment,container,false);
-//        ToolbarProgess = (ProgressBar) v.findViewById(R.id.ProgressToolbar);
-//        SaveBar = (TextView) v.findViewById(R.id.SaveText);
-//        SaveAmountBar = (TextView) v.findViewById(R.id.SaveAmountText);
-//        SpendBar = (TextView) v.findViewById(R.id.SpendText);
-//        SpendAmountBar = (TextView) v.findViewById(R.id.SpendAmountText);
-//        DateBar = (TextView) v.findViewById(R.id.textDate);
-//        //Hide Views when Goals tab is inflated
-//        SaveAmountBar.setVisibility(View.GONE);
-//        SpendBar.setVisibility(View.GONE);
-//        SaveBar.setVisibility(View.GONE);
-//        SpendAmountBar.setVisibility(View.GONE);
-//        ToolbarProgess.setVisibility(View.GONE);
-//        DateBar.setVisibility(View.GONE);
+
 
 
         // Create the adapter that will return a fragment for each of the three

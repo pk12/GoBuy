@@ -1,9 +1,12 @@
 package com.example.nightc.gobuy.GoBuySDK.UserClasses;
 
+import android.widget.TextView;
+
 import com.example.nightc.gobuy.Activities.Bottom_Tabs_Activity;
 import com.example.nightc.gobuy.GoBuySDK.Day;
 import com.example.nightc.gobuy.GoBuySDK.Goal;
 import com.example.nightc.gobuy.GoBuySDK.GoalComparator;
+import com.example.nightc.gobuy.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -125,7 +128,9 @@ public class ActiveGoalHandler {
         this.moneyToSavePerDay += amount;
         FirebaseDatabase.getInstance().getReference("Days/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/" + day.getDate() + "/" + "MoneyToSave/").setValue(this.moneyToSavePerDay);
         //TODO: add a textview on the bottom tabs activity toolbar and insert the information there
-        bottom_tabs_activity.getSupportActionBar().setSubtitle("Today you have to save " + moneyToSavePerDay);
+        TextView textView = (TextView) bottom_tabs_activity.findViewById(R.id.save_today_textview);
+        textView.setText(Double.toString(moneyToSavePerDay));
+
 
     }
 
